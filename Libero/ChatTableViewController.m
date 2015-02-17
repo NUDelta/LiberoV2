@@ -7,6 +7,7 @@
 //
 
 #import "ChatTableViewController.h"
+#import "ChatWallViewController.h"
 #import "MyUser.h"
 #import <Parse/Parse.h>
 #import "DelivererViewController.h"
@@ -101,6 +102,14 @@
 
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"chatNav"];
+    myNav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:myNav animated:YES completion:nil];
+    
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -134,6 +143,8 @@
     return YES;
 }
 */
+
+
 
 /*
 #pragma mark - Navigation

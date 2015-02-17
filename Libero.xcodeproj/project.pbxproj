@@ -37,6 +37,14 @@
 		59DFACDD1A83FA11003F9D49 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59DFACDC1A83FA11003F9D49 /* ImageViewController.m */; };
 		E30D565FF23D05C6A29BA15C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67CB72F7D380FE0545A20437 /* libPods.a */; };
 		EDFA7CC11A93ABCD000B6DD6 /* ChatTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA7CC01A93ABCD000B6DD6 /* ChatTableViewController.m */; };
+		EDFA7CCC1A93E9D5000B6DD6 /* balloon_read_left.png in Resources */ = {isa = PBXBuildFile; fileRef = EDFA7CC41A93E9D5000B6DD6 /* balloon_read_left.png */; };
+		EDFA7CCD1A93E9D5000B6DD6 /* balloon_read_right.png in Resources */ = {isa = PBXBuildFile; fileRef = EDFA7CC51A93E9D5000B6DD6 /* balloon_read_right.png */; };
+		EDFA7CCE1A93E9D5000B6DD6 /* balloon_selected_left.png in Resources */ = {isa = PBXBuildFile; fileRef = EDFA7CC61A93E9D5000B6DD6 /* balloon_selected_left.png */; };
+		EDFA7CCF1A93E9D5000B6DD6 /* balloon_selected_right.png in Resources */ = {isa = PBXBuildFile; fileRef = EDFA7CC71A93E9D5000B6DD6 /* balloon_selected_right.png */; };
+		EDFA7CD01A93E9D5000B6DD6 /* balloon_unread_left.png in Resources */ = {isa = PBXBuildFile; fileRef = EDFA7CC81A93E9D5000B6DD6 /* balloon_unread_left.png */; };
+		EDFA7CD11A93E9D5000B6DD6 /* balloon_unread_right.png in Resources */ = {isa = PBXBuildFile; fileRef = EDFA7CC91A93E9D5000B6DD6 /* balloon_unread_right.png */; };
+		EDFA7CD21A93E9D5000B6DD6 /* PTSMessagingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA7CCB1A93E9D5000B6DD6 /* PTSMessagingCell.m */; };
+		EDFA7CD51A93F55D000B6DD6 /* ChatWallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA7CD41A93F55D000B6DD6 /* ChatWallViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +105,16 @@
 		ED6A9D5EDD4EF6ABF023B942 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		EDFA7CBF1A93ABCD000B6DD6 /* ChatTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewController.h; sourceTree = "<group>"; };
 		EDFA7CC01A93ABCD000B6DD6 /* ChatTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewController.m; sourceTree = "<group>"; };
+		EDFA7CC41A93E9D5000B6DD6 /* balloon_read_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balloon_read_left.png; sourceTree = "<group>"; };
+		EDFA7CC51A93E9D5000B6DD6 /* balloon_read_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balloon_read_right.png; sourceTree = "<group>"; };
+		EDFA7CC61A93E9D5000B6DD6 /* balloon_selected_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balloon_selected_left.png; sourceTree = "<group>"; };
+		EDFA7CC71A93E9D5000B6DD6 /* balloon_selected_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balloon_selected_right.png; sourceTree = "<group>"; };
+		EDFA7CC81A93E9D5000B6DD6 /* balloon_unread_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balloon_unread_left.png; sourceTree = "<group>"; };
+		EDFA7CC91A93E9D5000B6DD6 /* balloon_unread_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balloon_unread_right.png; sourceTree = "<group>"; };
+		EDFA7CCA1A93E9D5000B6DD6 /* PTSMessagingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTSMessagingCell.h; sourceTree = "<group>"; };
+		EDFA7CCB1A93E9D5000B6DD6 /* PTSMessagingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTSMessagingCell.m; sourceTree = "<group>"; };
+		EDFA7CD31A93F55D000B6DD6 /* ChatWallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatWallViewController.h; sourceTree = "<group>"; };
+		EDFA7CD41A93F55D000B6DD6 /* ChatWallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatWallViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +151,7 @@
 		0643ED161A81A16100F8C4F4 = {
 			isa = PBXGroup;
 			children = (
+				EDFA7CC31A93E9D5000B6DD6 /* PTSMessagingCell */,
 				0643ED8D1A81A4DE00F8C4F4 /* libsqlite3.dylib */,
 				0643ED871A81A2AC00F8C4F4 /* MapKit.framework */,
 				0643ED851A81A2A700F8C4F4 /* AudioToolbox.framework */,
@@ -184,6 +203,8 @@
 				0643ED221A81A16100F8C4F4 /* Supporting Files */,
 				EDFA7CBF1A93ABCD000B6DD6 /* ChatTableViewController.h */,
 				EDFA7CC01A93ABCD000B6DD6 /* ChatTableViewController.m */,
+				EDFA7CD31A93F55D000B6DD6 /* ChatWallViewController.h */,
+				EDFA7CD41A93F55D000B6DD6 /* ChatWallViewController.m */,
 			);
 			path = Libero;
 			sourceTree = "<group>";
@@ -274,6 +295,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		EDFA7CC31A93E9D5000B6DD6 /* PTSMessagingCell */ = {
+			isa = PBXGroup;
+			children = (
+				EDFA7CC41A93E9D5000B6DD6 /* balloon_read_left.png */,
+				EDFA7CC51A93E9D5000B6DD6 /* balloon_read_right.png */,
+				EDFA7CC61A93E9D5000B6DD6 /* balloon_selected_left.png */,
+				EDFA7CC71A93E9D5000B6DD6 /* balloon_selected_right.png */,
+				EDFA7CC81A93E9D5000B6DD6 /* balloon_unread_left.png */,
+				EDFA7CC91A93E9D5000B6DD6 /* balloon_unread_right.png */,
+				EDFA7CCA1A93E9D5000B6DD6 /* PTSMessagingCell.h */,
+				EDFA7CCB1A93E9D5000B6DD6 /* PTSMessagingCell.m */,
+			);
+			path = PTSMessagingCell;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -358,9 +394,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDFA7CD01A93E9D5000B6DD6 /* balloon_unread_left.png in Resources */,
+				EDFA7CCD1A93E9D5000B6DD6 /* balloon_read_right.png in Resources */,
+				EDFA7CCF1A93E9D5000B6DD6 /* balloon_selected_right.png in Resources */,
 				59ACE7DE1A8A215200CB5A85 /* Icon.png in Resources */,
+				EDFA7CCC1A93E9D5000B6DD6 /* balloon_read_left.png in Resources */,
 				0643ED4B1A81A1D000F8C4F4 /* Main.storyboard in Resources */,
 				0643ED331A81A16100F8C4F4 /* LaunchScreen.xib in Resources */,
+				EDFA7CD11A93E9D5000B6DD6 /* balloon_unread_right.png in Resources */,
+				EDFA7CCE1A93E9D5000B6DD6 /* balloon_selected_left.png in Resources */,
 				0643ED301A81A16100F8C4F4 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -416,12 +458,14 @@
 				0643ED711A81A22800F8C4F4 /* HelperTableViewController.m in Sources */,
 				0643ED511A81A1F400F8C4F4 /* MyUser.m in Sources */,
 				EDFA7CC11A93ABCD000B6DD6 /* ChatTableViewController.m in Sources */,
+				EDFA7CD51A93F55D000B6DD6 /* ChatWallViewController.m in Sources */,
 				0643ED5A1A81A1FD00F8C4F4 /* LogInViewController.m in Sources */,
 				59DFACDD1A83FA11003F9D49 /* ImageViewController.m in Sources */,
 				0643ED251A81A16100F8C4F4 /* main.m in Sources */,
 				0643ED721A81A22800F8C4F4 /* MyTabViewController.m in Sources */,
 				0643ED5B1A81A1FD00F8C4F4 /* SignInViewController.m in Sources */,
 				0643ED681A81A21A00F8C4F4 /* PackageViewController.m in Sources */,
+				EDFA7CD21A93E9D5000B6DD6 /* PTSMessagingCell.m in Sources */,
 				0643ED701A81A22800F8C4F4 /* AppealerTableViewController.m in Sources */,
 				0643ED4E1A81A1ED00F8C4F4 /* AppDelegate.m in Sources */,
 			);
