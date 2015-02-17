@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>0A913F53-606B-4F48-AC7F-69F4C116C5E3</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Libero</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>AA8A0459DC89C14A4E3CD55703F4F44F8E697DD0</key>
+		<string>https://github.com/NUDelta/Libero.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Libero.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>AA8A0459DC89C14A4E3CD55703F4F44F8E697DD0</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/NUDelta/Libero.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>AA8A0459DC89C14A4E3CD55703F4F44F8E697DD0</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AA8A0459DC89C14A4E3CD55703F4F44F8E697DD0</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Libero</string>
+		</dict>
+	</array>
+</dict>
+</plist>
