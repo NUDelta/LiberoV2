@@ -1,5 +1,5 @@
 //
-//  ChatWallViewController.h
+//  ChatDetailTableViewController.h
 //  Libero
 //
 //  Created by Shana Azria Dev on 2/17/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChatWallViewController : UIViewController {
-     NSString *other;
-}
-@property NSString *other;
+@interface ChatDetailTableViewController : UITableViewController
+
 @end

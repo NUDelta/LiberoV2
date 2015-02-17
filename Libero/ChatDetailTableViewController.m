@@ -1,28 +1,21 @@
 //
-//  ChatTableViewController.m
+//  ChatDetailTableViewController.m
 //  Libero
 //
 //  Created by Shana Azria Dev on 2/17/15.
 //  Copyright (c) 2015 YK. All rights reserved.
 //
 
-#import "ChatTableViewController.h"
-#import "ChatWallViewController.h"
-#import "MyUser.h"
-#import <Parse/Parse.h>
-#import "DelivererViewController.h"
-#import "AppDelegate.h"
+#import "ChatDetailTableViewController.h"
 
-@interface ChatTableViewController ()
-@property (nonatomic, strong) NSArray *chatUsers;
+@interface ChatDetailTableViewController ()
+
 @end
 
-@implementation ChatTableViewController
+@implementation ChatDetailTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog([PFUser currentUser].username);
-    [self startDownloadChatUsers];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -30,44 +23,6 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
-
-- (void) viewDidAppear:(BOOL)animated {
-    
-    [self.tableView reloadData];
-
-}
-
-- (void)startDownloadChatUsers
-{
-    NSMutableArray *tmpUsers = [[NSMutableArray alloc]init];
-    PFQuery *query = [PFQuery queryWithClassName:@"Message"];
-    NSMutableDictionary *tmpDict = [[NSMutableDictionary alloc] init];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if(!error) {
-            for (PFObject *object in objects) {
-                if ([tmpDict objectForKey:(NSString *)object[@"username"]] == nil) {
-                    //if user isn't already there
-                    //NSLog((NSString *)object[@"username"]);
-                    [tmpUsers addObject: object];
-                    [tmpDict setObject:[NSNumber numberWithBool:YES] forKey:(NSString *)object[@"username"]];
-                    
-                }
-                
-                //need to add check to only have users whose package you re delivering/people who have your package
-                
-                
-            }
-            
-                 self.chatUsers = tmpUsers;
-                [self.tableView reloadData];
-           
-            
-            
-        }
-    }];
-    
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -79,40 +34,24 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 1;
+    return 0;
 }
 
-//later this needs to be changed to 2 different types of chat -->packages to be delivered and packages requested chats
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    
-    return [self.chatUsers count];
+    return 0;
 }
 
-
+/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *users = self.chatUsers[indexPath.row];
-    NSLog(@"%@", users);
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chatUsersCell" forIndexPath:indexPath];
-    NSLog([NSString stringWithFormat:@"%@", [users valueForKeyPath:@"username"]]);
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", [users valueForKeyPath:@"username"]];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    
+    // Configure the cell...
     
     return cell;
-
 }
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *users = self.chatUsers[indexPath.row];
-    UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"chatNav"];
-    ChatWallViewController * viewController = [myNav.viewControllers firstObject];
-    viewController.other = [NSString stringWithFormat:@"%@", [users valueForKeyPath:@"username"]];
-    myNav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentViewController:myNav animated:YES completion:nil];
-    
-}
-
-
+*/
 
 /*
 // Override to support conditional editing of the table view.
@@ -147,8 +86,6 @@
     return YES;
 }
 */
-
-
 
 /*
 #pragma mark - Navigation

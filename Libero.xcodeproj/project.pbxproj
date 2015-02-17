@@ -45,6 +45,7 @@
 		EDFA7CD11A93E9D5000B6DD6 /* balloon_unread_right.png in Resources */ = {isa = PBXBuildFile; fileRef = EDFA7CC91A93E9D5000B6DD6 /* balloon_unread_right.png */; };
 		EDFA7CD21A93E9D5000B6DD6 /* PTSMessagingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA7CCB1A93E9D5000B6DD6 /* PTSMessagingCell.m */; };
 		EDFA7CD51A93F55D000B6DD6 /* ChatWallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA7CD41A93F55D000B6DD6 /* ChatWallViewController.m */; };
+		EDFA7CDB1A940357000B6DD6 /* ChatDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA7CDA1A940357000B6DD6 /* ChatDetailTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,22 +70,22 @@
 		0643ED4A1A81A1D000F8C4F4 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
 		0643ED4C1A81A1ED00F8C4F4 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../AppDelegate.h; sourceTree = "<group>"; };
 		0643ED4D1A81A1ED00F8C4F4 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ../AppDelegate.m; sourceTree = "<group>"; };
-		0643ED4F1A81A1F400F8C4F4 /* MyUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyUser.h; path = ../MyUser.h; sourceTree = "<group>"; };
-		0643ED501A81A1F400F8C4F4 /* MyUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyUser.m; path = ../MyUser.m; sourceTree = "<group>"; };
-		0643ED521A81A1FD00F8C4F4 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignInViewController.h; path = ../SignInViewController.h; sourceTree = "<group>"; };
-		0643ED531A81A1FD00F8C4F4 /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogInViewController.h; path = ../LogInViewController.h; sourceTree = "<group>"; };
-		0643ED541A81A1FD00F8C4F4 /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogInViewController.m; path = ../LogInViewController.m; sourceTree = "<group>"; };
-		0643ED551A81A1FD00F8C4F4 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignInViewController.m; path = ../SignInViewController.m; sourceTree = "<group>"; };
+		0643ED4F1A81A1F400F8C4F4 /* MyUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyUser.h; sourceTree = "<group>"; };
+		0643ED501A81A1F400F8C4F4 /* MyUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyUser.m; sourceTree = "<group>"; };
+		0643ED521A81A1FD00F8C4F4 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
+		0643ED531A81A1FD00F8C4F4 /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
+		0643ED541A81A1FD00F8C4F4 /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
+		0643ED551A81A1FD00F8C4F4 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		0643ED5E1A81A21A00F8C4F4 /* DelivererViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelivererViewController.h; path = ../DelivererViewController.h; sourceTree = "<group>"; };
 		0643ED5F1A81A21A00F8C4F4 /* DelivererViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DelivererViewController.m; path = ../DelivererViewController.m; sourceTree = "<group>"; };
 		0643ED621A81A21A00F8C4F4 /* PackageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PackageViewController.h; path = ../PackageViewController.h; sourceTree = "<group>"; };
 		0643ED631A81A21A00F8C4F4 /* PackageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PackageViewController.m; path = ../PackageViewController.m; sourceTree = "<group>"; };
-		0643ED6A1A81A22800F8C4F4 /* AppealerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppealerTableViewController.h; path = ../AppealerTableViewController.h; sourceTree = "<group>"; };
-		0643ED6B1A81A22800F8C4F4 /* AppealerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppealerTableViewController.m; path = ../AppealerTableViewController.m; sourceTree = "<group>"; };
-		0643ED6C1A81A22800F8C4F4 /* HelperTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelperTableViewController.h; path = ../HelperTableViewController.h; sourceTree = "<group>"; };
-		0643ED6D1A81A22800F8C4F4 /* HelperTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelperTableViewController.m; path = ../HelperTableViewController.m; sourceTree = "<group>"; };
-		0643ED6E1A81A22800F8C4F4 /* MyTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyTabViewController.h; path = ../MyTabViewController.h; sourceTree = "<group>"; };
-		0643ED6F1A81A22800F8C4F4 /* MyTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyTabViewController.m; path = ../MyTabViewController.m; sourceTree = "<group>"; };
+		0643ED6A1A81A22800F8C4F4 /* AppealerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppealerTableViewController.h; sourceTree = "<group>"; };
+		0643ED6B1A81A22800F8C4F4 /* AppealerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppealerTableViewController.m; sourceTree = "<group>"; };
+		0643ED6C1A81A22800F8C4F4 /* HelperTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperTableViewController.h; sourceTree = "<group>"; };
+		0643ED6D1A81A22800F8C4F4 /* HelperTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperTableViewController.m; sourceTree = "<group>"; };
+		0643ED6E1A81A22800F8C4F4 /* MyTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTabViewController.h; sourceTree = "<group>"; };
+		0643ED6F1A81A22800F8C4F4 /* MyTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTabViewController.m; sourceTree = "<group>"; };
 		0643ED731A81A27000F8C4F4 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		0643ED751A81A27700F8C4F4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		0643ED771A81A28100F8C4F4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -115,6 +116,8 @@
 		EDFA7CCB1A93E9D5000B6DD6 /* PTSMessagingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTSMessagingCell.m; sourceTree = "<group>"; };
 		EDFA7CD31A93F55D000B6DD6 /* ChatWallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatWallViewController.h; sourceTree = "<group>"; };
 		EDFA7CD41A93F55D000B6DD6 /* ChatWallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatWallViewController.m; sourceTree = "<group>"; };
+		EDFA7CD91A940357000B6DD6 /* ChatDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatDetailTableViewController.h; sourceTree = "<group>"; };
+		EDFA7CDA1A940357000B6DD6 /* ChatDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatDetailTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,20 +154,9 @@
 		0643ED161A81A16100F8C4F4 = {
 			isa = PBXGroup;
 			children = (
-				EDFA7CC31A93E9D5000B6DD6 /* PTSMessagingCell */,
-				0643ED8D1A81A4DE00F8C4F4 /* libsqlite3.dylib */,
-				0643ED871A81A2AC00F8C4F4 /* MapKit.framework */,
-				0643ED851A81A2A700F8C4F4 /* AudioToolbox.framework */,
-				0643ED831A81A2A100F8C4F4 /* CFNetwork.framework */,
-				0643ED811A81A29B00F8C4F4 /* CoreGraphics.framework */,
-				0643ED7F1A81A29700F8C4F4 /* libz.dylib */,
-				0643ED7D1A81A29000F8C4F4 /* MobileCoreServices.framework */,
-				0643ED7B1A81A28B00F8C4F4 /* QuartzCore.framework */,
-				0643ED791A81A28700F8C4F4 /* Security.framework */,
-				0643ED771A81A28100F8C4F4 /* SystemConfiguration.framework */,
-				0643ED751A81A27700F8C4F4 /* CoreLocation.framework */,
-				0643ED731A81A27000F8C4F4 /* Accounts.framework */,
 				0643ED211A81A16100F8C4F4 /* Libero */,
+				EDFA7CC31A93E9D5000B6DD6 /* PTSMessagingCell */,
+				EDFA7CD71A9402E6000B6DD6 /* FrameWorks */,
 				0643ED3B1A81A16100F8C4F4 /* LiberoTests */,
 				0643ED201A81A16100F8C4F4 /* Products */,
 				5EE986B43B9E854EB61530C6 /* Pods */,
@@ -184,27 +176,13 @@
 		0643ED211A81A16100F8C4F4 /* Libero */ = {
 			isa = PBXGroup;
 			children = (
+				0643ED4A1A81A1D000F8C4F4 /* Main.storyboard */,
+				59DFACD71A83F914003F9D49 /* Login/SignUpVC */,
+				59DFACD81A83F920003F9D49 /* Model */,
+				EDFA7CD81A94031A000B6DD6 /* Chat */,
 				59DFACDA1A83F97E003F9D49 /* DetailedVC */,
 				59DFACD61A83F901003F9D49 /* TableVC */,
-				0643ED6E1A81A22800F8C4F4 /* MyTabViewController.h */,
-				0643ED6F1A81A22800F8C4F4 /* MyTabViewController.m */,
-				0643ED6A1A81A22800F8C4F4 /* AppealerTableViewController.h */,
-				0643ED6B1A81A22800F8C4F4 /* AppealerTableViewController.m */,
-				0643ED6C1A81A22800F8C4F4 /* HelperTableViewController.h */,
-				0643ED6D1A81A22800F8C4F4 /* HelperTableViewController.m */,
-				59DFACD71A83F914003F9D49 /* LoginVC */,
-				0643ED521A81A1FD00F8C4F4 /* SignInViewController.h */,
-				0643ED531A81A1FD00F8C4F4 /* LogInViewController.h */,
-				0643ED541A81A1FD00F8C4F4 /* LogInViewController.m */,
-				0643ED551A81A1FD00F8C4F4 /* SignInViewController.m */,
-				59DFACD81A83F920003F9D49 /* Model */,
-				0643ED4F1A81A1F400F8C4F4 /* MyUser.h */,
-				0643ED501A81A1F400F8C4F4 /* MyUser.m */,
 				0643ED221A81A16100F8C4F4 /* Supporting Files */,
-				EDFA7CBF1A93ABCD000B6DD6 /* ChatTableViewController.h */,
-				EDFA7CC01A93ABCD000B6DD6 /* ChatTableViewController.m */,
-				EDFA7CD31A93F55D000B6DD6 /* ChatWallViewController.h */,
-				EDFA7CD41A93F55D000B6DD6 /* ChatWallViewController.m */,
 			);
 			path = Libero;
 			sourceTree = "<group>";
@@ -217,7 +195,6 @@
 				0643ED2F1A81A16100F8C4F4 /* Images.xcassets */,
 				0643ED4C1A81A1ED00F8C4F4 /* AppDelegate.h */,
 				0643ED4D1A81A1ED00F8C4F4 /* AppDelegate.m */,
-				0643ED4A1A81A1D000F8C4F4 /* Main.storyboard */,
 				0643ED231A81A16100F8C4F4 /* Info.plist */,
 				0643ED241A81A16100F8C4F4 /* main.m */,
 			);
@@ -244,22 +221,34 @@
 		59DFACD61A83F901003F9D49 /* TableVC */ = {
 			isa = PBXGroup;
 			children = (
+				0643ED6E1A81A22800F8C4F4 /* MyTabViewController.h */,
+				0643ED6F1A81A22800F8C4F4 /* MyTabViewController.m */,
+				0643ED6A1A81A22800F8C4F4 /* AppealerTableViewController.h */,
+				0643ED6B1A81A22800F8C4F4 /* AppealerTableViewController.m */,
+				0643ED6C1A81A22800F8C4F4 /* HelperTableViewController.h */,
+				0643ED6D1A81A22800F8C4F4 /* HelperTableViewController.m */,
 			);
 			name = TableVC;
 			path = ..;
 			sourceTree = "<group>";
 		};
-		59DFACD71A83F914003F9D49 /* LoginVC */ = {
+		59DFACD71A83F914003F9D49 /* Login/SignUpVC */ = {
 			isa = PBXGroup;
 			children = (
+				0643ED521A81A1FD00F8C4F4 /* SignInViewController.h */,
+				0643ED551A81A1FD00F8C4F4 /* SignInViewController.m */,
+				0643ED531A81A1FD00F8C4F4 /* LogInViewController.h */,
+				0643ED541A81A1FD00F8C4F4 /* LogInViewController.m */,
 			);
-			name = LoginVC;
+			name = Login/SignUpVC;
 			path = ..;
 			sourceTree = "<group>";
 		};
 		59DFACD81A83F920003F9D49 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0643ED4F1A81A1F400F8C4F4 /* MyUser.h */,
+				0643ED501A81A1F400F8C4F4 /* MyUser.m */,
 			);
 			name = Model;
 			path = ..;
@@ -308,6 +297,38 @@
 				EDFA7CCB1A93E9D5000B6DD6 /* PTSMessagingCell.m */,
 			);
 			path = PTSMessagingCell;
+			sourceTree = "<group>";
+		};
+		EDFA7CD71A9402E6000B6DD6 /* FrameWorks */ = {
+			isa = PBXGroup;
+			children = (
+				0643ED8D1A81A4DE00F8C4F4 /* libsqlite3.dylib */,
+				0643ED871A81A2AC00F8C4F4 /* MapKit.framework */,
+				0643ED851A81A2A700F8C4F4 /* AudioToolbox.framework */,
+				0643ED831A81A2A100F8C4F4 /* CFNetwork.framework */,
+				0643ED811A81A29B00F8C4F4 /* CoreGraphics.framework */,
+				0643ED7F1A81A29700F8C4F4 /* libz.dylib */,
+				0643ED7D1A81A29000F8C4F4 /* MobileCoreServices.framework */,
+				0643ED7B1A81A28B00F8C4F4 /* QuartzCore.framework */,
+				0643ED791A81A28700F8C4F4 /* Security.framework */,
+				0643ED771A81A28100F8C4F4 /* SystemConfiguration.framework */,
+				0643ED751A81A27700F8C4F4 /* CoreLocation.framework */,
+				0643ED731A81A27000F8C4F4 /* Accounts.framework */,
+			);
+			name = FrameWorks;
+			sourceTree = "<group>";
+		};
+		EDFA7CD81A94031A000B6DD6 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				EDFA7CBF1A93ABCD000B6DD6 /* ChatTableViewController.h */,
+				EDFA7CC01A93ABCD000B6DD6 /* ChatTableViewController.m */,
+				EDFA7CD31A93F55D000B6DD6 /* ChatWallViewController.h */,
+				EDFA7CD41A93F55D000B6DD6 /* ChatWallViewController.m */,
+				EDFA7CD91A940357000B6DD6 /* ChatDetailTableViewController.h */,
+				EDFA7CDA1A940357000B6DD6 /* ChatDetailTableViewController.m */,
+			);
+			name = Chat;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -454,6 +475,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDFA7CDB1A940357000B6DD6 /* ChatDetailTableViewController.m in Sources */,
 				0643ED661A81A21A00F8C4F4 /* DelivererViewController.m in Sources */,
 				0643ED711A81A22800F8C4F4 /* HelperTableViewController.m in Sources */,
 				0643ED511A81A1F400F8C4F4 /* MyUser.m in Sources */,

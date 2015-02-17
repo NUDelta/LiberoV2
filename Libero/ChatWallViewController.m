@@ -7,15 +7,17 @@
 //
 
 #import "ChatWallViewController.h"
-
+#import "MyUser.h"
 @interface ChatWallViewController ()
 
 @end
 
 @implementation ChatWallViewController
+@synthesize other;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"sender - %@ / receiver - %@", [PFUser currentUser].username, other);
     // Do any additional setup after loading the view.
 }
 
@@ -23,6 +25,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 /*
 #pragma mark - Navigation
