@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PTSMessagingCell.h"
 
-@interface ChatDetailTableViewController : UITableViewController
-
+@interface ChatDetailTableViewController : UITableViewController {
+    NSString *combNames;
+    NSArray * messages;
+}
+@property NSString *combNames;
+@property (nonatomic) NSArray * messages;
 @end

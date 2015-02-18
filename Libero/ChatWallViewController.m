@@ -7,6 +7,7 @@
 //
 
 #import "ChatWallViewController.h"
+#import "ChatDetailTableViewController.h"
 #import "MyUser.h"
 @interface ChatWallViewController ()
 
@@ -26,7 +27,23 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+#pragma mark - Navigation
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSString * tmpNames;
+    if ((NSComparisonResult)[[PFUser currentUser].username compare: other] == NSOrderedAscending) {
+        tmpNames = [NSString stringWithFormat: @"%@%@", [PFUser currentUser].username, other];
+        
+    } else {
+         tmpNames = [NSString stringWithFormat: @"%@%@", other, [PFUser currentUser].username];
+    }
+    
+    if ([segue.identifier isEqualToString: @"show detail chat"]) {
+        ChatDetailTableViewController *vc = [segue destinationViewController];
+       // [vc setCombNames:tmpNames];
+        ////vc.combNames = tmpNames;
+    }
+}
 
 /*
 #pragma mark - Navigation

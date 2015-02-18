@@ -7,16 +7,34 @@
 //
 
 #import "ChatDetailTableViewController.h"
+#import "MyUser.h"
+#import "PTSMessagingCell.h"
+#import <Parse/Parse.h>
 
 @interface ChatDetailTableViewController ()
-
+@property (nonatomic, strong) NSMutableArray *convo;
 @end
 
 @implementation ChatDetailTableViewController
+@synthesize combNames;
+
+
+
+-(void)awakeFromNib {
+    
+    _messages = [[NSArray alloc] initWithObjects:
+                 @"Hello, how are you.",
+                 @"I'm great, how are you?",
+                                  nil];
+    
+    [super awakeFromNib];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self setCombNames:@"adminjiajun l"];
+    [self downloadConversation];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -29,29 +47,79 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) downloadConversation {
+    self.convo = [[NSMutableArray alloc]init];
+    PFQuery *query = [PFQuery queryWithClassName:@"ChatMessages"];
+    NSLog(self.combNames);
+   // [query whereKey:@"combinedNames" equalTo:@"self.combNames"];
+    //[query whereKey:@"combinedNames" hasPrefix:self.combNames];
+   
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error) {
+            for (PFObject *object in objects) {
+               // if ([(NSString *)object[@"combinedNames"] isEqualToString:self.combNames]) {
+                    [self.convo addObject: object];
+                //}
+                
+                
+            }
+            
+        }
+
+    }];
+    NSLog(@"%@", self.convo);
+
+    
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return 2;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    static NSString* cellIdentifier = @"messagingCell";
+
+    PTSMessagingCell * cell = (PTSMessagingCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    // Configure the cell...
+    if (cell == nil) {
+        cell = [[PTSMessagingCell alloc] initMessagingCellWithReuseIdentifier:cellIdentifier];
+    }
+    
+   // [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
 }
-*/
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGSize messageSize = [PTSMessagingCell messageSize:[_messages objectAtIndex:indexPath.row]];
+    return messageSize.height + 2*[PTSMessagingCell textMarginVertical] + 40.0f;
+}
+
+-(void)configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
+    PTSMessagingCell* ccell = (PTSMessagingCell*)cell;
+    
+    if (indexPath.row % 2 == 0) {
+        ccell.sent = YES;
+        //ccell.avatarImageView.image = [UIImage imageNamed:@"person1"];
+    } else {
+        ccell.sent = NO;
+        //ccell.avatarImageView.image = [UIImage imageNamed:@"person2"];
+    }
+    
+    ccell.messageLabel.text = [_messages objectAtIndex:indexPath.row];
+    
+}
 
 /*
 // Override to support conditional editing of the table view.

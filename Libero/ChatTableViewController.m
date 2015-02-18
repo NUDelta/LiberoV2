@@ -105,8 +105,9 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *users = self.chatUsers[indexPath.row];
     UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"chatNav"];
+    NSLog(@"%@", myNav.viewControllers);
     ChatWallViewController * viewController = [myNav.viewControllers firstObject];
-    viewController.other = [NSString stringWithFormat:@"%@", [users valueForKeyPath:@"username"]];
+   // viewController.other = [NSString stringWithFormat:@"%@", [users valueForKeyPath:@"username"]];
     myNav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:myNav animated:YES completion:nil];
     
