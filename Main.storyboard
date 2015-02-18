@@ -359,7 +359,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="qSV-y0-Vki" kind="modal" identifier="chat1" id="1VH-Lj-kdO"/>
+                                    <segue destination="qSV-y0-Vki" kind="push" identifier="chat1" id="SMh-gE-riq"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -386,16 +386,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LCP-IP-bdh">
-                                <rect key="frame" x="0.0" y="64" width="320" height="400"/>
-                                <connections>
-                                    <segue destination="blp-P5-mxX" kind="embed" id="pS3-46-Pqg"/>
-                                </connections>
-                            </containerView>
                             <containerView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A0b-S5-MPa">
-                                <rect key="frame" x="0.0" y="462" width="320" height="106"/>
+                                <rect key="frame" x="0.0" y="413" width="320" height="106"/>
                                 <connections>
                                     <segue destination="y3t-B6-sWN" kind="embed" id="QcE-2r-X0E"/>
+                                </connections>
+                            </containerView>
+                            <containerView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LCP-IP-bdh">
+                                <rect key="frame" x="0.0" y="64" width="320" height="349"/>
+                                <connections>
+                                    <segue destination="blp-P5-mxX" kind="embed" identifier="chat2" id="pS3-46-Pqg"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -514,11 +514,11 @@
                         <viewControllerLayoutGuide type="bottom" id="kgh-3i-5qr"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="INr-qV-MV8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="349"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="YMO-Mb-IDM">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="349"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="blp-P5-mxX" id="fvU-2M-8ho"/>
@@ -540,7 +540,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cuc-hw-pfv" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2060" y="2632"/>
+            <point key="canvasLocation" x="2100" y="2631.5"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

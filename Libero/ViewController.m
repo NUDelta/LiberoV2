@@ -46,7 +46,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _messages = [[NSMutableArray alloc] init];
-    [self setCombNames:@"adminjiajun l"];
+   // [self setCombNames:@"adminjiajun l"];
     [self downloadConversation];
     
         // Uncomment the following line to preserve selection between presentations.
@@ -69,7 +69,7 @@
         if(!error) {
            //  NSLog(@"%@", objects);
             for (PFObject *object in objects) {
-                if ([(NSString *)object[@"combinedNames"] isEqualToString:@"adminjiajun l"]) {
+                if ([(NSString *)object[@"combinedNames"] isEqualToString:self.combNames]) {
                     [self.convo addObject: object];
                     [self.messages addObject:[NSString stringWithFormat:(NSString *)object[@"message"]]];
                     NSLog(@"%@",self.messages);

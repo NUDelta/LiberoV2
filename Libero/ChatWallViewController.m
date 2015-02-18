@@ -9,6 +9,7 @@
 #import "ChatWallViewController.h"
 #import "ChatDetailTableViewController.h"
 #import "MyUser.h"
+#import "ViewController.h"
 @interface ChatWallViewController ()
 
 @end
@@ -38,12 +39,14 @@
          tmpNames = [NSString stringWithFormat: @"%@%@", other, [PFUser currentUser].username];
     }
     
-    if ([segue.identifier isEqualToString: @"show detail chat"]) {
-        ChatDetailTableViewController *vc = [segue destinationViewController];
-       // [vc setCombNames:tmpNames];
-        ////vc.combNames = tmpNames;
+    NSLog(tmpNames);
+    if ([segue.identifier isEqualToString:@"chat2"]) {
+        ViewController *vc = segue.destinationViewController;
+        vc.combNames = tmpNames; // You can pass any value from A to B here
     }
 }
+
+
 
 /*
 #pragma mark - Navigation
