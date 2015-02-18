@@ -49,7 +49,8 @@
 
 - (void) downloadConversation {
     self.convo = [[NSMutableArray alloc]init];
-    PFQuery *query = [PFQuery queryWithClassName:@"ChatMessages"];
+    //use chat
+    PFQuery *query = [PFQuery queryWithClassName:@"Chat"];
     NSLog(self.combNames);
    // [query whereKey:@"combinedNames" equalTo:@"self.combNames"];
     //[query whereKey:@"combinedNames" hasPrefix:self.combNames];
@@ -57,9 +58,10 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(!error) {
             for (PFObject *object in objects) {
-               // if ([(NSString *)object[@"combinedNames"] isEqualToString:self.combNames]) {
+                if ([(NSString *)object[@"combinedNames"] isEqualToString:self.combNames]) {
                     [self.convo addObject: object];
-                //}
+                    NSLog(@"%@",object[@"combinedNames"]);
+                }
                 
                 
             }
