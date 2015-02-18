@@ -61,20 +61,18 @@
     self.convo = [[NSMutableArray alloc]init];
     //use chat
     PFQuery *query = [PFQuery queryWithClassName:@"ChatMessages"];
-    NSLog(self.combNames);
-    // [query whereKey:@"combinedNames" equalTo:@"self.combNames"];
-    //[query whereKey:@"combinedNames" hasPrefix:self.combNames];
+      
+    [query whereKey:@"combinedNames" hasPrefix:self.combNames];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(!error) {
            //  NSLog(@"%@", objects);
             for (PFObject *object in objects) {
-                if ([(NSString *)object[@"combinedNames"] isEqualToString:self.combNames]) {
                     [self.convo addObject: object];
                     [self.messages addObject:[NSString stringWithFormat:(NSString *)object[@"message"]]];
                     NSLog(@"%@",self.messages);
                     [self.tableView reloadData];
-                }
+                
                 
                 
             }
