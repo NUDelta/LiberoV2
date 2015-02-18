@@ -7,16 +7,19 @@
 //
 
 #import "ViewController.h"
+#import "MyUser.h"
+#import <Parse/Parse.h>
 
 @interface ViewController ()
-
+@property (nonatomic, strong) NSMutableArray *convo;
 @end
 
 @implementation ViewController
+@synthesize combNames;
 
--(void)awakeFromNib {
+/*-(void)awakeFromNib {
     
-    _messages = [[NSArray alloc] initWithObjects:
+    _messages = [[NSMutableArray alloc] initWithObjects:
               @"Hello, how are you.",
               @"I'm great, how are you?",
               @"I'm fine, thanks. Up for dinner tonight?",
@@ -38,25 +41,77 @@
               nil];
     
     [super awakeFromNib];
+}*/
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    _messages = [[NSMutableArray alloc] init];
+    [self setCombNames:@"adminjiajun l"];
+    [self downloadConversation];
+    
+        // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+
+- (void) downloadConversation {
+    self.convo = [[NSMutableArray alloc]init];
+    //use chat
+    PFQuery *query = [PFQuery queryWithClassName:@"ChatMessages"];
+    NSLog(self.combNames);
+    // [query whereKey:@"combinedNames" equalTo:@"self.combNames"];
+    //[query whereKey:@"combinedNames" hasPrefix:self.combNames];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error) {
+           //  NSLog(@"%@", objects);
+            for (PFObject *object in objects) {
+                if ([(NSString *)object[@"combinedNames"] isEqualToString:@"adminjiajun l"]) {
+                    [self.convo addObject: object];
+                    [self.messages addObject:[NSString stringWithFormat:(NSString *)object[@"message"]]];
+                    NSLog(@"%@",self.messages);
+                    [self.tableView reloadData];
+                }
+                
+                
+            }
+            
+        }
+        
+    }];
+   // NSLog(@"%@", self.messages);
+    
+    
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSLog(@"%lu",(unsigned long)_messages.count);
     return [_messages count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     /*This method sets up the table-view.*/
-    
+    PFObject *object = [_convo objectAtIndex:indexPath.row];
     static NSString* cellIdentifier = @"messagingCell";
-    
+    NSString *userName = [PFUser currentUser].username;
     PTSMessagingCell * cell = (PTSMessagingCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (cell == nil) {
         cell = [[PTSMessagingCell alloc] initMessagingCellWithReuseIdentifier:cellIdentifier];
     }
-    
-    [self configureCell:cell atIndexPath:indexPath];
+   // NSLog(userName);
+    if ([(NSString *)object[@"sender"] isEqualToString:userName]) {
+        cell.sent = YES;
+    } else {
+        cell.sent = NO;
+    }
+    cell.timeLabel.text = (NSString *)object[@"sender"];
+    cell.messageLabel.text = [_messages objectAtIndex:indexPath.row];
+    //[self configureCell:cell atIndexPath:indexPath];
     
     return cell;
 }

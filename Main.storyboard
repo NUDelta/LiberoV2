@@ -358,6 +358,9 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wD0-Le-Y2p" id="nG2-VR-Rxp">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="qSV-y0-Vki" kind="modal" identifier="chat1" id="1VH-Lj-kdO"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -371,10 +374,10 @@
             </objects>
             <point key="canvasLocation" x="1136" y="2632"/>
         </scene>
-        <!--View Controller-->
+        <!--Chat Wall View Controller-->
         <scene sceneID="8Nn-GR-5EA">
             <objects>
-                <viewController autoresizesArchivedViewToFullSize="NO" id="qSV-y0-Vki" sceneMemberID="viewController">
+                <viewController autoresizesArchivedViewToFullSize="NO" id="qSV-y0-Vki" customClass="ChatWallViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ONY-HW-yX5"/>
                         <viewControllerLayoutGuide type="bottom" id="OWB-by-upe"/>
@@ -404,7 +407,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="agC-YS-KjJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2130" y="2632"/>
+            <point key="canvasLocation" x="1599" y="2632"/>
         </scene>
         <!--Chat Detail Table View Controller-->
         <scene sceneID="qlg-X6-Ra3">
@@ -431,23 +434,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gxl-1e-3ON" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2742" y="2576"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="nLq-6X-glp">
-            <objects>
-                <navigationController storyboardIdentifier="chatNav" id="TN2-K7-oM1" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="g93-fY-fjh"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="xSE-OU-Bxz">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="qSV-y0-Vki" kind="relationship" relationship="rootViewController" id="3N6-vh-nkR"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YvG-9a-6fg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1691" y="2632"/>
         </scene>
         <!--Chat-->
         <scene sceneID="RK1-0y-uLD">
@@ -517,7 +503,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yuD-18-Wld" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2130" y="3089"/>
+            <point key="canvasLocation" x="1599" y="3101"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="ZFy-mN-GqV">
@@ -554,7 +540,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cuc-hw-pfv" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2638" y="3276"/>
+            <point key="canvasLocation" x="2060" y="2632"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

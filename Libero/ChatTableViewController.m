@@ -102,7 +102,7 @@
 
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+/*-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *users = self.chatUsers[indexPath.row];
     UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"chatNav"];
     NSLog(@"%@", myNav.viewControllers);
@@ -111,8 +111,28 @@
     myNav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:myNav animated:YES completion:nil];
     
-}
+}*/
 
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+     NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+    NSDictionary *users = self.chatUsers[indexPath.row];
+    if([sender isKindOfClass:[UITableViewCell class]]) {
+       
+        if([segue.identifier isEqualToString:@"chat1"]) {
+            if([segue.destinationViewController isKindOfClass:[ChatWallViewController class]]) {
+                ChatWallViewController *cvc = [segue destinationViewController];
+                cvc.other = [NSString stringWithFormat:@"%@", [users valueForKeyPath:@"username"]];
+                NSLog(@"segueing");
+            }
+        }
+    }
+}
 
 
 /*

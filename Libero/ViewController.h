@@ -11,12 +11,12 @@
 
 @interface ViewController : UIViewController {
     UITableView * tableView;
-    
-    NSArray * messages;
+     NSString *combNames;
+    NSMutableArray * messages;
 }
 
 @property (nonatomic) IBOutlet UITableView * tableView;
-
-@property (nonatomic) NSArray * messages;
+@property NSString *combNames;
+@property (nonatomic) NSMutableArray * messages;
 
 @end
