@@ -155,7 +155,8 @@
         
         if(!error) {
             for(PFObject *object in objects){
-                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall] && ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"]) {
+//FIXME: commented [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall] or testing purpose
+                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"]) {
                         NSLog(@"%@", object[@"residenceHall"]);
                         NSLog(@"another one %@", [MyUser currentUser].residenceHall);
                         [tmpRequest addObject: object];
