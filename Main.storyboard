@@ -542,6 +542,77 @@
             </objects>
             <point key="canvasLocation" x="2100" y="2631.5"/>
         </scene>
+        <!--Log In View Controller-->
+        <scene sceneID="x8A-Qa-VTy">
+            <objects>
+                <viewController storyboardIdentifier="MyLogInViewController" id="2O3-H4-tH8" customClass="LogInViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="47d-N2-hmJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vo2-Oc-8bY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uCZ-jh-kPn">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Re-enter password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v6y-jv-qHY">
+                                <rect key="frame" x="20" y="243" width="279" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HNm-np-UgN">
+                                <rect key="frame" x="21" y="187" width="279" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Go8-WY-LBD">
+                                <rect key="frame" x="21" y="79" width="279" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="FirstLastYear@u.northwestern.edu" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WSV-3x-g2d">
+                                <rect key="frame" x="20" y="132" width="279" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lax-rh-IbQ">
+                                <rect key="frame" x="20" y="301" width="279" height="44"/>
+                                <state key="normal" title="Register">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="registerAction:" destination="2O3-H4-tH8" eventType="touchUpInside" id="lxH-j4-PJr"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="580-lG-wjX">
+                                <rect key="frame" x="30" y="380" width="257" height="39"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelButton:" destination="2O3-H4-tH8" eventType="touchUpInside" id="LDH-dF-tTB"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Go8-WY-LBD" firstAttribute="top" secondItem="47d-N2-hmJ" secondAttribute="bottom" constant="59" id="Cqc-ps-hjj"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="hAJ-JO-L7j"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="emailField" destination="WSV-3x-g2d" id="RDI-8L-2sQ"/>
+                        <outlet property="passwordField" destination="HNm-np-UgN" id="E5z-ni-LYB"/>
+                        <outlet property="reEnterPasswordField" destination="v6y-jv-qHY" id="vdK-0e-YtC"/>
+                        <outlet property="registerAction" destination="lax-rh-IbQ" id="90G-Sx-ejb"/>
+                        <outlet property="usernameField" destination="Go8-WY-LBD" id="BpF-aD-1c2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GLb-Rg-yOO" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-21" y="364"/>
+        </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
