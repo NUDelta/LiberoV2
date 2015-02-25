@@ -19,6 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"%@", self.childViewControllers);
     NSLog(@"sender - %@ / receiver - %@", [PFUser currentUser].username, other);
     // Do any additional setup after loading the view.
 }
@@ -58,4 +59,6 @@
 }
 */
 
+- (IBAction)sendMessage:(id)sender {
+}
 @end

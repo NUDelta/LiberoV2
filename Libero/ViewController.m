@@ -45,6 +45,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+   // NSLog(@"%@", [self parentViewController]);
     _messages = [[NSMutableArray alloc] init];
    // [self setCombNames:@"adminjiajun l"];
     [self downloadConversation];
@@ -93,7 +94,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     /*This method sets up the table-view.*/
-    PFObject *object = [_convo objectAtIndex:indexPath.row];
+    PFObject *object = [_convo objectAtIndex:([_messages count] - 1 - indexPath.row)];
     static NSString* cellIdentifier = @"messagingCell";
     NSString *userName = [PFUser currentUser].username;
     PTSMessagingCell * cell = (PTSMessagingCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -108,7 +109,7 @@
         cell.sent = NO;
     }
     cell.timeLabel.text = (NSString *)object[@"sender"];
-    cell.messageLabel.text = [_messages objectAtIndex:indexPath.row];
+    cell.messageLabel.text = [_messages objectAtIndex:([_messages count] - 1 - indexPath.row)];
     //[self configureCell:cell atIndexPath:indexPath];
     
     return cell;
