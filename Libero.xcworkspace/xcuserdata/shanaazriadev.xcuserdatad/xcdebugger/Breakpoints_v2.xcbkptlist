@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Libero/ChatTableViewController.m"
-            timestampString = "445904381.027701"
+            timestampString = "446577590.573108"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
             landmarkName = "-startDownloadChatUsers"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Libero/ChatTableViewController.m"
-            timestampString = "445904381.027701"
+            timestampString = "446577590.573108"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "-tableView:numberOfRowsInSection:"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Libero/ChatTableViewController.m"
-            timestampString = "445910497.449722"
+            timestampString = "446577590.573108"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
             landmarkName = "@implementation ChatTableViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -280,11 +280,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelperTableViewController.m"
-            timestampString = "446575453.129519"
+            timestampString = "446577283.246359"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "264"
-            endingLineNumber = "264"
+            startingLineNumber = "276"
+            endingLineNumber = "276"
             landmarkName = "-didReceiveMemoryWarning"
             landmarkType = "5">
          </BreakpointContent>
@@ -296,11 +296,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelperTableViewController.m"
-            timestampString = "446575453.129519"
+            timestampString = "446577283.246359"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -312,12 +312,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelperTableViewController.m"
-            timestampString = "446575453.129519"
+            timestampString = "446577283.246359"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
             landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Libero/InitialViewController.m"
+            timestampString = "446576610.09973"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "-presentStyleMenu:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

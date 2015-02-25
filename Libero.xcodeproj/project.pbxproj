@@ -36,6 +36,9 @@
 		59ACE7DE1A8A215200CB5A85 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 59ACE7DD1A8A215200CB5A85 /* Icon.png */; };
 		59DFACDD1A83FA11003F9D49 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59DFACDC1A83FA11003F9D49 /* ImageViewController.m */; };
 		E30D565FF23D05C6A29BA15C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67CB72F7D380FE0545A20437 /* libPods.a */; };
+		EDD3238D1A9E345400B8ED52 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDD3238C1A9E345400B8ED52 /* InitialViewController.m */; };
+		EDD3238F1A9E396000B8ED52 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = EDD3238E1A9E396000B8ED52 /* menu.png */; };
+		EDD323911A9E3A7200B8ED52 /* down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EDD323901A9E3A7200B8ED52 /* down@2x.png */; };
 		EDFA7CC11A93ABCD000B6DD6 /* ChatTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA7CC01A93ABCD000B6DD6 /* ChatTableViewController.m */; };
 		EDFA7CCC1A93E9D5000B6DD6 /* balloon_read_left.png in Resources */ = {isa = PBXBuildFile; fileRef = EDFA7CC41A93E9D5000B6DD6 /* balloon_read_left.png */; };
 		EDFA7CCD1A93E9D5000B6DD6 /* balloon_read_right.png in Resources */ = {isa = PBXBuildFile; fileRef = EDFA7CC51A93E9D5000B6DD6 /* balloon_read_right.png */; };
@@ -105,6 +108,10 @@
 		59DFACDC1A83FA11003F9D49 /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
 		67CB72F7D380FE0545A20437 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED6A9D5EDD4EF6ABF023B942 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		EDD3238B1A9E345400B8ED52 /* InitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialViewController.h; sourceTree = "<group>"; };
+		EDD3238C1A9E345400B8ED52 /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
+		EDD3238E1A9E396000B8ED52 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		EDD323901A9E3A7200B8ED52 /* down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down@2x.png"; sourceTree = "<group>"; };
 		EDFA7CBF1A93ABCD000B6DD6 /* ChatTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewController.h; sourceTree = "<group>"; };
 		EDFA7CC01A93ABCD000B6DD6 /* ChatTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewController.m; sourceTree = "<group>"; };
 		EDFA7CC41A93E9D5000B6DD6 /* balloon_read_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balloon_read_left.png; sourceTree = "<group>"; };
@@ -179,6 +186,8 @@
 		0643ED211A81A16100F8C4F4 /* Libero */ = {
 			isa = PBXGroup;
 			children = (
+				EDD323901A9E3A7200B8ED52 /* down@2x.png */,
+				EDD3238E1A9E396000B8ED52 /* menu.png */,
 				0643ED4A1A81A1D000F8C4F4 /* Main.storyboard */,
 				59DFACD71A83F914003F9D49 /* Login/SignUpVC */,
 				59DFACD81A83F920003F9D49 /* Model */,
@@ -186,6 +195,8 @@
 				59DFACDA1A83F97E003F9D49 /* DetailedVC */,
 				59DFACD61A83F901003F9D49 /* TableVC */,
 				0643ED221A81A16100F8C4F4 /* Supporting Files */,
+				EDD3238B1A9E345400B8ED52 /* InitialViewController.h */,
+				EDD3238C1A9E345400B8ED52 /* InitialViewController.m */,
 			);
 			path = Libero;
 			sourceTree = "<group>";
@@ -428,6 +439,8 @@
 				0643ED4B1A81A1D000F8C4F4 /* Main.storyboard in Resources */,
 				0643ED331A81A16100F8C4F4 /* LaunchScreen.xib in Resources */,
 				EDFA7CD11A93E9D5000B6DD6 /* balloon_unread_right.png in Resources */,
+				EDD323911A9E3A7200B8ED52 /* down@2x.png in Resources */,
+				EDD3238F1A9E396000B8ED52 /* menu.png in Resources */,
 				EDFA7CCE1A93E9D5000B6DD6 /* balloon_selected_left.png in Resources */,
 				0643ED301A81A16100F8C4F4 /* Images.xcassets in Resources */,
 			);
@@ -492,6 +505,7 @@
 				0643ED721A81A22800F8C4F4 /* MyTabViewController.m in Sources */,
 				EDFA7CE11A946CD5000B6DD6 /* ViewController.m in Sources */,
 				0643ED5B1A81A1FD00F8C4F4 /* SignInViewController.m in Sources */,
+				EDD3238D1A9E345400B8ED52 /* InitialViewController.m in Sources */,
 				0643ED681A81A21A00F8C4F4 /* PackageViewController.m in Sources */,
 				EDFA7CD21A93E9D5000B6DD6 /* PTSMessagingCell.m in Sources */,
 				0643ED701A81A22800F8C4F4 /* AppealerTableViewController.m in Sources */,

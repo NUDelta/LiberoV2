@@ -185,10 +185,22 @@
 {
     NSArray *styleItems =
     @[
-      [RWDropdownMenuItem itemWithText:@"Black Gradient" image:nil action:^{
+      [RWDropdownMenuItem itemWithText:@"Friend's Requests" image:nil action:^{
+          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"friendR"];
+          myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+          [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleBlackGradient;
       }],
-      [RWDropdownMenuItem itemWithText:@"Translucent" image:nil action:^{
+      [RWDropdownMenuItem itemWithText:@"My Requests" image:nil action:^{
+          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"requestsNav"];
+          myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+          [self presentViewController:myNav animated:YES completion:nil];
+          self.menuStyle = RWDropdownMenuStyleTranslucent;
+      }],
+      [RWDropdownMenuItem itemWithText:@"Chat Sessions" image:nil action:^{
+          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"chatNav"];
+          myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+          [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleTranslucent;
       }],
       ];
@@ -200,8 +212,8 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden=NO;
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [titleButton setImage:[[UIImage imageNamed:@"nav_down"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [titleButton setTitle:@"Menu Style" forState:UIControlStateNormal];
+    [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [titleButton setTitle:@"Friend's Requests" forState:UIControlStateNormal];
     [titleButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, -5)];
     [titleButton addTarget:self action:@selector(presentStyleMenu:) forControlEvents:UIControlEventTouchUpInside];
     

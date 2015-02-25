@@ -12,15 +12,55 @@
 #import <Parse/Parse.h>
 #import "DelivererViewController.h"
 #import "AppDelegate.h"
+#import "RWDropdownMenu.h"
 
 @interface ChatTableViewController ()
 @property (nonatomic, strong) NSArray *chatUsers;
+@property (nonatomic, assign) RWDropdownMenuStyle menuStyle;
 @end
 
 @implementation ChatTableViewController
 
+- (void)presentStyleMenu:(id)sender
+{
+    NSArray *styleItems =
+    @[
+      [RWDropdownMenuItem itemWithText:@"Friend's Requests" image:nil action:^{
+          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"friendR"];
+          myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+          [self presentViewController:myNav animated:YES completion:nil];
+          self.menuStyle = RWDropdownMenuStyleBlackGradient;
+      }],
+      [RWDropdownMenuItem itemWithText:@"My Requests" image:nil action:^{
+          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"requestsNav"];
+          myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+          [self presentViewController:myNav animated:YES completion:nil];
+          self.menuStyle = RWDropdownMenuStyleTranslucent;
+      }],
+      [RWDropdownMenuItem itemWithText:@"Chat Sessions" image:nil action:^{
+          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"chatNav"];
+          myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+          [self presentViewController:myNav animated:YES completion:nil];
+          self.menuStyle = RWDropdownMenuStyleTranslucent;
+      }],
+      ];
+    
+    [RWDropdownMenu presentFromViewController:self withItems:styleItems align:RWDropdownMenuCellAlignmentCenter style:self.menuStyle navBarImage:nil completion:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBarHidden=NO;
+    UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [titleButton setTitle:@"Chat Sessions" forState:UIControlStateNormal];
+    [titleButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, -5)];
+    [titleButton addTarget:self action:@selector(presentStyleMenu:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [titleButton sizeToFit];
+    self.navigationItem.titleView = titleButton;
+    
     NSLog([PFUser currentUser].username);
     [self startDownloadChatUsers];
     
