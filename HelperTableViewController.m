@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "MyUser.h"
 #import "ImageViewController.h"
-
+#import "RWDropdownMenu.h"
 
 @interface HelperTableViewController () <CLLocationManagerDelegate, UIAlertViewDelegate>
 @property (nonatomic, strong) NSArray *requests;
@@ -28,9 +28,14 @@
 @property (strong, nonatomic) NSIndexPath *myIndexPath;
 @property (nonatomic, strong) NSMutableArray *myHelpRequests;
 
+
+@property (nonatomic, assign) RWDropdownMenuStyle menuStyle;
+
+
 @end
 
 @implementation HelperTableViewController
+
 
 - (IBAction)indexChanged:(id)sender {
     switch (self.segmentedControl.selectedSegmentIndex)
@@ -176,9 +181,34 @@
     [self.tableView reloadData];
 }
 
+- (void)presentStyleMenu:(id)sender
+{
+    NSArray *styleItems =
+    @[
+      [RWDropdownMenuItem itemWithText:@"Black Gradient" image:nil action:^{
+          self.menuStyle = RWDropdownMenuStyleBlackGradient;
+      }],
+      [RWDropdownMenuItem itemWithText:@"Translucent" image:nil action:^{
+          self.menuStyle = RWDropdownMenuStyleTranslucent;
+      }],
+      ];
+    
+    [RWDropdownMenu presentFromViewController:self withItems:styleItems align:RWDropdownMenuCellAlignmentCenter style:self.menuStyle navBarImage:nil completion:nil];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBarHidden=NO;
+    UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [titleButton setImage:[[UIImage imageNamed:@"nav_down"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [titleButton setTitle:@"Menu Style" forState:UIControlStateNormal];
+    [titleButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, -5)];
+    [titleButton addTarget:self action:@selector(presentStyleMenu:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [titleButton sizeToFit];
+    self.navigationItem.titleView = titleButton;
+    
+
     [self HelperRequests];
 //    dispatch_queue_t queue = dispatch_get_main_queue();
     self.myIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
