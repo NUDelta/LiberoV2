@@ -14,5 +14,6 @@
     NSArray * messages;
 }
 @property NSString *combNames;
+- (void)dataReloaded;
 @property (nonatomic) NSArray * messages;
 @end

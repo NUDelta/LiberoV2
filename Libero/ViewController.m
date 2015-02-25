@@ -43,6 +43,17 @@
     [super awakeFromNib];
 }*/
 
+-(void)dataReloaded {
+    NSLog(@"data id getting reloaded");
+    NSMutableArray *new = [[NSMutableArray alloc] init];
+    NSUInteger c = _messages.count;
+    _messages = new;
+    sleep(1);
+    [self downloadConversation];
+    
+     [self.tableView reloadData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
    // NSLog(@"%@", [self parentViewController]);

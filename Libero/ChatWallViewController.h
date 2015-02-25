@@ -11,5 +11,7 @@
 @interface ChatWallViewController : UIViewController {
      NSString *other;
 }
+@property (weak, nonatomic) IBOutlet UITextField *messageInput;
+- (IBAction)sendMessage:(id)sender;
 @property NSString *other;
 @end

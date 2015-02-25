@@ -13,7 +13,7 @@
 @interface ChatWallViewController ()
 
 @end
-
+NSString * tmpNames;
 @implementation ChatWallViewController
 @synthesize other;
 
@@ -32,7 +32,7 @@
 #pragma mark - Navigation
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSString * tmpNames;
+    //NSString * tmpNames;
     if ((NSComparisonResult)[[PFUser currentUser].username compare: other] == NSOrderedAscending) {
         tmpNames = [NSString stringWithFormat: @"%@%@", [PFUser currentUser].username, other];
         
@@ -60,5 +60,21 @@
 */
 
 - (IBAction)sendMessage:(id)sender {
+   // self.messageInput.text
+    NSLog(@"%@", self.childViewControllers);
+    ViewController *vc = [self.childViewControllers objectAtIndex:0];
+    PFObject *obj = [PFObject objectWithClassName:@"ChatMessages"];
+    [obj setObject:[MyUser currentUser].username forKey:@"sender"];
+    [obj setObject:other forKey:@"receiver"];
+    [obj setObject:tmpNames forKey:@"combinedNames"];
+    [obj setObject:self.messageInput.text forKey:@"message"];
+    [obj saveInBackground];
+    self.messageInput.text = @"";
+    [vc dataReloaded];
+    
+    
+    
+    
+    
 }
 @end

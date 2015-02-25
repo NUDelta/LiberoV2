@@ -17,6 +17,7 @@
 
 @property (nonatomic) IBOutlet UITableView * tableView;
 @property NSString *combNames;
+- (void)dataReloaded;
 @property (nonatomic) NSMutableArray * messages;
 
 @end

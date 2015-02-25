@@ -19,6 +19,10 @@
 @synthesize combNames;
 
 
+-(void)dataReloaded {
+    NSLog(@"data id getting reloaded");
+}
+
 
 -(void)awakeFromNib {
     
