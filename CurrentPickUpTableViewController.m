@@ -154,7 +154,12 @@
     NSDictionary *request = self.requests[indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Sharer Request Cell" forIndexPath:indexPath];
     cell.textLabel.text = [request valueForKeyPath:@"username"];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"Email: %@\nStatus: %@", [request valueForKeyPath:@"email"], [request valueForKeyPath:@"delivered"]];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"MMMM d, YYYY hh:mm a";
+    dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"CST"];
+    NSString *dateWithNewFormat = [dateFormatter stringFromDate:[request valueForKeyPath:@"updatedAt"]];
+    
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Status: %@\nupdatedAt: %@", [request valueForKeyPath:@"delivered"], dateWithNewFormat];
     return cell;
 }
 

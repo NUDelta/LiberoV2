@@ -324,8 +324,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *request = self.requests[indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Sharer Request Cell" forIndexPath:indexPath];
-    cell.textLabel.text = [request valueForKeyPath:@"username"];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"Residence Hall : %@\nEmail: %@\nStatus: %@", [request valueForKeyPath:@"residenceHall"], [request valueForKeyPath:@"email"], [request valueForKeyPath:@"delivered"]];
+    cell.textLabel.text = [NSString stringWithFormat: @"Requester name: %@", [request valueForKeyPath:@"username"]];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"MMMM d, YYYY hh:mm a";
+    dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"CST"];
+    NSString *dateWithNewFormat = [dateFormatter stringFromDate:[request valueForKeyPath:@"createdAt"]];
+
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Package Size: %@\nRequested at: %@", [request valueForKeyPath:@"packageType"], dateWithNewFormat];
     return cell;
 }
 
@@ -469,41 +474,42 @@
 
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
-    [self logCoordinate:region.identifier];
-    NSLog(@"Welcome to %@", region.identifier);
-//    NSLog([self.requests[0] valueForKeyPath:@"username"]);
-    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-    if ([self.requests count]>0){
-        if (localNotif) {
-            NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[self.requests[0] valueForKeyPath:@"objectId"] forKey:[self.requests[0] valueForKeyPath:@"objectId"]];
-            localNotif.userInfo = dictionary;
-            NSLog(@"%@", [self.requests[0] valueForKeyPath:@"packageType"]);
-            if ([self.requests[0] valueForKeyPath:@"packageType"] == NULL)
-                localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"username"]];
-            else
-                localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ lbs) for me? --%@", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"packageType"], [self.requests[0] valueForKeyPath:@"username"]];
-            localNotif.alertAction = @"Testing notification based on regions";
-            localNotif.soundName = UILocalNotificationDefaultSoundName;
-            localNotif.applicationIconBadgeNumber = 1;
-            
-            PFQuery *query = [MyUser query];
-            [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
-                if (!error) {
-                    int notifCount = [object[@"notifNum"] intValue];
-                    NSLog(@"%d", notifCount);
-                    NSNumber *value = [NSNumber numberWithInt:notifCount+1];
-                    object[@"notifNum"] = value;
-                    [object saveInBackground];
-                } else {
-                    NSLog(@"ERROR!");
-                }
-            }];
-          
-            //        NSDictionary *infoDict = [NSDictionary dictionaryWithObject: @"Package number" forKey: @"Package Key"];
-            //        localNotif.userInfo = infoDict;
-            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-        }
-    }
+    //FIXME: this is for v1
+//    [self logCoordinate:region.identifier];
+//    NSLog(@"Welcome to %@", region.identifier);
+////    NSLog([self.requests[0] valueForKeyPath:@"username"]);
+//    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+//    if ([self.requests count]>0){
+//        if (localNotif) {
+//            NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[self.requests[0] valueForKeyPath:@"objectId"] forKey:[self.requests[0] valueForKeyPath:@"objectId"]];
+//            localNotif.userInfo = dictionary;
+//            NSLog(@"%@", [self.requests[0] valueForKeyPath:@"packageType"]);
+//            if ([self.requests[0] valueForKeyPath:@"packageType"] == NULL)
+//                localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"username"]];
+//            else
+//                localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ lbs) for me? --%@", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"packageType"], [self.requests[0] valueForKeyPath:@"username"]];
+//            localNotif.alertAction = @"Testing notification based on regions";
+//            localNotif.soundName = UILocalNotificationDefaultSoundName;
+//            localNotif.applicationIconBadgeNumber = 1;
+//            
+//            PFQuery *query = [MyUser query];
+//            [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
+//                if (!error) {
+//                    int notifCount = [object[@"notifNum"] intValue];
+//                    NSLog(@"%d", notifCount);
+//                    NSNumber *value = [NSNumber numberWithInt:notifCount+1];
+//                    object[@"notifNum"] = value;
+//                    [object saveInBackground];
+//                } else {
+//                    NSLog(@"ERROR!");
+//                }
+//            }];
+//          
+//            //        NSDictionary *infoDict = [NSDictionary dictionaryWithObject: @"Package number" forKey: @"Package Key"];
+//            //        localNotif.userInfo = infoDict;
+//            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+//        }
+//    }
     
 //    PFQuery *query = [PFQuery queryWithClassName:@"Message"];
 //    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {

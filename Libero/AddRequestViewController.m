@@ -170,6 +170,7 @@ numberOfRowsInComponent:(NSInteger)component
     req[@"deliverer"] = @"null";
     req[@"delivererId"] = @"null";
     req[@"delivered"] = @"waiting for pickup";
+    req[@"itemDescription"] = self.descriptionTextField.text;
     req[@"packageType"] = self.packageSize;
     
     [req saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {

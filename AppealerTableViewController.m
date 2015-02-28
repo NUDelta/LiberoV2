@@ -187,7 +187,12 @@
     else
         cell.textLabel.text = [NSString stringWithFormat:@"Helper name: %@", [request valueForKeyPath:@"deliverer"]];
 //    cell.textLabel.text = [NSString stringWithFormat:@"Tracking #: %@", [request valueForKeyPath:@"trackingNumber"]];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"Delivery status: %@\nTracking #: %@", [request valueForKeyPath:@"delivered"], [request valueForKeyPath:@"trackingNumber"]];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"MMMM d, YYYY hh:mm a";
+    dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"CST"];
+    NSString *dateWithNewFormat = [dateFormatter stringFromDate:[request valueForKeyPath:@"createdAt"]];
+    NSString *desc = [request valueForKeyPath:@"itemDescription"] ? [request valueForKeyPath:@"itemDescription"]: @"no description";
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Description: %@\nStatus: %@\nRequested at: %@", desc, [request valueForKeyPath:@"delivered"], dateWithNewFormat];
     return cell;
 }
 

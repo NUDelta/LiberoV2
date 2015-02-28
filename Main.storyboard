@@ -62,12 +62,12 @@
         <scene sceneID="VbE-e9-Alx">
             <objects>
                 <viewController id="Fzv-Ma-1km" customClass="AppealerTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="127" sectionHeaderHeight="22" sectionFooterHeight="22" id="yh7-va-BwY">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="157" sectionHeaderHeight="22" sectionFooterHeight="22" id="yh7-va-BwY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="Appealer Request Cell" textLabel="hDv-MA-Rhy" detailTextLabel="v4V-lB-Pjn" rowHeight="127" style="IBUITableViewCellStyleSubtitle" id="e8I-6a-z9o">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="Appealer Request Cell" textLabel="hDv-MA-Rhy" detailTextLabel="v4V-lB-Pjn" rowHeight="157" style="IBUITableViewCellStyleSubtitle" id="e8I-6a-z9o">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e8I-6a-z9o" id="11I-3n-8Cb">
@@ -79,9 +79,9 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Delivery status" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" preferredMaxLayoutWidth="101" id="v4V-lB-Pjn">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Delivery status" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" preferredMaxLayoutWidth="95" id="v4V-lB-Pjn">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -157,7 +157,7 @@
             </objects>
             <point key="canvasLocation" x="1642" y="1909"/>
         </scene>
-        <!--Friends' Requests-->
+        <!--Others' Requests-->
         <scene sceneID="3HH-w2-CDV">
             <objects>
                 <viewController id="ahd-Ri-dcv" customClass="HelperTableViewController" sceneMemberID="viewController">
@@ -193,7 +193,7 @@
                             </tableViewCell>
                         </prototypes>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Friends' Requests" id="yDI-gZ-s2z">
+                    <navigationItem key="navigationItem" title="Others' Requests" id="yDI-gZ-s2z">
                         <barButtonItem key="rightBarButtonItem" title="Logout" id="zJl-OZ-M9a">
                             <connections>
                                 <action selector="logOutButton:" destination="ahd-Ri-dcv" id="Ish-cp-tEA"/>
@@ -808,7 +808,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Br-PN-1Ha" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1561" y="480"/>
+            <point key="canvasLocation" x="1703" y="487"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0X6-Yy-Vjd">
