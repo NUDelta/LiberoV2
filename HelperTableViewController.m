@@ -7,6 +7,10 @@
 //
 
 #import "HelperTableViewController.h"
+#import "ESTBeaconManager.h"
+#import "ESTBeacon.h"
+#import <CoreMotion/CoreMotion.h>
+
 #import "PackageViewController.h"
 #import <Parse/Parse.h>
 #import "AppDelegate.h"
@@ -14,19 +18,21 @@
 #import "ImageViewController.h"
 #import "RWDropdownMenu.h"
 
-@interface HelperTableViewController () <CLLocationManagerDelegate, UIAlertViewDelegate>
+@interface HelperTableViewController () <CLLocationManagerDelegate, UIAlertViewDelegate, ESTBeaconManagerDelegate>
 @property (nonatomic, strong) NSArray *requests;
 @property (nonatomic, strong) NSString *packageType;
 @property (nonatomic, strong) NSString *username;
 
+@property (nonatomic, strong) ESTBeaconManager  *beaconManager;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLCircularRegion *region;
 @property (assign) BOOL notNotified;
 @property (assign) CLLocationCoordinate2D currentLoc;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (strong, nonatomic) NSIndexPath *myIndexPath;
 @property (nonatomic, strong) NSMutableArray *myHelpRequests;
+@property (assign) BOOL beaconNoti;
+@property (nonatomic, retain) CMMotionActivityManager *motionManager;
+@property (assign) float heading;
 
 
 @property (nonatomic, assign) RWDropdownMenuStyle menuStyle;
@@ -34,24 +40,26 @@
 
 @end
 
+#define degreesToRadians(x) (M_PI * x / 180.0)
+#define radiandsToDegrees(x) (x * 180.0 / M_PI)
+
 @implementation HelperTableViewController
 
-
-- (IBAction)indexChanged:(id)sender {
-    switch (self.segmentedControl.selectedSegmentIndex)
-    {
-        case 0:
-            [self HelperRequests];
-            [self.tableView reloadData];
-            break;
-        case 1:
-            [self MyHelpRequests];
-            [self appUsageLogging:@"myhelp"];
-            break;
-        default:
-            break;
-    }
-}
+//- (IBAction)indexChanged:(id)sender {
+//    switch (self.segmentedControl.selectedSegmentIndex)
+//    {
+//        case 0:
+//            [self HelperRequests];
+//            [self.tableView reloadData];
+//            break;
+//        case 1:
+//            [self MyHelpRequests];
+//            [self appUsageLogging:@"myhelp"];
+//            break;
+//        default:
+//            break;
+//    }
+//}
 
 - (void)MyHelpRequests
 {
@@ -112,20 +120,20 @@
 }
 
 
-- (void)testNotification
-{
-    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-    // request object Id
-//    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:objId forKey:objId];
-//    localNotif.userInfo = dictionary;
-
-    if (localNotif) {
-        localNotif.alertBody = @"Help your friend to delivery package!";
-        localNotif.alertAction = @"Testing notification based on regions";
-        localNotif.applicationIconBadgeNumber = 1;
-        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-    }
-}
+//- (void)testNotification
+//{
+//    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+//    // request object Id
+////    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:objId forKey:objId];
+////    localNotif.userInfo = dictionary;
+//
+//    if (localNotif) {
+//        localNotif.alertBody = @"Help your friend to delivery package!";
+//        localNotif.alertAction = @"Testing notification based on regions";
+//        localNotif.applicationIconBadgeNumber = 1;
+//        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+//    }
+//}
 
 
 - (IBAction)logOutButton:(UIBarButtonItem *)sender {
@@ -141,7 +149,6 @@
 - (void)setRequests:(NSArray *)requests
 {
     _requests = requests;
-    [self.spinner stopAnimating];
     [self.tableView reloadData];
 }
 
@@ -153,7 +160,6 @@
 - (void)HelperRequests
 {
     NSLog(@"Index : %d", [self.navigationController.viewControllers indexOfObject:self]);
-    [self.spinner startAnimating];
     PFQuery *query = [PFQuery queryWithClassName:@"Message"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         NSMutableArray *tmpRequest = [[NSMutableArray alloc] init];
@@ -161,7 +167,7 @@
         if(!error) {
             for(PFObject *object in objects){
 //FIXME: commented [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall] or testing purpose
-                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"]) {
+                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"delivering"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"]) {
                         NSLog(@"%@", object[@"residenceHall"]);
                         NSLog(@"another one %@", [MyUser currentUser].residenceHall);
                         [tmpRequest addObject: object];
@@ -191,6 +197,12 @@
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleBlackGradient;
       }],
+      [RWDropdownMenuItem itemWithText:@"Current Pickups" image:nil action:^{
+          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"currentPickupNav"];
+          myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+          [self presentViewController:myNav animated:YES completion:nil];
+          self.menuStyle = RWDropdownMenuStyleTranslucent;
+      }],
       [RWDropdownMenuItem itemWithText:@"My Requests" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"requestsNav"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -204,7 +216,7 @@
           self.menuStyle = RWDropdownMenuStyleTranslucent;
       }],
       [RWDropdownMenuItem itemWithText:@"New Request" image:nil action:^{
-          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"formNav"];
+          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"addRequestNav"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleTranslucent;
@@ -248,35 +260,33 @@
 //    [self.locationManager requestAlwaysAuthorization];
 //    [self.locationManager requestWhenInUseAuthorization];
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    
+    self.locationManager.distanceFilter = 50;
+
     [self.locationManager startUpdatingLocation];
     
-    CLLocationCoordinate2D center; //Ford
-    center.latitude = 42.056929;
-    center.longitude = -87.676519;
+    CLLocationCoordinate2D plex; //Foster Walker
+    plex.latitude = 42.053666;
+    plex.longitude = -87.677672;
+    CLCircularRegion *plexRegion = [[CLCircularRegion alloc] initWithCenter:plex radius:50 identifier:@"Plex"];
+    [self.locationManager startMonitoringForRegion:self.region];
     
-    CLLocationCoordinate2D plexLeft; //Kellogg
-    plexLeft.latitude = 42.053040;
-    plexLeft.longitude =  -87.679570;
-    
-    CLLocationCoordinate2D plexCenter; //Foster Walker
-    plexCenter.latitude = 42.053666;
-    plexCenter.longitude = -87.677672;
-    
-    CLCircularRegion *region2 = [[CLCircularRegion alloc] initWithCenter:plexLeft radius:50 identifier:@"Plex Left"];
-    CLCircularRegion *region3 = [[CLCircularRegion alloc] initWithCenter:plexCenter radius:50 identifier:@"Plex"];
-    
-//    [self.locationManager startMonitoringForRegion:self.region];
-    [self.locationManager startMonitoringForRegion:region2];
-    [self.locationManager startMonitoringForRegion:region3];
-
-
-//    [self.locationManager requestStateForRegion:self.region];
-    [self.locationManager requestStateForRegion:region2];
-    [self.locationManager requestStateForRegion:region3];
     NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
     [notifCenter addObserver:self selector:@selector(appDidEnterForeground) name:@"appDidEnterForeground" object:nil];
     [self appUsageLogging:@"appopen"];
+    
+    NSUUID *uuid = [[NSUUID alloc]initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
+    self.beaconManager = [[ESTBeaconManager alloc] init];
+    self.beaconManager.delegate = self;
+    
+    //    ESTBeaconRegion* region = [[ESTBeaconRegion alloc] initWithProximityUUID:uuid identifier:@"sample" secured:YES];
+    ESTBeaconRegion* region = [[ESTBeaconRegion alloc] initWithProximityUUID:uuid
+                                                                       major: 56412
+                                                                       minor: 31995
+                                                                  identifier: @"iBeaconRegion"];
+    [self.beaconManager requestWhenInUseAuthorization];
+    [self.beaconManager startMonitoringForRegion:region];
+    [self.beaconManager startRangingBeaconsInRegion:region];
+    self.motionManager = [[CMMotionActivityManager alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -406,6 +416,56 @@
 //    }
 //}
 
+#pragma mark - Location
+- (void)getHeadingForDirectionFromCoordinate:(CLLocationCoordinate2D)fromLoc toCoordinate:(CLLocationCoordinate2D)toLoc
+{
+    float fLat = degreesToRadians(fromLoc.latitude);
+    float fLng = degreesToRadians(fromLoc.longitude);
+    float tLat = degreesToRadians(toLoc.latitude);
+    float tLng = degreesToRadians(toLoc.longitude);
+    
+    float degree = radiandsToDegrees(atan2(sin(tLng-fLng)*cos(tLat), cos(fLat)*sin(tLat)-sin(fLat)*cos(tLat)*cos(tLng-fLng)));
+    
+    if (degree >= 0) {
+        self.heading = degree;
+        NSLog(@"degree is %f", degree);
+        if (self.heading >= 90.0) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"South" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
+            [alert show];
+            NSLog(@"South");
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"North" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
+            [alert show];
+            NSLog(@"North");
+            
+        }
+    } else {
+        self.heading = degree;
+        NSLog(@"degree is %f", degree);
+        if (self.heading <= -90.0) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"South" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
+            [alert show];
+            NSLog(@"South");
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"North" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
+            [alert show];
+            NSLog(@"North");
+            
+        }
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    CLLocation *locA = newLocation;
+    CLLocation *locB = oldLocation;
+    CLLocationCoordinate2D centerA;
+    CLLocationCoordinate2D centerB;
+    centerA.latitude = locA.coordinate.latitude;
+    centerB.latitude = locB.coordinate.latitude;
+    centerA.longitude = locA.coordinate.longitude;
+    centerB.longitude = locB.coordinate.longitude;
+    [self getHeadingForDirectionFromCoordinate:centerB toCoordinate:centerA];
+}
 
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
@@ -505,6 +565,37 @@
     }];
     
 //    NSLog(@"completed");
+}
+
+- (void)beaconManager:(ESTBeaconManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(ESTBeaconRegion *)region
+{
+    ESTBeacon *firstBeacon = [beacons firstObject];
+    //    NSLog(@"%f", [firstBeacon.distance floatValue]);
+    NSString *message = [NSString stringWithFormat:@"Hi %@! You are within %.02f meters to Delta lab, can you deliver an item from Delta lab to Frances Searle for me?", [MyUser currentUser].username, [firstBeacon.distance floatValue]];
+    //    [self updateDotPositionForDistance:[firstBeacon.distance integerValue]];
+    if (!self.beaconNoti && [firstBeacon.distance integerValue] < 3 && [firstBeacon.distance integerValue]!= -1 && [firstBeacon.distance integerValue]!= 0) {
+        [self triggerNotificationWithMessage: message];
+        NSLog(@"%@", message);
+        self.beaconNoti = YES;
+        [self appUsageLogging:[firstBeacon.distance stringValue]];
+    }
+}
+//
+- (void)beaconManager:(ESTBeaconManager *)manager didExitRegion:(ESTBeaconRegion *)region {
+    //    self.beaconNoti = NO;
+}
+
+- (void)beaconManager:(ESTBeaconManager *)manager rangingBeaconsDidFailForRegion:(ESTBeaconRegion *)region withError:(NSError *)error {
+    NSLog(error.description);
+}
+
+
+- (void)triggerNotificationWithMessage: (NSString *)message {
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    localNotification.alertBody = message;
+    localNotification.soundName = UILocalNotificationDefaultSoundName;
+    //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
+    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

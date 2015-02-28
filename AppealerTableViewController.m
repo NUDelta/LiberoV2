@@ -7,6 +7,7 @@
 //
 
 #import "AppealerTableViewController.h"
+#import "AddRequestViewController.h"
 #import "MyUser.h"
 #import <Parse/Parse.h>
 #import "DelivererViewController.h"
@@ -14,9 +15,9 @@
 #import "RWDropdownMenu.h"
 
 
-@interface AppealerTableViewController () <UIAlertViewDelegate>
+@interface AppealerTableViewController () <UIAlertViewDelegate, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
-@property (nonatomic, strong) NSArray *requests;
+@property (nonatomic, strong) NSMutableArray *requests;
 @property (nonatomic, strong) NSString *phoneNumber;
 @property (nonatomic, assign) RWDropdownMenuStyle menuStyle;
 @end
@@ -71,6 +72,12 @@
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleBlackGradient;
       }],
+      [RWDropdownMenuItem itemWithText:@"Current Pickups" image:nil action:^{
+          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"currentPickupNav"];
+          myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+          [self presentViewController:myNav animated:YES completion:nil];
+          self.menuStyle = RWDropdownMenuStyleTranslucent;
+      }],
       [RWDropdownMenuItem itemWithText:@"My Requests" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"requestsNav"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -84,7 +91,7 @@
           self.menuStyle = RWDropdownMenuStyleTranslucent;
       }],
       [RWDropdownMenuItem itemWithText:@"New Request" image:nil action:^{
-          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"formNav"];
+          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"addRequestNav"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleTranslucent;
@@ -108,6 +115,12 @@
     [titleButton sizeToFit];
     self.navigationItem.titleView = titleButton;
     
+    UINavigationItem *navItem = self.navigationItem;
+    navItem.title = @"My request";
+    UIBarButtonItem *bbi = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewItem)];
+    navItem.rightBarButtonItem = bbi;
+    navItem.leftBarButtonItem = self.editButtonItem;
+    
     NSLog([PFUser currentUser].username);
     [self startDownloadMyRequest];
     // Uncomment the following line to preserve selection between presentations.
@@ -124,6 +137,19 @@
     [self startDownloadMyRequest];
     [self.tableView reloadData];
     NSLog(@"table View reloaded");
+}
+
+- (void)addNewItem {
+    //    [self performSegueWithIdentifier:@"AddRequestModal" sender:self];
+    //    AddRequestViewController *arvc = [[AddRequestViewController alloc]init];
+    //    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:arvc];
+    //    arvc.modalPresentationStyle = UIModalPresentationCurrentContext;
+    //    [self presentViewController:nav animated:YES completion:NULL];
+    
+    UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"addRequestNav"];
+    myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:myNav animated:YES completion:nil];
+    self.menuStyle = RWDropdownMenuStyleTranslucent;
 }
 
 - (void)appUsageLogging: (NSString *)activity {
@@ -209,17 +235,24 @@
 }
 */
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+        NSLog(@"deleted");
+        PFQuery *query = [PFQuery queryWithClassName:@"Message"];
+        [query getObjectInBackgroundWithId:[self.requests[indexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
+            if(!error) {
+                object[@"cancelled"] = @"true";
+                NSLog(@"requets count: %d", [self.requests count]);
+                NSLog(@"%@", indexPath.description);
+                [self.requests removeObjectAtIndex: indexPath.row];
+                NSLog(@"requets count: %d", [self.requests count]);
+                [object saveInBackground];
+                [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            }
+        }];
+        
+    }
 }
-*/
 
 /*
 // Override to support rearranging the table view.

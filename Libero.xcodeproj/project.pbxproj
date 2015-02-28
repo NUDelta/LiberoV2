@@ -33,7 +33,10 @@
 		0643ED861A81A2A700F8C4F4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0643ED851A81A2A700F8C4F4 /* AudioToolbox.framework */; };
 		0643ED881A81A2AC00F8C4F4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0643ED871A81A2AC00F8C4F4 /* MapKit.framework */; };
 		0643ED8E1A81A4DE00F8C4F4 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0643ED8D1A81A4DE00F8C4F4 /* libsqlite3.dylib */; };
-		59ACE7DE1A8A215200CB5A85 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 59ACE7DD1A8A215200CB5A85 /* Icon.png */; };
+		5987C6071AA2318A00FC6BAD /* CurrentPickUpTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5987C6061AA2318A00FC6BAD /* CurrentPickUpTableViewController.m */; };
+		5987C60A1AA2368F00FC6BAD /* AddRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5987C6091AA2368F00FC6BAD /* AddRequestViewController.m */; };
+		5987C60C1AA2378F00FC6BAD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5987C60B1AA2378F00FC6BAD /* Icon.png */; };
+		5987C60F1AA23A7800FC6BAD /* MyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5987C60E1AA23A7800FC6BAD /* MyProfileViewController.m */; };
 		59DFACDD1A83FA11003F9D49 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59DFACDC1A83FA11003F9D49 /* ImageViewController.m */; };
 		E30D565FF23D05C6A29BA15C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67CB72F7D380FE0545A20437 /* libPods.a */; };
 		EDD3238D1A9E345400B8ED52 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDD3238C1A9E345400B8ED52 /* InitialViewController.m */; };
@@ -105,7 +108,13 @@
 		0643ED871A81A2AC00F8C4F4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0643ED8D1A81A4DE00F8C4F4 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		52BE63958BF81239F4D9B030 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		59ACE7DD1A8A215200CB5A85 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
+		5987C6051AA2318A00FC6BAD /* CurrentPickUpTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentPickUpTableViewController.h; sourceTree = "<group>"; };
+		5987C6061AA2318A00FC6BAD /* CurrentPickUpTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentPickUpTableViewController.m; sourceTree = "<group>"; };
+		5987C6081AA2368F00FC6BAD /* AddRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddRequestViewController.h; sourceTree = "<group>"; };
+		5987C6091AA2368F00FC6BAD /* AddRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddRequestViewController.m; sourceTree = "<group>"; };
+		5987C60B1AA2378F00FC6BAD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		5987C60D1AA23A7800FC6BAD /* MyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProfileViewController.h; sourceTree = "<group>"; };
+		5987C60E1AA23A7800FC6BAD /* MyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProfileViewController.m; sourceTree = "<group>"; };
 		59DFACDB1A83FA11003F9D49 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
 		59DFACDC1A83FA11003F9D49 /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
 		67CB72F7D380FE0545A20437 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -212,7 +221,7 @@
 		0643ED221A81A16100F8C4F4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				59ACE7DD1A8A215200CB5A85 /* Icon.png */,
+				5987C60B1AA2378F00FC6BAD /* Icon.png */,
 				0643ED311A81A16100F8C4F4 /* LaunchScreen.xib */,
 				0643ED2F1A81A16100F8C4F4 /* Images.xcassets */,
 				0643ED4C1A81A1ED00F8C4F4 /* AppDelegate.h */,
@@ -244,6 +253,8 @@
 			isa = PBXGroup;
 			children = (
 				0643ED6E1A81A22800F8C4F4 /* MyTabViewController.h */,
+				5987C6051AA2318A00FC6BAD /* CurrentPickUpTableViewController.h */,
+				5987C6061AA2318A00FC6BAD /* CurrentPickUpTableViewController.m */,
 				0643ED6F1A81A22800F8C4F4 /* MyTabViewController.m */,
 				0643ED6A1A81A22800F8C4F4 /* AppealerTableViewController.h */,
 				0643ED6B1A81A22800F8C4F4 /* AppealerTableViewController.m */,
@@ -285,6 +296,10 @@
 				0643ED5F1A81A21A00F8C4F4 /* DelivererViewController.m */,
 				0643ED621A81A21A00F8C4F4 /* PackageViewController.h */,
 				0643ED631A81A21A00F8C4F4 /* PackageViewController.m */,
+				5987C6081AA2368F00FC6BAD /* AddRequestViewController.h */,
+				5987C6091AA2368F00FC6BAD /* AddRequestViewController.m */,
+				5987C60D1AA23A7800FC6BAD /* MyProfileViewController.h */,
+				5987C60E1AA23A7800FC6BAD /* MyProfileViewController.m */,
 			);
 			name = DetailedVC;
 			sourceTree = "<group>";
@@ -408,11 +423,11 @@
 				TargetAttributes = {
 					0643ED1E1A81A16100F8C4F4 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = E2L5G3LYSL;
+						DevelopmentTeam = W4E2C6X642;
 					};
 					0643ED371A81A16100F8C4F4 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = E2L5G3LYSL;
+						DevelopmentTeam = W4E2C6X642;
 						TestTargetID = 0643ED1E1A81A16100F8C4F4;
 					};
 				};
@@ -441,10 +456,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5987C60C1AA2378F00FC6BAD /* Icon.png in Resources */,
 				EDFA7CD01A93E9D5000B6DD6 /* balloon_unread_left.png in Resources */,
 				EDFA7CCD1A93E9D5000B6DD6 /* balloon_read_right.png in Resources */,
 				EDFA7CCF1A93E9D5000B6DD6 /* balloon_selected_right.png in Resources */,
-				59ACE7DE1A8A215200CB5A85 /* Icon.png in Resources */,
 				EDFA7CCC1A93E9D5000B6DD6 /* balloon_read_left.png in Resources */,
 				0643ED4B1A81A1D000F8C4F4 /* Main.storyboard in Resources */,
 				0643ED331A81A16100F8C4F4 /* LaunchScreen.xib in Resources */,
@@ -506,6 +521,8 @@
 				EDD323941A9E5B0100B8ED52 /* SendViewController.m in Sources */,
 				EDFA7CDB1A940357000B6DD6 /* ChatDetailTableViewController.m in Sources */,
 				0643ED661A81A21A00F8C4F4 /* DelivererViewController.m in Sources */,
+				5987C6071AA2318A00FC6BAD /* CurrentPickUpTableViewController.m in Sources */,
+				5987C60A1AA2368F00FC6BAD /* AddRequestViewController.m in Sources */,
 				0643ED711A81A22800F8C4F4 /* HelperTableViewController.m in Sources */,
 				0643ED511A81A1F400F8C4F4 /* MyUser.m in Sources */,
 				EDFA7CC11A93ABCD000B6DD6 /* ChatTableViewController.m in Sources */,
@@ -521,6 +538,7 @@
 				0643ED681A81A21A00F8C4F4 /* PackageViewController.m in Sources */,
 				EDFA7CD21A93E9D5000B6DD6 /* PTSMessagingCell.m in Sources */,
 				0643ED701A81A22800F8C4F4 /* AppealerTableViewController.m in Sources */,
+				5987C60F1AA23A7800FC6BAD /* MyProfileViewController.m in Sources */,
 				0643ED4E1A81A1ED00F8C4F4 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -656,7 +674,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Northwestern University";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yongsung Kim (ALQWK44CCB)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
