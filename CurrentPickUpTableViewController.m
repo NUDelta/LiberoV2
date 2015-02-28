@@ -35,7 +35,7 @@
         NSMutableArray *tmpRequest = [[NSMutableArray alloc] init];
         if(!error) {
             for(PFObject *object in objects){
-                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && [object[@"deliverer"] isEqualToString:[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"waiting for pick up"]) {
+                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && [object[@"deliverer"] isEqualToString:[MyUser currentUser].username] && [object[@"delivered"] isEqualToString:@"delivering"]) {
                     NSLog(@"found %@",object[@"deliverer"]);
                     [tmpRequest addObject: object];
                 }
@@ -60,7 +60,7 @@
 {
     NSArray *styleItems =
     @[
-      [RWDropdownMenuItem itemWithText:@"Friend's Requests" image:nil action:^{
+      [RWDropdownMenuItem itemWithText:@"Other's Requests" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"friendR"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
           [self presentViewController:myNav animated:YES completion:nil];

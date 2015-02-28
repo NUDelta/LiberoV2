@@ -191,7 +191,7 @@
 {
     NSArray *styleItems =
     @[
-      [RWDropdownMenuItem itemWithText:@"Friend's Requests" image:nil action:^{
+      [RWDropdownMenuItem itemWithText:@"Other's Requests" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"friendR"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
           [self presentViewController:myNav animated:YES completion:nil];
@@ -231,7 +231,7 @@
     self.navigationController.navigationBarHidden=NO;
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [titleButton setTitle:@"Friend's Requests" forState:UIControlStateNormal];
+    [titleButton setTitle:@"Other's Requests" forState:UIControlStateNormal];
     [titleButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, -5)];
     [titleButton addTarget:self action:@selector(presentStyleMenu:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -324,7 +324,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *request = self.requests[indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Sharer Request Cell" forIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat: @"Requester name: %@", [request valueForKeyPath:@"username"]];
+    cell.textLabel.text = [NSString stringWithFormat: @"Requester: %@", [request valueForKeyPath:@"username"]];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"MMMM d, YYYY hh:mm a";
     dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"CST"];
@@ -336,9 +336,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Are you gonna pick this up?" message:@"If you click YES, email notification will be sent to the recipient." delegate:self cancelButtonTitle:@"NO" otherButtonTitles: nil];
-//    [alert addButtonWithTitle:@"YES"];
-//    [alert show];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Are you gonna pick this up?" message:@"If you click YES, email notification will be sent to the recipient." delegate:self cancelButtonTitle:@"NO" otherButtonTitles: nil];
+    [alert addButtonWithTitle:@"YES"];
+    [alert show];
     self.myIndexPath = indexPath;
     NSLog(@"index button clicked");
 
@@ -361,19 +361,18 @@
 //    [alert show];
 }
 
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-//{
-//    if(buttonIndex!= alertView.cancelButtonIndex){
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex!= alertView.cancelButtonIndex){
 //        [self performSegueWithIdentifier:@"Image View Segue" sender:self];
-//        NSLog(@"clicked okay");
-//        if (self.myIndexPath!=nil) {
-//            NSLog(@"calling method pickupemail");
-//            [self pickUpEmail:self.myIndexPath];
-//        }
-//    } else {
-//        self.myIndexPath = nil;
-//    }
-//}
+        NSLog(@"clicked okay");
+        if (self.myIndexPath!=nil) {
+            [self pickUpEmail:self.myIndexPath];
+        }
+    } else {
+        self.myIndexPath = nil;
+    }
+}
 
 /*
 // Override to support editing the table view.
@@ -544,33 +543,33 @@
 
 - (void)logCoordinate: (NSString *)regionName
 {
-    NSLog(regionName);
-    NSError *error;
-    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-        if (!error) {
-            NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
-            NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: nil];
-            
-            NSURL * url = [NSURL URLWithString:@"http://libero.parseapp.com/coord"];
-            NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-            NSString * params = [NSString stringWithFormat:@"region=%@&lat=%f&lon=%f&username=%@",regionName, geoPoint.latitude, geoPoint.longitude, [MyUser currentUser].username];
-            [urlRequest setHTTPMethod:@"POST"];
-            [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
-            
-            //    NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys: @"tester", @"name", nil];
-            //    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
-            //    [urlRequest setHTTPBody:postData];
-            
-            //    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
-            
-            NSURLSessionDataTask * dataTask = [defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                NSLog(error.description);
-            }];
-            [dataTask resume];
-        }
-    }];
-    
-//    NSLog(@"completed");
+//    NSLog(regionName);
+//    NSError *error;
+//    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+//        if (!error) {
+//            NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+//            NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: nil];
+//            
+//            NSURL * url = [NSURL URLWithString:@"http://libero.parseapp.com/coord"];
+//            NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
+//            NSString * params = [NSString stringWithFormat:@"region=%@&lat=%f&lon=%f&username=%@",regionName, geoPoint.latitude, geoPoint.longitude, [MyUser currentUser].username];
+//            [urlRequest setHTTPMethod:@"POST"];
+//            [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+//            
+//            //    NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys: @"tester", @"name", nil];
+//            //    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+//            //    [urlRequest setHTTPBody:postData];
+//            
+//            //    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+//            
+//            NSURLSessionDataTask * dataTask = [defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+//                NSLog(error.description);
+//            }];
+//            [dataTask resume];
+//        }
+//    }];
+//    
+////    NSLog(@"completed");
 }
 
 - (void)beaconManager:(ESTBeaconManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(ESTBeaconRegion *)region
@@ -605,58 +604,57 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSLog(@"========here here ======");
     // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-//    if([segue.identifier isEqualToString:@"Map View Test"]) {
-//        if([segue.destinationViewController isKindOfClass:[MapViewController class]]) {
-//            NSLog(@"================Segueing===============");
-//            MapViewController *mvc = [segue destinationViewController];
-//            mvc.request = self.requests[self.myIndexPath.row];
-//        }
-//    }
-    if ([sender isKindOfClass:[UITableViewCell class]]) {
-        self.myIndexPath = [self.tableView indexPathForCell:sender];
-        if([segue.identifier isEqualToString:@"Image View Segue"]) {
-            if([segue.destinationViewController isKindOfClass:[ImageViewController class]]) {
-                NSLog(@"================Segueing===============");
-                ImageViewController *ivc = [segue destinationViewController];
-                ivc.request = self.requests[self.myIndexPath.row];
-                NSLog([self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"]);
-            }
+//    if ([sender isKindOfClass:[UITableViewCell class]]) {
+    self.myIndexPath = [self.tableView indexPathForCell:sender];
+    if([segue.identifier isEqualToString:@"Image View Segue"]) {
+        if([segue.destinationViewController isKindOfClass:[ImageViewController class]]) {
+            NSLog(@"================Segueing===============");
+            ImageViewController *ivc = [segue destinationViewController];
+            ivc.request = self.requests[self.myIndexPath.row];
+            NSLog([self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"]);
         }
     }
+//    }
     
 }
 
-//- (void)pickUpEmail: (NSIndexPath *)indexPath
-//{
-//    NSLog(@"pickup email");
-//    NSError *error;
-//    NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
-//    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: nil];
-//    PFQuery *query = [PFQuery queryWithClassName:@"Message"];
-//    [query getObjectInBackgroundWithId:[self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
-//        object[@"deliverer"] = [PFUser currentUser].username;
-//        object[@"delivererId"] = [PFUser currentUser].objectId;
-//        object[@"delivered"] = @"delivering";
-//        [object saveInBackground];
-//    }];
-//    NSURL * url = [NSURL URLWithString:@"http://plex.parseapp.com/pickup_email"];
-//    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-//    NSString * params = [NSString stringWithFormat:@"name=%@&number=%@",[MyUser currentUser].username, [MyUser currentUser].additional];
-//    [urlRequest setHTTPMethod:@"POST"];
-//    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    //    NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys: @"tester", @"name", nil];
-//    //    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
-//    //    [urlRequest setHTTPBody:postData];
-//    
-//    //    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    NSURLSessionDataTask * dataTask = [defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//        NSLog(error.description);
-//    }];
-//    [dataTask resume];
-//    NSLog(@"completed");
-//}
+- (void)pickUpEmail: (NSIndexPath *)indexPath
+{
+    NSLog(@"pickup email");
+    NSError *error;
+    NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: nil];
+    PFQuery *query = [PFQuery queryWithClassName:@"Message"];
+    [query getObjectInBackgroundWithId:[self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
+        object[@"deliverer"] = [MyUser currentUser].username;
+        object[@"delivererId"] = [MyUser currentUser].objectId;
+        object[@"delivered"] = @"delivering";
+        [object saveInBackground];
+    }];
+    
+    NSURL * url = [NSURL URLWithString:@"http://libero.parseapp.com/pickup_email"];
+    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
+    NSString *reqName = [self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"];
+    NSString *name = [MyUser currentUser].username;
+    NSString *email = [MyUser currentUser].email;
+    NSLog(@"email=%@",email);
+    NSString * params = [NSString stringWithFormat:@"name=%@&email=%@&reqName=%@",name,email,reqName];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    //    NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys: @"tester", @"name", nil];
+    //    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+    //    [urlRequest setHTTPBody:postData];
+    
+    //    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSURLSessionDataTask * dataTask = [defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSLog(error.description);
+    }];
+    [dataTask resume];
+    NSLog(@"completed");
+    [self performSegueWithIdentifier:@"Image View Segue" sender:self];
+}
 @end

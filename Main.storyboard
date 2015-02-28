@@ -186,10 +186,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="1L9-V9-hKo" kind="push" id="QZx-UR-hXj"/>
-                                    <segue destination="1L9-V9-hKo" kind="push" trigger="accessoryAction" id="dvh-L8-oVd"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                     </tableView>
@@ -200,6 +196,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="ZyY-hA-Clv" kind="push" identifier="Image View Segue" id="7bY-bK-yha"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u8T-Ry-XDj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -242,62 +241,6 @@
                 <exit id="3bH-Ek-K6S" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="52" y="1599"/>
-        </scene>
-        <!--Tracking number-->
-        <scene sceneID="oXC-w4-bDJ">
-            <objects>
-                <viewController id="1L9-V9-hKo" customClass="ImageViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jLa-07-y7z"/>
-                        <viewControllerLayoutGuide type="bottom" id="H8V-iH-kBg"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="F5Y-o9-2kH">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" maximumZoomScale="10" translatesAutoresizingMaskIntoConstraints="NO" id="oSP-8Y-rFA">
-                                <rect key="frame" x="0.0" y="64" width="320" height="256"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hFA-Ew-CRs">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="286"/>
-                                    </imageView>
-                                </subviews>
-                                <connections>
-                                    <outlet property="delegate" destination="1L9-V9-hKo" id="sQf-2t-4Td"/>
-                                </connections>
-                            </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqV-Os-vlJ">
-                                <rect key="frame" x="0.0" y="328" width="322" height="60"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <state key="normal" title="  I am picking this up!">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="pickUpButton:" destination="1L9-V9-hKo" eventType="touchUpInside" id="B3a-59-zfq"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7xQ-sI-unH">
-                                <rect key="frame" x="2" y="385" width="320" height="56"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <state key="normal" title="I have dropped off!">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="dropOffButton:" destination="1L9-V9-hKo" eventType="touchUpInside" id="PZa-Jt-p0o"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Tracking number" id="Oso-tg-lsq"/>
-                    <connections>
-                        <outlet property="imageView" destination="hFA-Ew-CRs" id="gAR-Fq-afe"/>
-                        <outlet property="navItem" destination="Oso-tg-lsq" id="025-iR-iN7"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fjc-m4-ZcF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1703" y="1166"/>
         </scene>
         <!--Friends' requests-->
         <scene sceneID="oWx-H3-YMC">
@@ -983,6 +926,49 @@
             </objects>
             <point key="canvasLocation" x="1136" y="4810"/>
         </scene>
+        <!--Image View Controller-->
+        <scene sceneID="AdE-cW-Ims">
+            <objects>
+                <viewController storyboardIdentifier="ImageViewController" id="ZyY-hA-Clv" customClass="ImageViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SPm-to-12a"/>
+                        <viewControllerLayoutGuide type="bottom" id="7KM-IK-XHt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="b9o-dH-CkU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" maximumZoomScale="10" translatesAutoresizingMaskIntoConstraints="NO" id="SIi-IN-ZeQ">
+                                <rect key="frame" x="0.0" y="144" width="320" height="375"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="foW-YQ-AoT">
+                                        <rect key="frame" x="0.0" y="-4" width="320" height="395"/>
+                                    </imageView>
+                                </subviews>
+                                <connections>
+                                    <outlet property="delegate" destination="ZyY-hA-Clv" id="5Af-fj-IHu"/>
+                                </connections>
+                            </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Thanks!" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" preferredMaxLayoutWidth="288" translatesAutoresizingMaskIntoConstraints="NO" id="vQt-qF-kD4">
+                                <rect key="frame" x="16" y="78" width="288" height="53"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="eMh-6W-gLm"/>
+                    <connections>
+                        <outlet property="imageView" destination="foW-YQ-AoT" id="EqS-Qx-cFa"/>
+                        <outlet property="scrollView" destination="SIi-IN-ZeQ" id="LY4-yd-ToR"/>
+                        <outlet property="thankLabel" destination="vQt-qF-kD4" id="gEv-4o-CI6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Gf-tQ-U3J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1632" y="1172"/>
+        </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -990,7 +976,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="dvh-L8-oVd"/>
         <segue reference="xQq-lb-Vrf"/>
     </inferredMetricsTieBreakers>
 </document>

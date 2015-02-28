@@ -66,7 +66,7 @@
 {
     NSArray *styleItems =
     @[
-      [RWDropdownMenuItem itemWithText:@"Friend's Requests" image:nil action:^{
+      [RWDropdownMenuItem itemWithText:@"Other's Requests" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"friendR"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
           [self presentViewController:myNav animated:YES completion:nil];

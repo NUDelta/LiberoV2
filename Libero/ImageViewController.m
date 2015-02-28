@@ -11,9 +11,11 @@
 #import "MyUser.h"
 
 @interface ImageViewController () <UIScrollViewDelegate>
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (nonatomic,strong) UIImage *image;
 @property (strong, nonatomic) NSString *reqObjectId;
-@property (weak, nonatomic) IBOutlet UINavigationItem *navItem;
+@property (weak, nonatomic) IBOutlet UILabel *thankLabel;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @end
 
 @implementation ImageViewController
@@ -23,7 +25,7 @@
     [alert show];
 }
 - (IBAction)dropOffButton:(UIButton *)sender {
-//    [self dropOffEmail];
+    //    [self dropOffEmail];
     PFQuery *query = [PFQuery queryWithClassName:@"Message"];
     [query getObjectInBackgroundWithId:[self.request valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
         object[@"delivered"] = @"delivered";
@@ -31,7 +33,7 @@
     }];
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Libero" message:@"Thank you for delivering the package!" delegate:self cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
     [alert show];
-
+    
     [self appUsageLogging:@"dropoff"];
 }
 
@@ -53,40 +55,47 @@
             object[@"delivered"] = @"delivering";
             [object saveInBackground];
         }];
-
-//        [self performSegueWithIdentifier:@"Map View Segue" sender:self];
-//        [self pickUpEmail];
-//        PFQuery *userQuery = [MyUser query];
-//        if(self.reqObjectId!=nil){
-//            [userQuery whereKey:@"objectId" equalTo:self.reqObjectId];
-//            PFQuery *pushQuery = [PFInstallation query];
-//            [pushQuery whereKey:@"user" matchesQuery:userQuery];
-//            //            [pushQuery whereKey:@"user" equalTo:[object valueForKeyPath:@"objectId"]];
-//            PFPush *push = [[PFPush alloc]init];
-//            NSString *pushMsg = [[NSString alloc]initWithFormat:@"Hi %@, I just picked up your package!\n--%@", [self.request valueForKeyPath:@"username"], [MyUser currentUser].username];
-//            NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
-//                                  pushMsg, @"alert"
-//                                  @"cheering.caf", @"sound",
-//                                  nil];
-//            [push setQuery:pushQuery];
-//            [push setData:data];
-//            [push sendPushInBackground];
-//        }
+        
+        //        [self performSegueWithIdentifier:@"Map View Segue" sender:self];
+        //        [self pickUpEmail];
+        //        PFQuery *userQuery = [MyUser query];
+        //        if(self.reqObjectId!=nil){
+        //            [userQuery whereKey:@"objectId" equalTo:self.reqObjectId];
+        //            PFQuery *pushQuery = [PFInstallation query];
+        //            [pushQuery whereKey:@"user" matchesQuery:userQuery];
+        //            //            [pushQuery whereKey:@"user" equalTo:[object valueForKeyPath:@"objectId"]];
+        //            PFPush *push = [[PFPush alloc]init];
+        //            NSString *pushMsg = [[NSString alloc]initWithFormat:@"Hi %@, I just picked up your package!\n--%@", [self.request valueForKeyPath:@"username"], [MyUser currentUser].username];
+        //            NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+        //                                  pushMsg, @"alert"
+        //                                  @"cheering.caf", @"sound",
+        //                                  nil];
+        //            [push setQuery:pushQuery];
+        //            [push setData:data];
+        //            [push sendPushInBackground];
+        //        }
         [self appUsageLogging:@"pickup"];
     } else {
     }
 }
 
+- (void)setScrollView:(UIScrollView *)scrollView {
+    _scrollView = scrollView;
+    _scrollView.maximumZoomScale = 2.0;
+    _scrollView.delegate = self;
+    self.scrollView.contentSize = self.image? self.image.size: CGSizeZero;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    PFQuery *userQuery = [MyUser query];
-//    [userQuery whereKey:@"username" equalTo:[self.request valueForKeyPath:@"username"]];
-//    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-//        self.reqObjectId = [object valueForKeyPath:@"objectId"];
-//        NSLog(@"testing pick up user %@", self.reqObjectId);
-//    }];
-    self.navItem.title = [self.request valueForKeyPath:@"trackingNumber"];
+    //    PFQuery *userQuery = [MyUser query];
+    //    [userQuery whereKey:@"username" equalTo:[self.request valueForKeyPath:@"username"]];
+    //    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+    //        self.reqObjectId = [object valueForKeyPath:@"objectId"];
+    //        NSLog(@"testing pick up user %@", self.reqObjectId);
+    //    }];
     // Do any additional setup after loading the view.
+    self.thankLabel.text = [NSString stringWithFormat:@"Thanks for picking this up %@!", [MyUser currentUser].username];
     
     PFQuery *query = [PFQuery queryWithClassName:@"Message"];
     NSLog([self.request valueForKeyPath:@"objectId"]);
@@ -98,11 +107,10 @@
             PFFile *imageFile = object[@"image"];
             [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                 if(!error) {
-                    UIImage *image = [UIImage imageWithData: data];
-                    self.imageView.image = image;
-                    NSLog(@"image!");
+                    self.image = [UIImage imageWithData: data];
+                    self.imageView.image = self.image;
                     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-
+                    
                 }
             }];
         } else {
@@ -122,14 +130,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 - (void)dropOffEmail
 {
@@ -196,9 +204,9 @@
     NSURL * url = [NSURL URLWithString:@"http://libero.parseapp.com/pickup_email"];
     
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-//    NSString * params = [NSString stringWithFormat:@"name=%@&number=%@",[MyUser currentUser].username, [MyUser currentUser].additional];
+    //    NSString * params = [NSString stringWithFormat:@"name=%@&number=%@",[MyUser currentUser].username, [MyUser currentUser].additional];
     NSString * params = [NSString stringWithFormat:@"name=%@&number=%@&reqName=%@&email=%@",[MyUser currentUser].username, [MyUser currentUser].additional,[self.request valueForKeyPath:@"username"], [self.request valueForKeyPath:@"email"]];
-
+    
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     
@@ -213,7 +221,7 @@
         NSLog(error.description);
     }];
     [dataTask resume];
-
+    
     [self sendSMS:@"pickup"];
 }
 
