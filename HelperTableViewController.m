@@ -166,8 +166,7 @@
         
         if(!error) {
             for(PFObject *object in objects){
-//FIXME: commented [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall] or testing purpose
-                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"delivering"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"]) {
+                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"delivering"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
                         NSLog(@"%@", object[@"residenceHall"]);
                         NSLog(@"another one %@", [MyUser currentUser].residenceHall);
                         [tmpRequest addObject: object];
@@ -375,6 +374,7 @@
             [self pickUpEmail:self.myIndexPath];
         }
     } else {
+        [self.tableView deselectRowAtIndexPath:self.myIndexPath animated:YES];
         self.myIndexPath = nil;
     }
 }
@@ -630,13 +630,13 @@
     NSError *error;
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: nil];
-//    PFQuery *query = [PFQuery queryWithClassName:@"Message"];
-//    [query getObjectInBackgroundWithId:[self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
-//        object[@"deliverer"] = [MyUser currentUser].username;
-//        object[@"delivererId"] = [MyUser currentUser].objectId;
-//        object[@"delivered"] = @"delivering";
-//        [object saveInBackground];
-//    }];
+    PFQuery *query = [PFQuery queryWithClassName:@"Message"];
+    [query getObjectInBackgroundWithId:[self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
+        object[@"deliverer"] = [MyUser currentUser].username;
+        object[@"delivererId"] = [MyUser currentUser].objectId;
+        object[@"delivered"] = @"delivering";
+        [object saveInBackground];
+    }];
     
     NSURL * url = [NSURL URLWithString:@"http://libero.parseapp.com/pickup_email"];
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];

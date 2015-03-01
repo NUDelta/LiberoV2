@@ -190,7 +190,7 @@
     NSDictionary *request = self.requests[self.requests.count - 1 - indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Appealer Request Cell" forIndexPath:indexPath];
     if([(NSString *)[request valueForKeyPath:@"deliverer"] isEqualToString:@"null"])
-        cell.textLabel.text = @"No Helper";
+        cell.textLabel.text = @"Waiting for pickup";
     else
         cell.textLabel.text = [NSString stringWithFormat:@"Helper name: %@", [request valueForKeyPath:@"deliverer"]];
 //    cell.textLabel.text = [NSString stringWithFormat:@"Tracking #: %@", [request valueForKeyPath:@"trackingNumber"]];
