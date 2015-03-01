@@ -88,7 +88,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="7YF-mb-I8z" kind="push" identifier="Show Deliverer Info" id="PUK-wv-jvt"/>
+                                    <segue destination="qSV-y0-Vki" kind="push" identifier="chatV2" id="e96-fJ-Z6O"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -361,7 +361,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="agC-YS-KjJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1632" y="2632"/>
+            <point key="canvasLocation" x="1642" y="2632"/>
         </scene>
         <!--Chat Detail Table View Controller-->
         <scene sceneID="qlg-X6-Ra3">
@@ -722,7 +722,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="qSV-y0-Vki" kind="push" identifier="chat2" id="qDO-m3-qba"/>
+                                    <segue destination="qSV-y0-Vki" kind="push" identifier="chatV1" id="qDO-m3-qba"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -993,6 +993,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qDO-m3-qba"/>
+        <segue reference="e96-fJ-Z6O"/>
     </inferredMetricsTieBreakers>
 </document>

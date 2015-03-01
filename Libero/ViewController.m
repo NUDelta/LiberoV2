@@ -16,7 +16,7 @@
 
 @implementation ViewController
 @synthesize combNames;
-
+NSTimer *timer;
 /*-(void)awakeFromNib {
     
     _messages = [[NSMutableArray alloc] initWithObjects:
@@ -56,7 +56,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(dataReloaded) userInfo:nil repeats:YES];
+    timer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(dataReloaded) userInfo:nil repeats:YES];
    // NSLog(@"%@", [self parentViewController]);
     _messages = [[NSMutableArray alloc] init];
    // [self setCombNames:@"adminjiajun l"];
@@ -146,6 +146,13 @@
     
     ccell.messageLabel.text = [_messages objectAtIndex:indexPath.row];
     ccell.timeLabel.text = @"2012-08-29";
+}
+
+
+-(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [timer invalidate];
+    timer = nil;
 }
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {

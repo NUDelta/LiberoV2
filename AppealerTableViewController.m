@@ -13,6 +13,7 @@
 #import "DelivererViewController.h"
 #import "AppDelegate.h"
 #import "RWDropdownMenu.h"
+#import "ChatWallViewController.h"
 
 
 @interface AppealerTableViewController () <UIAlertViewDelegate, UITableViewDelegate>
@@ -84,20 +85,14 @@
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleTranslucent;
       }],
-      [RWDropdownMenuItem itemWithText:@"Chat Sessions" image:nil action:^{
-          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"chatNav"];
+      [RWDropdownMenuItem itemWithText:@"New Request" image:nil action:^{
+          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"addRequestNav"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleTranslucent;
       }],
       [RWDropdownMenuItem itemWithText:@"Profile" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"profileNav"];
-          myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-          [self presentViewController:myNav animated:YES completion:nil];
-          self.menuStyle = RWDropdownMenuStyleTranslucent;
-      }],
-      [RWDropdownMenuItem itemWithText:@"New Request" image:nil action:^{
-          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"addRequestNav"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleTranslucent;
@@ -287,6 +282,28 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+    NSDictionary *request = self.requests[indexPath.row];
+    
+    if([sender isKindOfClass:[UITableViewCell class]]) {
+        
+        if([segue.identifier isEqualToString:@"chatV2"]) {
+            if([segue.destinationViewController isKindOfClass:[ChatWallViewController class]]) {
+                ChatWallViewController *cvc = [segue destinationViewController];
+                NSLog(@"%@", [request valueForKeyPath:@"deliverer"]);
+                cvc.other = [NSString stringWithFormat:@"%@", [request valueForKeyPath:@"deliverer"]];
+                cvc.detailChat = NO;
+                //cvc.objId = [request valueForKey:@"objectId"];
+                NSLog(@"segueing");
+            }
+        }
+    }
+}
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+/*- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
     if([sender isKindOfClass:[UITableViewCell class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         if([segue.identifier isEqualToString:@"Show Deliverer Info"]) {
@@ -297,6 +314,6 @@
             }
         }
     }
-}
+}*/
 
 @end

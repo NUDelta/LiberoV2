@@ -14,7 +14,6 @@
 @interface ChatDetailTableViewController ()
 @property (nonatomic, strong) NSMutableArray *convo;
 @end
-
 @implementation ChatDetailTableViewController
 @synthesize combNames;
 

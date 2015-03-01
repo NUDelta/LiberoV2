@@ -14,6 +14,7 @@
 
 @end
 NSString * tmpNames;
+
 @implementation ChatWallViewController
 @synthesize other;
 @synthesize detailChat;
