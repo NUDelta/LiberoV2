@@ -251,7 +251,7 @@
                 object[@"cancelled"] = @"true";
                 NSLog(@"requets count: %d", [self.requests count]);
                 NSLog(@"%@", indexPath.description);
-                [self.requests removeObjectAtIndex: indexPath.row];
+                [self.requests removeObjectAtIndex: self.requests.count - 1 - indexPath.row];
                 NSLog(@"requets count: %d", [self.requests count]);
                 [object saveInBackground];
                 [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -284,7 +284,9 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-    NSDictionary *request = self.requests[indexPath.row];
+    NSDictionary *request = self.requests[self.requests.count -1 - indexPath.row];
+    
+    NSLog(@"======================deliverer %@", [request valueForKeyPath:@"deliverer"]);
     if([(NSString *)[request valueForKeyPath:@"deliverer"] isEqualToString:@"null"]) {
         
         if([segue.identifier isEqualToString:@"chatV2"]) {
