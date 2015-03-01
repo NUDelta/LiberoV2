@@ -435,11 +435,11 @@
         NSLog(@"degree is %f", degree);
         if (self.heading >= 90.0) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"South" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
-            [alert show];
+//            [alert show];
             NSLog(@"South");
         } else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"North" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
-            [alert show];
+//            [alert show];
             NSLog(@"North");
             
         }
@@ -448,11 +448,11 @@
         NSLog(@"degree is %f", degree);
         if (self.heading <= -90.0) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"South" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
-            [alert show];
+//            [alert show];
             NSLog(@"South");
         } else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"North" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
-            [alert show];
+//            [alert show];
             NSLog(@"North");
             
         }
@@ -617,7 +617,6 @@
         }
     }
 //    }
-    
 }
 
 - (void)pickUpEmail: (NSIndexPath *)indexPath
@@ -626,13 +625,13 @@
     NSError *error;
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: nil];
-    PFQuery *query = [PFQuery queryWithClassName:@"Message"];
-    [query getObjectInBackgroundWithId:[self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
-        object[@"deliverer"] = [MyUser currentUser].username;
-        object[@"delivererId"] = [MyUser currentUser].objectId;
-        object[@"delivered"] = @"delivering";
-        [object saveInBackground];
-    }];
+//    PFQuery *query = [PFQuery queryWithClassName:@"Message"];
+//    [query getObjectInBackgroundWithId:[self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
+//        object[@"deliverer"] = [MyUser currentUser].username;
+//        object[@"delivererId"] = [MyUser currentUser].objectId;
+//        object[@"delivered"] = @"delivering";
+//        [object saveInBackground];
+//    }];
     
     NSURL * url = [NSURL URLWithString:@"http://libero.parseapp.com/pickup_email"];
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
