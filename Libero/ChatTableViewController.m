@@ -98,16 +98,29 @@
 - (void)startDownloadChatUsers
 {
     NSMutableArray *tmpUsers = [[NSMutableArray alloc]init];
-    PFQuery *query = [PFQuery queryWithClassName:@"Message"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"delivered != %@ && (deliverer == %@ || username == %@)", @"delivered", [PFUser currentUser].username, [PFUser currentUser].username];
+    PFQuery *query = [PFQuery queryWithClassName:@"Message" predicate:predicate];
+    
     NSMutableDictionary *tmpDict = [[NSMutableDictionary alloc] init];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(!error) {
+           // NSLog(@"objects - %@", objects);
             for (PFObject *object in objects) {
-                if ([tmpDict objectForKey:(NSString *)object[@"username"]] == nil) {
+                NSString *name;
+                if ([(NSString *)object[@"username"] isEqualToString:[PFUser currentUser].username]) {
+                    name = (NSString *)object[@"deliverer"];
+                } else {
+                    
+                    name = (NSString *)object[@"username"];
+                }
+                NSLog(@"%@", object);
+                NSLog([PFUser currentUser].username);
+                NSLog(name);
+                if ([tmpDict objectForKey:name] == nil) {
                     //if user isn't already there
-                    //NSLog((NSString *)object[@"username"]);
+                    NSLog(@"%@", name);
                     [tmpUsers addObject: object];
-                    [tmpDict setObject:[NSNumber numberWithBool:YES] forKey:(NSString *)object[@"username"]];
+                    [tmpDict setObject:[NSNumber numberWithBool:YES] forKey:name];
                     
                 }
                 
@@ -152,9 +165,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *users = self.chatUsers[indexPath.row];
     NSLog(@"%@", users);
+    NSString *name;
+    if ([[users valueForKeyPath:@"username"] isEqualToString:[PFUser currentUser].username]) {
+        name = [users valueForKeyPath:@"deliverer"];
+    } else {
+        
+        name = [users valueForKeyPath:@"username"];
+    }
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chatUsersCell" forIndexPath:indexPath];
-    NSLog([NSString stringWithFormat:@"%@", [users valueForKeyPath:@"username"]]);
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", [users valueForKeyPath:@"username"]];
+    //NSLog([NSString stringWithFormat:@"%@", [users valueForKeyPath:@"username"]]);
+    cell.textLabel.text = [NSString stringWithFormat:name];
     
     return cell;
 
@@ -180,12 +200,19 @@
     // Pass the selected object to the new view controller.
      NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
     NSDictionary *users = self.chatUsers[indexPath.row];
+    NSString *name;
+    if ([[users valueForKeyPath:@"username"] isEqualToString:[PFUser currentUser].username]) {
+        name = [users valueForKeyPath:@"deliverer"];
+    } else {
+        
+        name = [users valueForKeyPath:@"username"];
+    }
     if([sender isKindOfClass:[UITableViewCell class]]) {
        
         if([segue.identifier isEqualToString:@"chat1"]) {
             if([segue.destinationViewController isKindOfClass:[ChatWallViewController class]]) {
                 ChatWallViewController *cvc = [segue destinationViewController];
-                cvc.other = [NSString stringWithFormat:@"%@", [users valueForKeyPath:@"username"]];
+                cvc.other = [NSString stringWithFormat:name];
                 NSLog(@"segueing");
             }
         }
