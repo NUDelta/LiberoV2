@@ -7,7 +7,7 @@
 //
 
 #import "CurrentPickUpTableViewController.h"
-
+#import "ChatWallViewController.h"
 #import <Parse/Parse.h>
 #import "MyUser.h"
 #import "RWDropdownMenu.h"
@@ -195,15 +195,29 @@
     //    [alert show];
 }
 
-/*
+
  #pragma mark - Navigation
  
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+    NSDictionary *request = self.requests[indexPath.row];
+    
+    if([sender isKindOfClass:[UITableViewCell class]]) {
+        
+        if([segue.identifier isEqualToString:@"chat2"]) {
+            if([segue.destinationViewController isKindOfClass:[ChatWallViewController class]]) {
+                ChatWallViewController *cvc = [segue destinationViewController];
+                NSLog(@"%@", [request valueForKeyPath:@"username"]);
+                cvc.other = [NSString stringWithFormat:@"%@", [request valueForKeyPath:@"username"]];
+                NSLog(@"segueing");
+            }
+        }
+    }
+}
+
 
 @end
 
