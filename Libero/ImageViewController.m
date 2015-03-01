@@ -98,12 +98,12 @@
     self.thankLabel.text = [NSString stringWithFormat:@"Thanks for picking this up %@!", [MyUser currentUser].username];
     
     PFQuery *query = [PFQuery queryWithClassName:@"Message"];
-    NSLog([self.request valueForKeyPath:@"objectId"]);
+    NSLog(@"here is request object id: %@", [self.request valueForKeyPath:@"objectId"]);
     [query getObjectInBackgroundWithId:[self.request valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
         if(!error) {
             NSLog(@"-------testing--------");
-            NSLog([object valueForKeyPath:@"username"]);
-            NSLog([object valueForKeyPath:@"objectId"]);
+            NSLog(@"username here: %@", [object valueForKeyPath:@"username"]);
+            NSLog(@"here is object id: %@", [object valueForKeyPath:@"objectId"]);
             PFFile *imageFile = object[@"image"];
             [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                 if(!error) {

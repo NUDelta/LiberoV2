@@ -187,7 +187,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *request = self.requests[indexPath.row];
+    NSDictionary *request = self.requests[self.requests.count - 1 - indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Appealer Request Cell" forIndexPath:indexPath];
     if([(NSString *)[request valueForKeyPath:@"deliverer"] isEqualToString:@"null"])
         cell.textLabel.text = @"No Helper";
@@ -251,7 +251,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSLog(@"deleted");
         PFQuery *query = [PFQuery queryWithClassName:@"Message"];
-        [query getObjectInBackgroundWithId:[self.requests[indexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
+        [query getObjectInBackgroundWithId:[self.requests[self.requests.count - 1 - indexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
             if(!error) {
                 object[@"cancelled"] = @"true";
                 NSLog(@"requets count: %d", [self.requests count]);
@@ -292,7 +292,7 @@
         if([segue.identifier isEqualToString:@"Show Deliverer Info"]) {
             if([segue.destinationViewController isKindOfClass:[DelivererViewController class]]) {
                 DelivererViewController *dvc = [segue destinationViewController];
-                dvc.request = self.requests[indexPath.row];
+                dvc.request = self.requests[self.requests.count - 1 - indexPath.row];
                 NSLog(@"segueing");
             }
         }

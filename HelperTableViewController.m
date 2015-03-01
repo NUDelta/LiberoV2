@@ -342,12 +342,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.myIndexPath = indexPath;
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Are you gonna pick this up?" message:@"If you click YES, email notification will be sent to the recipient." delegate:self cancelButtonTitle:@"NO" otherButtonTitles: nil];
     [alert addButtonWithTitle:@"YES"];
     [alert show];
-    self.myIndexPath = indexPath;
     NSLog(@"index button clicked");
-
 }
 
 /*
@@ -613,13 +612,13 @@
     NSLog(@"========here here ======");
     // Get the new view controller using [segue destinationViewController].
 //    if ([sender isKindOfClass:[UITableViewCell class]]) {
-    self.myIndexPath = [self.tableView indexPathForCell:sender];
+//    self.myIndexPath = [self.tableView indexPathForCell:sender];
     if([segue.identifier isEqualToString:@"Image View Segue"]) {
         if([segue.destinationViewController isKindOfClass:[ImageViewController class]]) {
             NSLog(@"================Segueing===============");
             ImageViewController *ivc = [segue destinationViewController];
             ivc.request = self.requests[self.myIndexPath.row];
-            NSLog([self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"]);
+            NSLog(@"here is object ID: %@",[self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"]);
         }
     }
 //    }
@@ -631,13 +630,13 @@
     NSError *error;
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: nil];
-    PFQuery *query = [PFQuery queryWithClassName:@"Message"];
-    [query getObjectInBackgroundWithId:[self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
-        object[@"deliverer"] = [MyUser currentUser].username;
-        object[@"delivererId"] = [MyUser currentUser].objectId;
-        object[@"delivered"] = @"delivering";
-        [object saveInBackground];
-    }];
+//    PFQuery *query = [PFQuery queryWithClassName:@"Message"];
+//    [query getObjectInBackgroundWithId:[self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
+//        object[@"deliverer"] = [MyUser currentUser].username;
+//        object[@"delivererId"] = [MyUser currentUser].objectId;
+//        object[@"delivered"] = @"delivering";
+//        [object saveInBackground];
+//    }];
     
     NSURL * url = [NSURL URLWithString:@"http://libero.parseapp.com/pickup_email"];
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
