@@ -56,7 +56,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [NSTimer scheduledTimerWithTimeInterval:120 target:self selector:@selector(dataReloaded) userInfo:nil repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(dataReloaded) userInfo:nil repeats:YES];
    // NSLog(@"%@", [self parentViewController]);
     _messages = [[NSMutableArray alloc] init];
    // [self setCombNames:@"adminjiajun l"];
