@@ -610,12 +610,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Re-enter password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v6y-jv-qHY">
-                                <rect key="frame" x="20" y="243" width="279" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HNm-np-UgN">
-                                <rect key="frame" x="21" y="187" width="279" height="30"/>
+                                <rect key="frame" x="20" y="275" width="279" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
@@ -630,7 +625,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lax-rh-IbQ">
-                                <rect key="frame" x="20" y="301" width="279" height="44"/>
+                                <rect key="frame" x="20" y="328" width="279" height="44"/>
                                 <state key="normal" title="Register">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -639,7 +634,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="580-lG-wjX">
-                                <rect key="frame" x="30" y="380" width="257" height="39"/>
+                                <rect key="frame" x="31" y="393" width="257" height="39"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -647,6 +642,16 @@
                                     <action selector="cancelButton:" destination="2O3-H4-tH8" eventType="touchUpInside" id="LDH-dF-tTB"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Residence Hall" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gNZ-B0-Tnk">
+                                <rect key="frame" x="20" y="181" width="279" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HNm-np-UgN">
+                                <rect key="frame" x="21" y="230" width="279" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -661,6 +666,7 @@
                         <outlet property="passwordField" destination="HNm-np-UgN" id="E5z-ni-LYB"/>
                         <outlet property="reEnterPasswordField" destination="v6y-jv-qHY" id="vdK-0e-YtC"/>
                         <outlet property="registerAction" destination="lax-rh-IbQ" id="90G-Sx-ejb"/>
+                        <outlet property="residenceHallField" destination="gNZ-B0-Tnk" id="wMh-k6-4pd"/>
                         <outlet property="usernameField" destination="Go8-WY-LBD" id="BpF-aD-1c2"/>
                     </connections>
                 </viewController>
