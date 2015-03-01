@@ -105,7 +105,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     UINavigationItem *nav = self.navigationItem;
-    nav.title = @"Current Pick ups";
+    nav.title = @"Current Pickups";
     
     self.navigationController.navigationBarHidden=NO;
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
