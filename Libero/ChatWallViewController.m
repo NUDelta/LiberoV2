@@ -22,17 +22,25 @@ NSString * tmpNames;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"%@", self.childViewControllers);
-    NSLog(@"sender - %@ / receiver - %@", [PFUser currentUser].username, other);
-   /* if (self.detailChat == nil) {
-        self.detailChat = NO;
-    }*/
-    if (self.detailChat) {
-        self.deliveredBttn.hidden = false;
+    
+    if ([self.other isEqualToString:@"notdelivered"]){
+        UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"requestsNav"];
+        myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        [self presentViewController:myNav animated:YES completion:nil];
     } else {
-        self.deliveredBttn.hidden = true;
+        NSLog(@"%@", self.childViewControllers);
+        NSLog(@"sender - %@ / receiver - %@", [PFUser currentUser].username, other);
+        /* if (self.detailChat == nil) {
+         self.detailChat = NO;
+         }*/
+        if (self.detailChat) {
+            self.deliveredBttn.hidden = false;
+        } else {
+            self.deliveredBttn.hidden = true;
+        }
+        // Do any additional setup after loading the view.
     }
-    // Do any additional setup after loading the view.
+   
 }
 
 - (void)didReceiveMemoryWarning {

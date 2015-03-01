@@ -276,6 +276,7 @@
 */
 
 
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -284,20 +285,42 @@
     // Pass the selected object to the new view controller.
     NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
     NSDictionary *request = self.requests[indexPath.row];
-    
-    if([sender isKindOfClass:[UITableViewCell class]]) {
+    if([(NSString *)[request valueForKeyPath:@"deliverer"] isEqualToString:@"null"]) {
         
         if([segue.identifier isEqualToString:@"chatV2"]) {
             if([segue.destinationViewController isKindOfClass:[ChatWallViewController class]]) {
                 ChatWallViewController *cvc = [segue destinationViewController];
                 NSLog(@"%@", [request valueForKeyPath:@"deliverer"]);
-                cvc.other = [NSString stringWithFormat:@"%@", [request valueForKeyPath:@"deliverer"]];
+                cvc.other = @"notdelivered";
                 cvc.detailChat = NO;
                 //cvc.objId = [request valueForKey:@"objectId"];
                 NSLog(@"segueing");
             }
         }
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Waiting for pickup"
+                                                message: @"We're sorry, your package hasn't been picked up yet!"
+                                                delegate: self
+                                                cancelButtonTitle: @"OK"
+                                                otherButtonTitles: nil,nil];
+        [alert show];
+
+        
+    } else if([sender isKindOfClass:[UITableViewCell class]]) {
+            
+            if([segue.identifier isEqualToString:@"chatV2"]) {
+                if([segue.destinationViewController isKindOfClass:[ChatWallViewController class]]) {
+                    ChatWallViewController *cvc = [segue destinationViewController];
+                    NSLog(@"%@", [request valueForKeyPath:@"deliverer"]);
+                    cvc.other = [NSString stringWithFormat:@"%@", [request valueForKeyPath:@"deliverer"]];
+                    cvc.detailChat = NO;
+                    //cvc.objId = [request valueForKey:@"objectId"];
+                    NSLog(@"segueing");
+                }
+            }
     }
+    
+    
 }
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
