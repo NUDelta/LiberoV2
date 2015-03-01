@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
+		<key>Pods-EstimoteSDK.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 		<key>Pods-Parse.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -37,12 +42,37 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>5992CD5B26AA4C17E93735F4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5C043CCF76326AAB8BB2DBA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>647815FB550715A9E53D4504</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7F544A7535C8D482642ACEC5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>99129E1A3CDDAF4E41011B20</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>B65AC2E20669F66605820B6F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D366D1DC957BD2F74F6A913E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -75,6 +75,7 @@
     PFQuery *query = [PFQuery queryWithClassName:@"ChatMessages"];
       
     [query whereKey:@"combinedNames" hasPrefix:self.combNames];
+    [query orderByAscending:@"createdAt"];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(!error) {
