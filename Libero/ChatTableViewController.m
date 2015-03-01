@@ -213,6 +213,7 @@
             if([segue.destinationViewController isKindOfClass:[ChatWallViewController class]]) {
                 ChatWallViewController *cvc = [segue destinationViewController];
                 cvc.other = [NSString stringWithFormat:name];
+                cvc.detailChat = NO;
                 NSLog(@"segueing");
             }
         }

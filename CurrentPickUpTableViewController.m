@@ -212,6 +212,8 @@
                 ChatWallViewController *cvc = [segue destinationViewController];
                 NSLog(@"%@", [request valueForKeyPath:@"username"]);
                 cvc.other = [NSString stringWithFormat:@"%@", [request valueForKeyPath:@"username"]];
+                cvc.detailChat = YES;
+                cvc.objId = [request valueForKey:@"objectId"];
                 NSLog(@"segueing");
             }
         }

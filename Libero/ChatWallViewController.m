@@ -10,17 +10,27 @@
 #import "ChatDetailTableViewController.h"
 #import "MyUser.h"
 #import "ViewController.h"
-@interface ChatWallViewController ()
+@interface ChatWallViewController () <UIAlertViewDelegate>
 
 @end
 NSString * tmpNames;
 @implementation ChatWallViewController
 @synthesize other;
+@synthesize detailChat;
+@synthesize objId;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSLog(@"%@", self.childViewControllers);
     NSLog(@"sender - %@ / receiver - %@", [PFUser currentUser].username, other);
+   /* if (self.detailChat == nil) {
+        self.detailChat = NO;
+    }*/
+    if (self.detailChat) {
+        self.deliveredBttn.hidden = false;
+    } else {
+        self.deliveredBttn.hidden = true;
+    }
     // Do any additional setup after loading the view.
 }
 
@@ -72,9 +82,31 @@ NSString * tmpNames;
     self.messageInput.text = @"";
     [vc dataReloaded];
     
+}
+
+- (void)alertView:(UIAlertView *)alertView
+clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == [alertView cancelButtonIndex]){
+        //cancel clicked ...do your action
+    }else{
+        //yes clicked
+        PFObject *point = [PFObject objectWithoutDataWithClassName:@"Message" objectId:self.objId];
+        [point setObject:@"delivered" forKey:@"delivered"];
+        [point save];
+        UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"currentPickupNav"];
+        myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        [self presentViewController:myNav animated:YES completion:nil];
+    }
+}
+
+- (IBAction)deliveredPressed:(id)sender {
     
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delivered?"
+                                                    message:@"Do you confirm this package has been delivered?"
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Yes", nil];
     
-    
-    
+    [alert show];
 }
 @end
