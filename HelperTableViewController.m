@@ -620,24 +620,41 @@
 
 - (void)pickUpEmail: (NSIndexPath *)indexPath
 {
+    PFQuery *userQuery = [MyUser query];
+    NSLog(@"testing: %@",[self.requests[self.myIndexPath.row] valueForKeyPath:@"username"]);
+    [userQuery whereKey:@"username" equalTo:[self.requests[self.myIndexPath.row] valueForKeyPath:@"username"]];
+    PFQuery *pushQuery = [PFInstallation query];
+    [pushQuery whereKey:@"user" matchesQuery:userQuery];
+    //            [pushQuery whereKey:@"user" equalTo:[object valueForKeyPath:@"objectId"]];
+    PFPush *push = [[PFPush alloc]init];
+    NSLog(@"here!");
+    NSString *pushMsg = [[NSString alloc]initWithFormat:@"Hi %@, I just picked up your package!\n--%@", [self.requests[self.myIndexPath.row] valueForKeyPath:@"username"], [MyUser currentUser].username];
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound", nil];
+    [push setQuery:pushQuery];
+    [push setData:data];
+    [push sendPushInBackground];
+    
+
     NSLog(@"pickup email");
     NSError *error;
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: nil];
-    PFQuery *query = [PFQuery queryWithClassName:@"Message"];
-    [query getObjectInBackgroundWithId:[self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
-        object[@"deliverer"] = [MyUser currentUser].username;
-        object[@"delivererId"] = [MyUser currentUser].objectId;
-        object[@"delivered"] = @"delivering";
-        [object saveInBackground];
-    }];
+//    PFQuery *query = [PFQuery queryWithClassName:@"Message"];
+//    [query getObjectInBackgroundWithId:[self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
+//        object[@"deliverer"] = [MyUser currentUser].username;
+//        object[@"delivererId"] = [MyUser currentUser].objectId;
+//        object[@"delivered"] = @"delivering";
+//        [object saveInBackground];
+//    }];
     
     NSURL * url = [NSURL URLWithString:@"http://libero.parseapp.com/pickup_email"];
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-    NSString *reqName = [self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"];
+    NSString *reqName = [self.requests[self.myIndexPath.row] valueForKeyPath:@"username"];
     NSString *name = [MyUser currentUser].username;
-    NSString *email = [MyUser currentUser].email;
+    NSString *email = [self.requests[self.myIndexPath.row] valueForKeyPath:@"email"];
     NSLog(@"email=%@",email);
+    NSLog(@"name=%@",name);
+    NSLog(@"requester name=%@", reqName);
     NSString * params = [NSString stringWithFormat:@"name=%@&email=%@&reqName=%@",name,email,reqName];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
@@ -653,6 +670,13 @@
     }];
     [dataTask resume];
     NSLog(@"completed");
+//    PFQuery *userQuery = [MyUser query];
+//    [userQuery whereKey:@"username" equalTo:[self.request valueForKeyPath:@"username"]];
+//    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+//        self.reqObjectId = [object valueForKeyPath:@"objectId"];
+//        NSLog(@"testing pick up user %@", self.reqObjectId);
+//    }];
+
     [self performSegueWithIdentifier:@"Image View Segue" sender:self];
 }
 @end
