@@ -318,6 +318,7 @@
                     cvc.detailChat = NO;
                     //cvc.objId = [request valueForKey:@"objectId"];
                     NSLog(@"segueing");
+                    [self appUsageLogging:[NSString stringWithFormat:@"requester chat with %@ for %@", cvc.other, [request valueForKeyPath:@"objectId"]]];
                 }
             }
     }

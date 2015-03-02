@@ -14,8 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *email;
 @property (weak, nonatomic) IBOutlet UILabel *residenceHall;
-@property (weak, nonatomic) IBOutlet UILabel *points;
-@property (weak, nonatomic) IBOutlet UILabel *phoneNumber;
 @property (nonatomic, assign) RWDropdownMenuStyle menuStyle;
 @end
 
@@ -83,6 +81,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self appUsageLogging:@"profile"];
     self.navigationController.navigationBarHidden=NO;
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
@@ -96,13 +95,11 @@
     self.name.text = [NSString stringWithFormat:@"Name: %@", [MyUser currentUser].username];
     self.email.text = [NSString stringWithFormat:@"Email: %@", [MyUser currentUser].email];
     self.residenceHall.text = [NSString stringWithFormat:@"Residence hall: %@", [MyUser currentUser].residenceHall];
-    self.phoneNumber.text = [NSString stringWithFormat:@"Phone: %@", [MyUser currentUser].additional];
     PFQuery *query = [MyUser query];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(!error) {
             for(PFObject *object in objects){
                 if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username]) {
-                    self.points.text = [NSString stringWithFormat:@"Points: %@", [object[@"points"] stringValue]];
                     object[@"notification"] = @"On";
                     NSLog(@"saved notification On!");
                     [object saveInBackground];
@@ -113,6 +110,13 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)appUsageLogging: (NSString *)activity {
+    PFObject *usage = [PFObject objectWithClassName:@"UsageLog"];
+    usage[@"username"] = [MyUser currentUser].username;
+    usage[@"userid"] = [MyUser currentUser].objectId;
+    usage[@"activity"] = activity;
+    [usage saveInBackground];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

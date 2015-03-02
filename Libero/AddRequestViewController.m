@@ -68,7 +68,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self appUsageLogging:@"add new request"];
     self.navigationController.navigationBarHidden=NO;
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
@@ -159,6 +159,7 @@ numberOfRowsInComponent:(NSInteger)component
 
 - (void)saveRequest {
     NSLog(@"save request");
+    [self appUsageLogging:@"added new request"];
     PFObject *req = [PFObject objectWithClassName:@"Message"];
     if (self.imageView.image != NULL) {
         NSData* data = UIImageJPEGRepresentation(self.imageView.image, 0.5f);
@@ -181,8 +182,15 @@ numberOfRowsInComponent:(NSInteger)component
     }];
 }
 
+- (void)appUsageLogging: (NSString *)activity {
+    PFObject *usage = [PFObject objectWithClassName:@"UsageLog"];
+    usage[@"username"] = [MyUser currentUser].username;
+    usage[@"userid"] = [MyUser currentUser].objectId;
+    usage[@"activity"] = activity;
+    [usage saveInBackground];
+}
+
 - (void)cancelRequest {
-    NSLog(@"cancel request");
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 - (void)didReceiveMemoryWarning {

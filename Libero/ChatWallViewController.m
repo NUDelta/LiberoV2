@@ -108,8 +108,16 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     }
 }
 
+- (void)appUsageLogging: (NSString *)activity {
+    PFObject *usage = [PFObject objectWithClassName:@"UsageLog"];
+    usage[@"username"] = [MyUser currentUser].username;
+    usage[@"userid"] = [MyUser currentUser].objectId;
+    usage[@"activity"] = activity;
+    [usage saveInBackground];
+}
+
 - (IBAction)deliveredPressed:(id)sender {
-    
+    [self appUsageLogging:[NSString stringWithFormat:@"delivered %@",objId]];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delivered?"
                                                     message:@"Do you confirm this package has been delivered?"
                                                    delegate:self

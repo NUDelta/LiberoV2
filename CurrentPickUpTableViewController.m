@@ -123,6 +123,7 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self appUsageLogging:@"current pickup"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -208,6 +209,7 @@
                 cvc.other = [NSString stringWithFormat:@"%@", [request valueForKeyPath:@"username"]];
                 cvc.detailChat = YES;
                 cvc.objId = [request valueForKey:@"objectId"];
+                [self appUsageLogging:[NSString stringWithFormat:@"chat with %@ for %@", cvc.other, cvc.objId]];
                 NSLog(@"segueing");
             }
         }
