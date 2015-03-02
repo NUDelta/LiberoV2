@@ -310,11 +310,11 @@
                 if (activity.walking || activity.running) {
                     if (activity.walking) {
                         self.motion = @"walking";
-                        [self appUsageLogging:@"running"];
+//                        [self appUsageLogging:@"running"];
                     }
                     if (activity.running) {
                         self.motion = @"walking";
-                        [self appUsageLogging:@"running"];
+//                        [self appUsageLogging:@"running"];
                     }
                 }
             });
