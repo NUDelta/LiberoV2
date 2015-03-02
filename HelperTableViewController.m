@@ -33,6 +33,9 @@
 @property (assign) BOOL beaconNoti;
 @property (nonatomic, retain) CMMotionActivityManager *motionManager;
 @property (assign) float heading;
+@property (nonatomic, strong) NSString *direction;
+@property (nonatomic, strong) NSString *motion;
+@property (nonatomic, strong) NSString *message;
 
 
 @property (nonatomic, assign) RWDropdownMenuStyle menuStyle;
@@ -173,9 +176,14 @@
                     }
                 }
             }
-            self.requests = tmpRequest;
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//            });
+        self.requests = tmpRequest;
+        NSLog(@"%d",self.requests.count);
+        if (self.requests.count > 0) {
+            if ([self.requests[0] valueForKeyPath:@"packageType"] == NULL)
+                self.message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username], [self.requests[0] valueForKeyPath:@"username"];
+            else
+                self.message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me? --%@", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"packageType"], [self.requests[0] valueForKeyPath:@"username"]];
+        }
     }];
 }
 
@@ -237,8 +245,10 @@
     [titleButton sizeToFit];
     self.navigationItem.titleView = titleButton;
     
-
     [self HelperRequests];
+    
+    self.direction = [[NSString alloc]init];
+    self.message = [[NSString alloc]init];
 //    dispatch_queue_t queue = dispatch_get_main_queue();
     self.myIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     // Uncomment the following line to preserve selection between presentations.
@@ -286,8 +296,27 @@
     [self.beaconManager startMonitoringForRegion:region];
     [self.beaconManager startRangingBeaconsInRegion:region];
     self.motionManager = [[CMMotionActivityManager alloc] init];
+    [self detectMotion];
 }
 
+- (void)detectMotion {
+    if([CMMotionActivityManager isActivityAvailable]) {
+        [self.motionManager startActivityUpdatesToQueue:[[NSOperationQueue alloc]init] withHandler:^(CMMotionActivity *activity) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (activity.walking || activity.running) {
+                    if (activity.walking) {
+                        self.motion = @"walking";
+                        [self appUsageLogging:@"running"];
+                    }
+                    if (activity.running) {
+                        self.motion = @"walking";
+                        [self appUsageLogging:@"running"];
+                    }
+                }
+            });
+        }];
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -353,7 +382,6 @@
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     self.myIndexPath = indexPath;
-    NSLog(@"index button clicked");
 //    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Are you gonna pick this up?" message:@"If you click YES, email notification will be sent to the recipient." delegate:self cancelButtonTitle:@"NO" otherButtonTitles: nil];
 //    [alert addButtonWithTitle:@"YES"];
 //    [alert show];
@@ -433,25 +461,28 @@
         self.heading = degree;
         NSLog(@"degree is %f", degree);
         if (self.heading >= 90.0) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"South" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
+//            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"South" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
 //            [alert show];
+            self.direction = @"south";
             NSLog(@"South");
         } else {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"North" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
+//            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"North" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
 //            [alert show];
+            self.direction = @"north";
             NSLog(@"North");
-            
         }
     } else {
         self.heading = degree;
         NSLog(@"degree is %f", degree);
         if (self.heading <= -90.0) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"South" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
+//            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"South" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
 //            [alert show];
+            self.direction = @"south";
             NSLog(@"South");
         } else {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"North" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
+//            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Heading" message:@"North" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
 //            [alert show];
+            self.direction = @"north";
             NSLog(@"North");
             
         }
@@ -459,6 +490,7 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    [self detectMotion];
     CLLocation *locA = newLocation;
     CLLocation *locB = oldLocation;
     CLLocationCoordinate2D centerA;
@@ -485,7 +517,7 @@
 //            if ([self.requests[0] valueForKeyPath:@"packageType"] == NULL)
 //                localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"username"]];
 //            else
-//                localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ lbs) for me? --%@", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"packageType"], [self.requests[0] valueForKeyPath:@"username"]];
+//                localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me? --%@", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"packageType"], [self.requests[0] valueForKeyPath:@"username"]];
 //            localNotif.alertAction = @"Testing notification based on regions";
 //            localNotif.soundName = UILocalNotificationDefaultSoundName;
 //            localNotif.applicationIconBadgeNumber = 1;
@@ -574,12 +606,14 @@
 - (void)beaconManager:(ESTBeaconManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(ESTBeaconRegion *)region
 {
     ESTBeacon *firstBeacon = [beacons firstObject];
-    //    NSLog(@"%f", [firstBeacon.distance floatValue]);
-    NSString *message = [NSString stringWithFormat:@"Hi %@! You are within %.02f meters to Delta lab, can you deliver an item from Delta lab to Frances Searle for me?", [MyUser currentUser].username, [firstBeacon.distance floatValue]];
-    //    [self updateDotPositionForDistance:[firstBeacon.distance integerValue]];
+//    if ([self.requests[0] valueForKeyPath:@"packageType"] == NULL)
+//        message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me?", [MyUser currentUser].username];
+//    else
+//        message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me?", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"packageType"]];
     if (!self.beaconNoti && [firstBeacon.distance integerValue] < 3 && [firstBeacon.distance integerValue]!= -1 && [firstBeacon.distance integerValue]!= 0) {
-        [self triggerNotificationWithMessage: message];
-        NSLog(@"%@", message);
+        if (!self.message)
+            self.message = [NSString stringWithFormat: @"Hi %@, can you please help pick up a package?", [MyUser currentUser].username];
+        [self triggerNotificationWithMessage: self.message];
         self.beaconNoti = YES;
         [self appUsageLogging:[firstBeacon.distance stringValue]];
     }
@@ -593,13 +627,29 @@
     NSLog(error.description);
 }
 
-
 - (void)triggerNotificationWithMessage: (NSString *)message {
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = message;
-    localNotification.soundName = UILocalNotificationDefaultSoundName;
-    //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
-    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+//TODO: test outside!
+//    if ([self.direction isEqualToString:@"south"] || [self.direction isEqualToString:@"north"]) {
+//        
+//    }
+    if ([self.motion isEqualToString:@"walking"] || [self.motion isEqualToString:@"running"]) {
+        if ([self.motion isEqualToString:@"walking"])
+            [self appUsageLogging:@"walking"];
+        if ([self.motion isEqualToString:@"walking"])
+            [self appUsageLogging:@"running"];
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.alertBody = message;
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
+        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+    } else {
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.alertBody = message;
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
+        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+    }
+    [self appUsageLogging:@"notification"];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -634,8 +684,6 @@
     [push setData:data];
     [push sendPushInBackground];
     
-
-    NSLog(@"pickup email");
     NSError *error;
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: nil];
@@ -652,6 +700,10 @@
     NSString *reqName = [self.requests[self.myIndexPath.row] valueForKeyPath:@"username"];
     NSString *name = [MyUser currentUser].username;
     NSString *email = [self.requests[self.myIndexPath.row] valueForKeyPath:@"email"];
+    NSString *reqObjId = [self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"];
+
+    [self appUsageLogging:[NSString stringWithFormat:@"picked up %@ package %@", reqName, reqObjId]];
+    
     NSLog(@"email=%@",email);
     NSLog(@"name=%@",name);
     NSLog(@"requester name=%@", reqName);
