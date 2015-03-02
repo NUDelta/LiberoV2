@@ -130,6 +130,14 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
+    [notifCenter addObserver:self selector:@selector(appDidEnterForeground) name:@"appDidEnterForeground" object:nil];
+    
+}
+
+- (void)appDidEnterForeground {
+    [self startDownloadMyRequest];
+    [self.tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated

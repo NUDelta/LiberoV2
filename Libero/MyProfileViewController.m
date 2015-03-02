@@ -110,6 +110,22 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [self appUsageLogging:@"profile"];
+    PFQuery *query = [MyUser query];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error) {
+            for(PFObject *object in objects){
+                if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username]) {
+                    object[@"notification"] = @"On";
+                    NSLog(@"saved notification On!");
+                    [object saveInBackground];
+                }
+            }
+        }
+    }];
+}
+
 - (void)appUsageLogging: (NSString *)activity {
     PFObject *usage = [PFObject objectWithClassName:@"UsageLog"];
     usage[@"username"] = [MyUser currentUser].username;

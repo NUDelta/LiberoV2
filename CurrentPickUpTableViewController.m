@@ -100,6 +100,12 @@
     //    [self.tableView deselectRowAtIndexPath:self.myIndexPath animated:YES];
     [self CurrentPickUpRequests];
     [self.tableView reloadData];
+    [self appUsageLogging:@"current pickup"];
+}
+
+- (void)appDidEnterForeground {
+    [self CurrentPickUpRequests];
+    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad {
@@ -123,7 +129,8 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [self appUsageLogging:@"current pickup"];
+    NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
+    [notifCenter addObserver:self selector:@selector(appDidEnterForeground) name:@"appDidEnterForeground" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {

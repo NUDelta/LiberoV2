@@ -66,9 +66,12 @@
     [RWDropdownMenu presentFromViewController:self withItems:styleItems align:RWDropdownMenuCellAlignmentCenter style:self.menuStyle navBarImage:nil completion:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [self appUsageLogging:@"add new request"];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self appUsageLogging:@"add new request"];
     self.navigationController.navigationBarHidden=NO;
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
