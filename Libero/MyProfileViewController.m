@@ -29,12 +29,26 @@
                     if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username]) {
                         object[@"notification"] = @"On";
                         NSLog(@"saved notification On!");
+                        [self appUsageLogging: @"turned on notification"];
                         [object saveInBackground];
                     }
                 }
             }
         }];
     } else {
+        PFQuery *query = [MyUser query];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if(!error) {
+                for(PFObject *object in objects){
+                    if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username]) {
+                        object[@"notification"] = @"Off";
+                        NSLog(@"saved notification On!");
+                        [self appUsageLogging: @"turned off notification"];
+                        [object saveInBackground];
+                    }
+                }
+            }
+        }];
         NSLog(@"Off");
     }
 }
