@@ -169,7 +169,7 @@
         
         if(!error) {
             for(PFObject *object in objects){
-                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"delivering"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
+                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
                         NSLog(@"%@", object[@"residenceHall"]);
                         NSLog(@"another one %@", [MyUser currentUser].residenceHall);
                         [tmpRequest addObject: object];
@@ -273,10 +273,14 @@
 
     [self.locationManager startUpdatingLocation];
     
+    CLLocationCoordinate2D center; //Ford
+    center.latitude = 42.056929;
+    center.longitude = -87.676519;
+    
     CLLocationCoordinate2D plex; //Foster Walker
     plex.latitude = 42.053666;
     plex.longitude = -87.677672;
-    CLCircularRegion *plexRegion = [[CLCircularRegion alloc] initWithCenter:plex radius:50 identifier:@"Plex"];
+    CLCircularRegion *plexRegion = [[CLCircularRegion alloc] initWithCenter:center radius:50 identifier:@"Plex"];
     [self.locationManager startMonitoringForRegion:self.region];
     
     NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
@@ -505,41 +509,46 @@
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
     //FIXME: this is for v1
-//    [self logCoordinate:region.identifier];
-//    NSLog(@"Welcome to %@", region.identifier);
-////    NSLog([self.requests[0] valueForKeyPath:@"username"]);
-//    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-//    if ([self.requests count]>0){
-//        if (localNotif) {
-//            NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[self.requests[0] valueForKeyPath:@"objectId"] forKey:[self.requests[0] valueForKeyPath:@"objectId"]];
-//            localNotif.userInfo = dictionary;
-//            NSLog(@"%@", [self.requests[0] valueForKeyPath:@"packageType"]);
-//            if ([self.requests[0] valueForKeyPath:@"packageType"] == NULL)
-//                localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"username"]];
-//            else
-//                localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me? --%@", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"packageType"], [self.requests[0] valueForKeyPath:@"username"]];
-//            localNotif.alertAction = @"Testing notification based on regions";
-//            localNotif.soundName = UILocalNotificationDefaultSoundName;
-//            localNotif.applicationIconBadgeNumber = 1;
-//            
-//            PFQuery *query = [MyUser query];
-//            [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
-//                if (!error) {
-//                    int notifCount = [object[@"notifNum"] intValue];
-//                    NSLog(@"%d", notifCount);
-//                    NSNumber *value = [NSNumber numberWithInt:notifCount+1];
-//                    object[@"notifNum"] = value;
-//                    [object saveInBackground];
-//                } else {
-//                    NSLog(@"ERROR!");
-//                }
-//            }];
-//          
-//            //        NSDictionary *infoDict = [NSDictionary dictionaryWithObject: @"Package number" forKey: @"Package Key"];
-//            //        localNotif.userInfo = infoDict;
-//            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-//        }
-//    }
+    NSLog(@"Welcome to %@", region.identifier);
+    if ([region.identifier isEqualToString:@"Plex"]) {
+        UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+        if ([self.requests count]>0){
+            if (localNotif) {
+                NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[self.requests[0] valueForKeyPath:@"objectId"] forKey:[self.requests[0] valueForKeyPath:@"objectId"]];
+                localNotif.userInfo = dictionary;
+                NSLog(@"%@", [self.requests[0] valueForKeyPath:@"packageType"]);
+                if ([self.requests[0] valueForKeyPath:@"packageType"] == NULL)
+                    localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"username"]];
+                else
+                    localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me? --%@", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"packageType"], [self.requests[0] valueForKeyPath:@"username"]];
+                localNotif.alertAction = @"Testing notification based on regions";
+                localNotif.soundName = UILocalNotificationDefaultSoundName;
+                localNotif.applicationIconBadgeNumber = 1;
+                
+                PFQuery *query = [MyUser query];
+                [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
+                    if (!error) {
+                        int notifCount = [object[@"notifNum"] intValue];
+                        NSLog(@"%d", notifCount);
+                        NSNumber *value = [NSNumber numberWithInt:notifCount+1];
+                        object[@"notifNum"] = value;
+                        [object saveInBackground];
+                    } else {
+                        NSLog(@"ERROR!");
+                    }
+                }];
+                [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+                    if (!error) {
+                        NSString *message = [NSString stringWithFormat:@"%f, %f",geoPoint.latitude, geoPoint.longitude];
+                        [self appUsageLogging:message];
+                    }
+                }];
+                [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+            }
+        }
+    }
+//    NSLog([self.requests[0] valueForKeyPath:@"username"]);
+
     
 //    PFQuery *query = [PFQuery queryWithClassName:@"Message"];
 //    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
@@ -565,43 +574,41 @@
 //    [alert show];
 }
 
-//- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
-//{
-//    [self logCoordinate: [NSString stringWithFormat:@"%@ exiting", region.identifier]];
-////    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:region.identifier message:[NSString stringWithFormat:@("ByeBye %@"), region.identifier] delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
-////    [alert show];
-//}
-
-- (void)logCoordinate: (NSString *)regionName
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
 {
-//    NSLog(regionName);
-//    NSError *error;
+    if ([region.identifier isEqualToString:@"Plex"]) {
+        self.beaconNoti = NO;
+    }
+}
+
+//- (void)logCoordinate: (NSString *)regionName
+//{
 //    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
 //        if (!error) {
-//            NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
-//            NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: nil];
-//            
-//            NSURL * url = [NSURL URLWithString:@"http://libero.parseapp.com/coord"];
-//            NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-//            NSString * params = [NSString stringWithFormat:@"region=%@&lat=%f&lon=%f&username=%@",regionName, geoPoint.latitude, geoPoint.longitude, [MyUser currentUser].username];
-//            [urlRequest setHTTPMethod:@"POST"];
-//            [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
-//            
-//            //    NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys: @"tester", @"name", nil];
-//            //    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
-//            //    [urlRequest setHTTPBody:postData];
-//            
-//            //    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
-//            
-//            NSURLSessionDataTask * dataTask = [defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//                NSLog(error.description);
-//            }];
-//            [dataTask resume];
+//            NSString *message = [NSString stringWithFormat:@"%f, %f",geoPoint.latitude, geoPoint.longitude];
+//            [self appUsageLogging:message];
+////            NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+////            NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: nil];
+////            
+////            NSURL * url = [NSURL URLWithString:@"http://libero.parseapp.com/coord"];
+////            NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
+////            NSString * params = [NSString stringWithFormat:@"region=%@&lat=%f&lon=%f&username=%@",regionName, geoPoint.latitude, geoPoint.longitude, [MyUser currentUser].username];
+////            [urlRequest setHTTPMethod:@"POST"];
+////            [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+////            
+////            //    NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys: @"tester", @"name", nil];
+////            //    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+////            //    [urlRequest setHTTPBody:postData];
+////            
+////            //    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+////            
+////            NSURLSessionDataTask * dataTask = [defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+////                NSLog(error.description);
+////            }];
+////            [dataTask resume];
 //        }
 //    }];
-//    
-////    NSLog(@"completed");
-}
+//}
 
 - (void)beaconManager:(ESTBeaconManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(ESTBeaconRegion *)region
 {
@@ -650,6 +657,18 @@
         [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
     }
     [self appUsageLogging:@"notification"];
+    PFQuery *query = [MyUser query];
+    [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
+        if (!error) {
+            int notifCount = [object[@"notifNum"] intValue];
+            NSLog(@"%d", notifCount);
+            NSNumber *value = [NSNumber numberWithInt:notifCount+1];
+            object[@"notifNum"] = value;
+            [object saveInBackground];
+        } else {
+            NSLog(@"ERROR!");
+        }
+    }];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -691,7 +710,7 @@
     [query getObjectInBackgroundWithId:[self.requests[self.myIndexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
         object[@"deliverer"] = [MyUser currentUser].username;
         object[@"delivererId"] = [MyUser currentUser].objectId;
-        object[@"delivered"] = @"delivering";
+        object[@"delivered"] = @"picked up";
         [object saveInBackground];
     }];
     

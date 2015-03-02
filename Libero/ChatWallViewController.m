@@ -90,7 +90,6 @@ NSString * tmpNames;
     [obj saveInBackground];
     self.messageInput.text = @"";
     [vc dataReloaded];
-    
 }
 
 - (void)alertView:(UIAlertView *)alertView
@@ -105,7 +104,64 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"currentPickupNav"];
         myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         [self presentViewController:myNav animated:YES completion:nil];
+        [self deliveredEmail];
+        [self appUsageLogging: [NSString stringWithFormat:@"delivered %@", self.objId]];
     }
+}
+
+- (void)deliveredEmail
+{
+    PFQuery *userQuery = [MyUser query];
+    NSLog(@"testing: %@",[self.request valueForKeyPath:@"username"]);
+    [userQuery whereKey:@"username" equalTo:[self.request valueForKeyPath:@"username"]];
+    PFQuery *pushQuery = [PFInstallation query];
+    [pushQuery whereKey:@"user" matchesQuery:userQuery];
+    //            [pushQuery whereKey:@"user" equalTo:[object valueForKeyPath:@"objectId"]];
+    PFPush *push = [[PFPush alloc]init];
+    NSLog(@"here!");
+    NSString *pushMsg = [[NSString alloc]initWithFormat:@"Hi %@, I just delivered up your package!\n--%@", [self.request valueForKeyPath:@"username"], [MyUser currentUser].username];
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound", nil];
+    [push setQuery:pushQuery];
+    [push setData:data];
+    [push sendPushInBackground];
+    
+    NSError *error;
+    NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: nil];
+    
+    NSURL * url = [NSURL URLWithString:@"http://libero.parseapp.com/delivered_email"];
+    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
+    NSString *reqName = [self.request valueForKeyPath:@"username"];
+    NSString *name = [MyUser currentUser].username;
+    NSString *email = [self.request valueForKeyPath:@"email"];
+    NSString *reqObjId = [self.request valueForKeyPath:@"objectId"];
+    
+    [self appUsageLogging:[NSString stringWithFormat:@"picked up %@ package %@", reqName, reqObjId]];
+    
+    NSLog(@"email=%@",email);
+    NSLog(@"name=%@",name);
+    NSLog(@"requester name=%@", reqName);
+    NSString * params = [NSString stringWithFormat:@"name=%@&email=%@&reqName=%@",name,email,reqName];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    //    NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys: @"tester", @"name", nil];
+    //    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+    //    [urlRequest setHTTPBody:postData];
+    
+    //    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSURLSessionDataTask * dataTask = [defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSLog(error.description);
+    }];
+    [dataTask resume];
+    NSLog(@"completed");
+    //    PFQuery *userQuery = [MyUser query];
+    //    [userQuery whereKey:@"username" equalTo:[self.request valueForKeyPath:@"username"]];
+    //    [userQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+    //        self.reqObjectId = [object valueForKeyPath:@"objectId"];
+    //        NSLog(@"testing pick up user %@", self.reqObjectId);
+    //    }];
 }
 
 - (void)appUsageLogging: (NSString *)activity {

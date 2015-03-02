@@ -35,7 +35,7 @@
         NSMutableArray *tmpRequest = [[NSMutableArray alloc] init];
         if(!error) {
             for(PFObject *object in objects){
-                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && [object[@"deliverer"] isEqualToString:[MyUser currentUser].username] && [object[@"delivered"] isEqualToString:@"delivering"]) {
+                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && [object[@"deliverer"] isEqualToString:[MyUser currentUser].username] && [object[@"delivered"] isEqualToString:@"picked up"]) {
                     NSLog(@"found %@",object[@"deliverer"]);
                     [tmpRequest addObject: object];
                 }
@@ -215,6 +215,7 @@
                 NSLog(@"%@", [request valueForKeyPath:@"username"]);
                 cvc.other = [NSString stringWithFormat:@"%@", [request valueForKeyPath:@"username"]];
                 cvc.detailChat = YES;
+                cvc.request = self.requests[indexPath.row];
                 cvc.objId = [request valueForKey:@"objectId"];
                 [self appUsageLogging:[NSString stringWithFormat:@"chat with %@ for %@", cvc.other, cvc.objId]];
                 NSLog(@"segueing");

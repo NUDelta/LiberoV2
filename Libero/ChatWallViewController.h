@@ -14,6 +14,7 @@
 - (IBAction)deliveredPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *deliveredBttn;
 @property (weak, nonatomic) IBOutlet UITextField *messageInput;
+@property (nonatomic, strong) NSDictionary *request;
 - (IBAction)sendMessage:(id)sender;
 @property NSString *other;
 @property BOOL *detailChat;
