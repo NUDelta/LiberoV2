@@ -281,7 +281,7 @@
     plex.latitude = 42.053666;
     plex.longitude = -87.677672;
     CLCircularRegion *plexRegion = [[CLCircularRegion alloc] initWithCenter:center radius:50 identifier:@"Plex"];
-    [self.locationManager startMonitoringForRegion:self.region];
+    [self.locationManager startMonitoringForRegion: plexRegion];
     
     NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
     [notifCenter addObserver:self selector:@selector(appDidEnterForeground) name:@"appDidEnterForeground" object:nil];
