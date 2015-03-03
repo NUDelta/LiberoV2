@@ -280,7 +280,7 @@
     CLLocationCoordinate2D plex; //Foster Walker
     plex.latitude = 42.053666;
     plex.longitude = -87.677672;
-    CLCircularRegion *plexRegion = [[CLCircularRegion alloc] initWithCenter:center radius:50 identifier:@"Plex"];
+    CLCircularRegion *plexRegion = [[CLCircularRegion alloc] initWithCenter:plex radius:50 identifier:@"Plex"];
     [self.locationManager startMonitoringForRegion: plexRegion];
     
     NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
@@ -617,7 +617,7 @@
 //        message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me?", [MyUser currentUser].username];
 //    else
 //        message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me?", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"packageType"]];
-    if (!self.beaconNoti && [firstBeacon.distance integerValue] < 3 && [firstBeacon.distance integerValue]!= -1 && [firstBeacon.distance integerValue]!= 0) {
+    if (!self.beaconNoti && [firstBeacon.distance integerValue] < 10 && [firstBeacon.distance integerValue]!= -1 && [firstBeacon.distance integerValue]!= 0) {
         if (!self.message)
             self.message = [NSString stringWithFormat: @"Hi %@, can you please help pick up a package?", [MyUser currentUser].username];
         [self triggerNotificationWithMessage: self.message];
@@ -636,39 +636,38 @@
 
 - (void)triggerNotificationWithMessage: (NSString *)message {
 //TODO: test outside!
-//    if ([self.direction isEqualToString:@"south"] || [self.direction isEqualToString:@"north"]) {
-//        
-//    }
-    if ([self.motion isEqualToString:@"walking"] || [self.motion isEqualToString:@"running"]) {
-        if ([self.motion isEqualToString:@"walking"])
-            [self appUsageLogging:@"walking"];
-        if ([self.motion isEqualToString:@"walking"])
-            [self appUsageLogging:@"running"];
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        localNotification.alertBody = message;
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-        //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
-        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-    } else {
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        localNotification.alertBody = message;
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-        //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
-        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-    }
-    [self appUsageLogging:@"notification"];
-    PFQuery *query = [MyUser query];
-    [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
-        if (!error) {
-            int notifCount = [object[@"notifNum"] intValue];
-            NSLog(@"%d", notifCount);
-            NSNumber *value = [NSNumber numberWithInt:notifCount+1];
-            object[@"notifNum"] = value;
-            [object saveInBackground];
+    if ([self.direction isEqualToString:@"south"] || [self.direction isEqualToString:@"north"]) {
+        if ([self.motion isEqualToString:@"walking"] || [self.motion isEqualToString:@"running"]) {
+            if ([self.motion isEqualToString:@"walking"])
+                [self appUsageLogging:@"walking"];
+            if ([self.motion isEqualToString:@"walking"])
+                [self appUsageLogging:@"running"];
+            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+            localNotification.alertBody = message;
+            localNotification.soundName = UILocalNotificationDefaultSoundName;
+            //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
+            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
         } else {
-            NSLog(@"ERROR!");
+            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+            localNotification.alertBody = message;
+            localNotification.soundName = UILocalNotificationDefaultSoundName;
+            //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
+            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
         }
-    }];
+        [self appUsageLogging:@"notification"];
+        PFQuery *query = [MyUser query];
+        [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
+            if (!error) {
+                int notifCount = [object[@"notifNum"] intValue];
+                NSLog(@"%d", notifCount);
+                NSNumber *value = [NSNumber numberWithInt:notifCount+1];
+                object[@"notifNum"] = value;
+                [object saveInBackground];
+            } else {
+                NSLog(@"ERROR!");
+            }
+        }];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

@@ -250,6 +250,22 @@
 }
 */
 
+- (void)tableView: (UITableView*)tableView
+  willDisplayCell: (UITableViewCell*)cell
+forRowAtIndexPath: (NSIndexPath*)indexPath
+{
+    if ([(NSString *)[self.requests[indexPath.row] valueForKeyPath:@"delivered"] isEqualToString:@"delivered"]) {
+        cell.backgroundColor = [UIColor colorWithRed: 0.0 green: 1.0 blue: 0.0 alpha: 1.0];
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    } else {
+        cell.backgroundColor = [UIColor colorWithRed: 1.0 green: 0.0 blue: 0.0 alpha: 1.0];
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    }
+
+}
+
 - (void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSLog(@"deleted");
