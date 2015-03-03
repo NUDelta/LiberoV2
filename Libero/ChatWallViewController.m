@@ -78,6 +78,21 @@ NSString * tmpNames;
 }
 */
 
+- (void)pushNotification {
+    PFQuery *userQuery = [MyUser query];
+    [userQuery whereKey:@"username" equalTo:[self.request valueForKeyPath:@"username"]];
+    PFQuery *pushQuery = [PFInstallation query];
+    [pushQuery whereKey:@"user" matchesQuery:userQuery];
+    //            [pushQuery whereKey:@"user" equalTo:[object valueForKeyPath:@"objectId"]];
+    PFPush *push = [[PFPush alloc]init];
+    NSLog(@"here!");
+    NSString *pushMsg = [[NSString alloc]initWithFormat:@"You've got a message from %@", [MyUser currentUser].username];
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound", nil];
+    [push setQuery:pushQuery];
+    [push setData:data];
+    [push sendPushInBackground];
+}
+
 - (IBAction)sendMessage:(id)sender {
    // self.messageInput.text
     NSLog(@"%@", self.childViewControllers);
@@ -90,6 +105,7 @@ NSString * tmpNames;
     [obj saveInBackground];
     self.messageInput.text = @"";
     [vc dataReloaded];
+    [self pushNotification];
 }
 
 - (void)alertView:(UIAlertView *)alertView

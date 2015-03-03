@@ -617,7 +617,7 @@
 //        message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me?", [MyUser currentUser].username];
 //    else
 //        message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me?", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"packageType"]];
-    if (!self.beaconNoti && [firstBeacon.distance integerValue] < 10 && [firstBeacon.distance integerValue]!= -1 && [firstBeacon.distance integerValue]!= 0) {
+    if (!self.beaconNoti && [firstBeacon.distance integerValue] < 5 && [firstBeacon.distance integerValue]!= -1 && [firstBeacon.distance integerValue]!= 0) {
         if (!self.message)
             self.message = [NSString stringWithFormat: @"Hi %@, can you please help pick up a package?", [MyUser currentUser].username];
         [self triggerNotificationWithMessage: self.message];
