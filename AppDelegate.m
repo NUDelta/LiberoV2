@@ -12,7 +12,7 @@
 #import "MyUser.h"
 #import "ESTConfig.h"
 #import "ChatWallViewController.h" 
-#import "AppealerTableViewController.h"
+#import "CurrentPickUpTableViewController.h"
 
 @interface AppDelegate () <CLLocationManagerDelegate>
 @property (nonatomic, strong) UIStoryboard *storyBoard;
