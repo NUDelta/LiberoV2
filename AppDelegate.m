@@ -100,11 +100,28 @@
 {
     NSLog(@"objectId: %@ - whereFrom: %@", [userInfo valueForKeyPath:@"objectId"], [userInfo valueForKeyPath:@"whereFrom"]);
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UINavigationController *myNav = [sb instantiateViewControllerWithIdentifier:@"currentPickupNav"];
-    CurrentPickUpTableViewController *cptvc = (CurrentPickUpTableViewController *)[sb instantiateViewControllerWithIdentifier:@"CurrentPickUpTableViewController"];
-    ChatWallViewController *cwvc = (ChatWallViewController *)[sb instantiateViewControllerWithIdentifier:@"ChatWallViewController"];
-    myNav.viewControllers = [NSArray arrayWithObjects:cptvc,cwvc, nil];
-    [myNav popToViewController:cwvc animated:YES];
+    if ([[userInfo valueForKeyPath:@"objectId"] isEqualToString:@"-1"]){
+        //send to my requests
+        
+    } else if ([[userInfo valueForKeyPath:@"whereFrom"] isEqualToString:@"pickup"]) {
+        //send to my requests chat
+        
+    } else {
+        //send to current pickups chat
+        NSDictionary *request = [userInfo valueForKeyPath:@"request"];
+        UINavigationController *myNav = [sb instantiateViewControllerWithIdentifier:@"currentPickupNav"];
+        CurrentPickUpTableViewController *cptvc = (CurrentPickUpTableViewController *)[sb instantiateViewControllerWithIdentifier:@"CurrentPickUpTableViewController"];
+        
+        ChatWallViewController *cvc = (ChatWallViewController *)[sb instantiateViewControllerWithIdentifier:@"ChatWallViewController"];
+       
+        cvc.other = [NSString stringWithFormat:@"%@", [request valueForKeyPath:@"username"]];
+        cvc.detailChat = YES;
+        cvc.request = request;
+        cvc.objId = [request valueForKey:@"objectId"];
+        myNav.viewControllers = [NSArray arrayWithObjects:cptvc,cvc, nil];
+        [myNav popToViewController:cvc animated:YES];
+    }
+    
 //    [PFPush handlePush:userInfo];
 }
 

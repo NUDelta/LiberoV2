@@ -80,6 +80,7 @@ NSString * tmpNames;
 
 - (void)pushNotification {
     PFQuery *userQuery = [MyUser query];
+   
     if ([[MyUser currentUser].username isEqualToString:[self.request valueForKeyPath:@"username"]]) {
         [userQuery whereKey:@"username" equalTo:[self.request valueForKeyPath:@"deliverer"]];
     } else {
@@ -93,9 +94,9 @@ NSString * tmpNames;
     NSString *pushMsg = [[NSString alloc]initWithFormat:@"You've got a message from %@", [MyUser currentUser].username];
     NSDictionary *data;
     if (self.detailChat) {
-        data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound",[self.request valueForKeyPath:@"objectId"], @"objectId", @"pickup", @"whereFrom", nil];
+        data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound",[self.request valueForKeyPath:@"objectId"], @"objectId", @"pickup", @"whereFrom", self.request, @"request", nil];
     } else {
-        data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound",[self.request valueForKeyPath:@"objectId"], @"objectId", @"request", @"whereFrom", nil];
+        data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound",[self.request valueForKeyPath:@"objectId"], @"objectId", @"request", @"whereFrom", self.request, @"request", nil];
     }
     
     [push setQuery:pushQuery];
@@ -146,7 +147,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     PFPush *push = [[PFPush alloc]init];
     NSLog(@"here!");
     NSString *pushMsg = [[NSString alloc]initWithFormat:@"Hi %@, I just delivered up your package!\n--%@", [self.request valueForKeyPath:@"username"], [MyUser currentUser].username];
-    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound", nil];
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound",@"-1", @"objectId", @"delivered", @"whereFrom", @"-1", @"request", nil];
     [push setQuery:pushQuery];
     [push setData:data];
     [push sendPushInBackground];

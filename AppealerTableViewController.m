@@ -340,6 +340,7 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
                     cvc.other = [NSString stringWithFormat:@"%@", [request valueForKeyPath:@"deliverer"]];
                     cvc.detailChat = NO;
                     //cvc.objId = [request valueForKey:@"objectId"];
+                    cvc.request = request;
                     NSLog(@"segueing");
                     [self appUsageLogging:[NSString stringWithFormat:@"requester chat with %@ for %@", cvc.other, [request valueForKeyPath:@"objectId"]]];
                 }

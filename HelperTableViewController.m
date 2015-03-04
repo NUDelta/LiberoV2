@@ -729,7 +729,7 @@
     PFPush *push = [[PFPush alloc]init];
     NSLog(@"here!");
     NSString *pushMsg = [[NSString alloc]initWithFormat:@"Hi %@, I just picked up your package!\n--%@", [self.requests[self.myIndexPath.row] valueForKeyPath:@"username"], [MyUser currentUser].username];
-    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound", nil];
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound",@"-1", @"objectId", @"pickup", @"whereFrom", @"-1", @"request", nil];
     [push setQuery:pushQuery];
     [push setData:data];
     [push sendPushInBackground];
