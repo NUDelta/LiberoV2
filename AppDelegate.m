@@ -20,6 +20,7 @@
 @end
 
 @implementation AppDelegate
+@synthesize cwvc;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -109,7 +110,9 @@
     } else {
         //send to current pickups chat
         NSDictionary *request = [userInfo valueForKeyPath:@"request"];
-        UINavigationController *myNav = [sb instantiateViewControllerWithIdentifier:@"currentPickupNav"];
+
+        UINavigationController *myNav = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"currentPickupNav"];
+        self.window.rootViewController = myNav;
         CurrentPickUpTableViewController *cptvc = (CurrentPickUpTableViewController *)[sb instantiateViewControllerWithIdentifier:@"CurrentPickUpTableViewController"];
         
         ChatWallViewController *cvc = (ChatWallViewController *)[sb instantiateViewControllerWithIdentifier:@"ChatWallViewController"];
