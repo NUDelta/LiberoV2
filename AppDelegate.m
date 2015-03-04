@@ -98,7 +98,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSLog(@"DAMN rebased!!!!!!!!!!!!!! objectId: %@ - whereFrom: %@", [userInfo valueForKeyPath:@"objectId"], [userInfo valueForKeyPath:@"whereFrom"]);
+    NSLog(@"objectId: %@ - whereFrom: %@", [userInfo valueForKeyPath:@"objectId"], [userInfo valueForKeyPath:@"whereFrom"]);
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UINavigationController *myNav = [sb instantiateViewControllerWithIdentifier:@"currentPickupNav"];
     CurrentPickUpTableViewController *cptvc = (CurrentPickUpTableViewController *)[sb instantiateViewControllerWithIdentifier:@"CurrentPickUpTableViewController"];
