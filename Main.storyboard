@@ -695,7 +695,7 @@
         <!--Current Pick Up Table View Controller-->
         <scene sceneID="uOR-0K-bc7">
             <objects>
-                <viewController id="8t2-th-rWC" customClass="CurrentPickUpTableViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CurrentPickUpTableViewController" id="8t2-th-rWC" customClass="CurrentPickUpTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="147" sectionHeaderHeight="22" sectionFooterHeight="22" id="ugC-8q-epb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -980,6 +980,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="e96-fJ-Z6O"/>
+        <segue reference="qDO-m3-qba"/>
     </inferredMetricsTieBreakers>
 </document>
