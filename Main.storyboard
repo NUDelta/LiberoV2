@@ -299,7 +299,7 @@
         <!--Chat Wall View Controller-->
         <scene sceneID="8Nn-GR-5EA">
             <objects>
-                <viewController autoresizesArchivedViewToFullSize="NO" id="qSV-y0-Vki" customClass="ChatWallViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatWallViewController" autoresizesArchivedViewToFullSize="NO" id="qSV-y0-Vki" customClass="ChatWallViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ONY-HW-yX5"/>
                         <viewControllerLayoutGuide type="bottom" id="OWB-by-upe"/>
@@ -922,6 +922,7 @@
                     <connections>
                         <outlet property="email" destination="quo-HK-JMJ" id="bwL-C0-hh6"/>
                         <outlet property="name" destination="zBr-VU-5tP" id="Epy-ln-RLR"/>
+                        <outlet property="notification" destination="zLH-B5-JDM" id="lWu-FZ-Uf2"/>
                         <outlet property="residenceHall" destination="7zn-3B-UTf" id="cUj-Ag-bff"/>
                     </connections>
                 </viewController>

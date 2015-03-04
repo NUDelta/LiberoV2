@@ -36,6 +36,7 @@
 @property (nonatomic, strong) NSString *direction;
 @property (nonatomic, strong) NSString *motion;
 @property (nonatomic, strong) NSString *message;
+@property (nonatomic, strong) NSString *notificationSetting;
 
 
 @property (nonatomic, assign) RWDropdownMenuStyle menuStyle;
@@ -189,6 +190,16 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    PFQuery *query = [MyUser query];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error) {
+            for(PFObject *object in objects){
+                if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username]) {
+                    self.notificationSetting = object[@"notification"];
+                }
+            }
+        }
+    }];
     [self.tableView deselectRowAtIndexPath:self.myIndexPath animated:YES];
     [self HelperRequests];
     [self.tableView reloadData];
@@ -235,6 +246,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"Notification setting: %@", [MyUser currentUser].notification);
+
     self.navigationController.navigationBarHidden=NO;
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
@@ -285,6 +298,8 @@
     
     NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
     [notifCenter addObserver:self selector:@selector(appDidEnterForeground) name:@"appDidEnterForeground" object:nil];
+    
+    [notifCenter addObserver:self selector: @selector(notificationChanged:) name:@"notificationChanged" object: nil];
     [self appUsageLogging:@"appopen"];
     
     NSUUID *uuid = [[NSUUID alloc]initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
@@ -301,6 +316,22 @@
     [self.beaconManager startRangingBeaconsInRegion:region];
     self.motionManager = [[CMMotionActivityManager alloc] init];
     [self detectMotion];
+}
+
+- (void)notificationChanged: (NSNotification *)notification {
+    NSLog(@"notification settings!!!!!!!!!!!!!!! %@", [notification.userInfo valueForKeyPath:@"notificationKey"]);
+    self.notificationSetting = [notification.userInfo valueForKeyPath:@"notificationKey"];
+//    PFQuery *query = [MyUser query];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        if(!error) {
+//            for(PFObject *object in objects){
+//                if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username]) {
+//                    object[@"notification"] = [notification.userInfo valueForKeyPath:@"notificationKey"];
+//                    [object saveInBackground];
+//                }
+//            }
+//        }
+//    }];
 }
 
 - (void)detectMotion {
@@ -510,7 +541,8 @@
 {
     //FIXME: this is for v1
     NSLog(@"Welcome to %@", region.identifier);
-    if ([region.identifier isEqualToString:@"Plex"]) {
+    NSLog(@"notification setting: %@", self.notificationSetting);
+    if ([region.identifier isEqualToString:@"Plex"] && [self.notificationSetting isEqualToString:@"On"]) {
         UILocalNotification *localNotif = [[UILocalNotification alloc] init];
         if ([self.requests count]>0){
             if (localNotif) {

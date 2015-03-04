@@ -87,7 +87,7 @@ NSString * tmpNames;
     PFPush *push = [[PFPush alloc]init];
     NSLog(@"here!");
     NSString *pushMsg = [[NSString alloc]initWithFormat:@"You've got a message from %@", [MyUser currentUser].username];
-    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound", nil];
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound", [self.request valueForKeyPath:@"objectId"], @"ojbectId",@"chatwall", @"viewcontroller", nil];
     [push setQuery:pushQuery];
     [push setData:data];
     [push sendPushInBackground];

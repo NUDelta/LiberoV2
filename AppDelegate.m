@@ -11,6 +11,8 @@
 #import <Parse/Parse.h> 
 #import "MyUser.h"
 #import "ESTConfig.h"
+#import "ChatWallViewController.h" 
+#import "AppealerTableViewController.h"
 
 @interface AppDelegate () <CLLocationManagerDelegate>
 @property (nonatomic, strong) UIStoryboard *storyBoard;
@@ -96,7 +98,25 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [PFPush handlePush:userInfo];
+    NSLog(@"%@", userInfo);
+    if ([(NSString *)[userInfo valueForKeyPath:@"viewcontroller"] isEqualToString:@"chatview"]){
+        UIViewController* rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ChatWallViewController"];
+        UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController];
+        self.window.rootViewController = navigation;
+//        AppealerTableViewController *atvc = (AppealerTableViewController *)[sb instantiateViewControllerWithIdentifier:@"AppealerTableViewController"];
+//        for(NSString *key in notification.userInfo){
+//            NSLog(@"notification userInfo: %@", [notification.userInfo objectForKey:key]);
+//            hdvc.objectId = [notification.userInfo objectForKey:key];
+//        }
+//        UIViewController* rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
+//        UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController];
+//        self.window.rootViewController = navigation;
+//
+//        UINavigationController *nav = (UINavigationController *)[[(UITabBarController *)self.window.rootViewController viewControllers] objectAtIndex:0];
+//        nav.viewControllers = [NSArray arrayWithObjects:hmvc,hdvc, nil];
+//        [nav popToViewController:hdvc animated:YES];
+    }
+//    [PFPush handlePush:userInfo];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

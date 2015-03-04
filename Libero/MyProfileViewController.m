@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *email;
 @property (weak, nonatomic) IBOutlet UILabel *residenceHall;
 @property (nonatomic, assign) RWDropdownMenuStyle menuStyle;
+@property (weak, nonatomic) IBOutlet UISwitch *notification;
 @end
 
 @implementation MyProfileViewController
@@ -31,6 +32,9 @@
                         NSLog(@"saved notification On!");
                         [self appUsageLogging: @"turned on notification"];
                         [object saveInBackground];
+                        NSDictionary *notificationInfo = [NSDictionary dictionaryWithObject:@"On" forKey:@"notificationKey"];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"notificationChanged" object:self userInfo:notificationInfo];
+
                     }
                 }
             }
@@ -42,16 +46,18 @@
                 for(PFObject *object in objects){
                     if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username]) {
                         object[@"notification"] = @"Off";
-                        NSLog(@"saved notification On!");
+                        NSLog(@"saved notification Off!");
                         [self appUsageLogging: @"turned off notification"];
                         [object saveInBackground];
+                        NSDictionary *notificationInfo = [NSDictionary dictionaryWithObject:@"Off" forKey:@"notificationKey"];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"notificationChanged" object:self userInfo:notificationInfo];
                     }
                 }
             }
         }];
-        NSLog(@"Off");
     }
 }
+
 - (void)presentStyleMenu:(id)sender
 {
     NSArray *styleItems =
@@ -109,18 +115,8 @@
     self.name.text = [NSString stringWithFormat:@"Name: %@", [MyUser currentUser].username];
     self.email.text = [NSString stringWithFormat:@"Email: %@", [MyUser currentUser].email];
     self.residenceHall.text = [NSString stringWithFormat:@"Residence hall: %@", [MyUser currentUser].residenceHall];
-    PFQuery *query = [MyUser query];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if(!error) {
-            for(PFObject *object in objects){
-                if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username]) {
-                    object[@"notification"] = @"On";
-                    NSLog(@"saved notification On!");
-                    [object saveInBackground];
-                }
-            }
-        }
-    }];
+
+        
     // Do any additional setup after loading the view.
 }
 
@@ -131,13 +127,27 @@
         if(!error) {
             for(PFObject *object in objects){
                 if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username]) {
-                    object[@"notification"] = @"On";
-                    NSLog(@"saved notification On!");
-                    [object saveInBackground];
+                    if ([object[@"notification"] isEqualToString: @"On"])
+                        [self.notification setOn:YES];
+                    else
+                        [self.notification setOn:NO];
                 }
             }
         }
     }];
+
+//    PFQuery *query = [MyUser query];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        if(!error) {
+//            for(PFObject *object in objects){
+//                if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username]) {
+//                    object[@"notification"] = @"On";
+//                    NSLog(@"saved notification On!");
+//                    [object saveInBackground];
+//                }
+//            }
+//        }
+//    }];
 }
 
 - (void)appUsageLogging: (NSString *)activity {

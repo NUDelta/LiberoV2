@@ -12,4 +12,5 @@
 @interface MyUser : PFUser<PFSubclassing>
 @property (retain) NSString *residenceHall;
 @property (retain) NSString *additional;
+@property (retain) NSString *notification;
 @end

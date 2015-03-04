@@ -12,4 +12,5 @@
 @implementation MyUser
 @dynamic residenceHall;
 @dynamic additional;
+@dynamic notification;
 @end
