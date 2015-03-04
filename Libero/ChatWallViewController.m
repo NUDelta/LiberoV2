@@ -80,14 +80,24 @@ NSString * tmpNames;
 
 - (void)pushNotification {
     PFQuery *userQuery = [MyUser query];
-    [userQuery whereKey:@"username" equalTo:[self.request valueForKeyPath:@"username"]];
+    if ([[MyUser currentUser].username isEqualToString:[self.request valueForKeyPath:@"username"]]) {
+        [userQuery whereKey:@"username" equalTo:[self.request valueForKeyPath:@"deliverer"]];
+    } else {
+        [userQuery whereKey:@"username" equalTo:[self.request valueForKeyPath:@"username"]];
+    }
     PFQuery *pushQuery = [PFInstallation query];
     [pushQuery whereKey:@"user" matchesQuery:userQuery];
     //            [pushQuery whereKey:@"user" equalTo:[object valueForKeyPath:@"objectId"]];
     PFPush *push = [[PFPush alloc]init];
     NSLog(@"here!");
     NSString *pushMsg = [[NSString alloc]initWithFormat:@"You've got a message from %@", [MyUser currentUser].username];
-    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound", [self.request valueForKeyPath:@"objectId"], @"ojbectId",@"chatwall", @"viewcontroller", nil];
+    NSDictionary *data;
+    if (self.detailChat) {
+        data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound",[self.request valueForKeyPath:@"objectId"], @"objectId", @"pickup", @"whereFrom", nil];
+    } else {
+        data = [NSDictionary dictionaryWithObjectsAndKeys: pushMsg, @"alert", @"cheering.caf", @"sound",[self.request valueForKeyPath:@"objectId"], @"objectId", @"request", @"whereFrom", nil];
+    }
+    
     [push setQuery:pushQuery];
     [push setData:data];
     [push sendPushInBackground];

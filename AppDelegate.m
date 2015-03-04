@@ -98,24 +98,13 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSLog(@"%@", userInfo);
-    if ([(NSString *)[userInfo valueForKeyPath:@"viewcontroller"] isEqualToString:@"chatview"]){
-        UIViewController* rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ChatWallViewController"];
-        UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController];
-        self.window.rootViewController = navigation;
-//        AppealerTableViewController *atvc = (AppealerTableViewController *)[sb instantiateViewControllerWithIdentifier:@"AppealerTableViewController"];
-//        for(NSString *key in notification.userInfo){
-//            NSLog(@"notification userInfo: %@", [notification.userInfo objectForKey:key]);
-//            hdvc.objectId = [notification.userInfo objectForKey:key];
-//        }
-//        UIViewController* rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
-//        UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController];
-//        self.window.rootViewController = navigation;
-//
-//        UINavigationController *nav = (UINavigationController *)[[(UITabBarController *)self.window.rootViewController viewControllers] objectAtIndex:0];
-//        nav.viewControllers = [NSArray arrayWithObjects:hmvc,hdvc, nil];
-//        [nav popToViewController:hdvc animated:YES];
-    }
+    NSLog(@"DAMN rebased!!!!!!!!!!!!!! objectId: %@ - whereFrom: %@", [userInfo valueForKeyPath:@"objectId"], [userInfo valueForKeyPath:@"whereFrom"]);
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UINavigationController *myNav = [sb instantiateViewControllerWithIdentifier:@"currentPickupNav"];
+    CurrentPickUpTableViewController *cptvc = (CurrentPickUpTableViewController *)[sb instantiateViewControllerWithIdentifier:@"CurrentPickUpTableViewController"];
+    ChatWallViewController *cwvc = (ChatWallViewController *)[sb instantiateViewControllerWithIdentifier:@"ChatWallViewController"];
+    myNav.viewControllers = [NSArray arrayWithObjects:cptvc,cwvc, nil];
+    [myNav popToViewController:cwvc animated:YES];
 //    [PFPush handlePush:userInfo];
 }
 
