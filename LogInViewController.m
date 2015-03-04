@@ -26,6 +26,14 @@
     [self dismissViewControllerAnimated:self completion:NULL];
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.usernameField resignFirstResponder];
+    [self.passwordField resignFirstResponder];
+    [self.reEnterPasswordField resignFirstResponder];
+    [self.emailField resignFirstResponder];
+    [self.residenceHallField resignFirstResponder];
+}
+
 - (IBAction)registerAction:(UIButton *)sender {
     [self.usernameField resignFirstResponder];
     [self.passwordField resignFirstResponder];
@@ -49,11 +57,25 @@
     self.reEnterPasswordField.delegate = self;
     self.emailField.delegate = self;
     self.residenceHallField.delegate = self;
+    
+    [self.usernameField setReturnKeyType:UIReturnKeyNext];
+    [self.residenceHallField setReturnKeyType:UIReturnKeyNext];
+    [self.emailField setReturnKeyType:UIReturnKeyNext];
+    [self.passwordField setReturnKeyType:UIReturnKeyNext];
+    [self.reEnterPasswordField setReturnKeyType:UIReturnKeyDone];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
+    if (textField==self.usernameField)
+        [self.emailField becomeFirstResponder];
+    if(textField==self.emailField)
+        [self.residenceHallField becomeFirstResponder];
+    if(textField==self.residenceHallField)
+        [self.passwordField becomeFirstResponder];
+    if(textField==self.passwordField)
+        [self.reEnterPasswordField becomeFirstResponder];
     return YES;
 }
 

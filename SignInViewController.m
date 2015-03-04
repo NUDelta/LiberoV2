@@ -32,6 +32,8 @@
                 }];
                 // Do stuff after successful login.
             } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Libero!" message:@"Wrong password" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
                 // The login failed. Check error to see why.
             }
         }];
@@ -41,9 +43,16 @@
     [self presentViewController:logInViewController animated:NO completion:NULL];
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.username resignFirstResponder];
+    [self.password resignFirstResponder];
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
+    if (textField==self.username)
+        [self.password becomeFirstResponder];
     return YES;
 }
 
@@ -51,6 +60,8 @@
     [super viewDidLoad];
     self.username.delegate = self;
     self.password.delegate = self;
+    [self.username setReturnKeyType:UIReturnKeyNext];
+    [self.password setReturnKeyType:UIReturnKeyDone];
     // Do any additional setup after loading the view.
 }
 
