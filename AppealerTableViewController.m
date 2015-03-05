@@ -159,7 +159,8 @@
     [titleButton setTitle:@"My Requests" forState:UIControlStateNormal];
     [titleButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, -5)];
     [titleButton addTarget:self action:@selector(presentStyleMenu:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [titleButton setTintColor:[UIColor blackColor]];
+    [titleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [titleButton sizeToFit];
     self.navigationItem.titleView = titleButton;
     
@@ -168,7 +169,8 @@
     UIBarButtonItem *bbi = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewItem)];
     navItem.rightBarButtonItem = bbi;
     navItem.leftBarButtonItem = self.editButtonItem;
-    
+    [navItem.rightBarButtonItem setTintColor:[UIColor blackColor]];
+    [navItem.leftBarButtonItem setTintColor:[UIColor blackColor]];
 //    NSLog([PFUser currentUser].username);
     [self startDownloadMyRequest];
     
