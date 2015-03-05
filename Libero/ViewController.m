@@ -56,7 +56,7 @@ NSTimer *timer;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    timer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(dataReloaded) userInfo:nil repeats:YES];
+    
    // NSLog(@"%@", [self parentViewController]);
     _messages = [[NSMutableArray alloc] init];
    // [self setCombNames:@"adminjiajun l"];
@@ -69,6 +69,9 @@ NSTimer *timer;
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    timer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(dataReloaded) userInfo:nil repeats:YES];
+}
 
 - (void) downloadConversation {
     self.convo = [[NSMutableArray alloc]init];

@@ -61,13 +61,13 @@
         <!--My Requests-->
         <scene sceneID="VbE-e9-Alx">
             <objects>
-                <viewController id="Fzv-Ma-1km" customClass="AppealerTableViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyRequestsVC" id="Fzv-Ma-1km" customClass="AppealerTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="157" sectionHeaderHeight="22" sectionFooterHeight="22" id="yh7-va-BwY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="Appealer Request Cell" textLabel="hDv-MA-Rhy" detailTextLabel="v4V-lB-Pjn" rowHeight="157" style="IBUITableViewCellStyleSubtitle" id="e8I-6a-z9o">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="Appealer Request Cell" textLabel="hDv-MA-Rhy" detailTextLabel="v4V-lB-Pjn" rowHeight="157" style="IBUITableViewCellStyleSubtitle" id="e8I-6a-z9o">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e8I-6a-z9o" id="11I-3n-8Cb">
@@ -87,6 +87,7 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="qSV-y0-Vki" kind="push" identifier="chatV2" id="e96-fJ-Z6O"/>
                                 </connections>
@@ -166,7 +167,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="Sharer Request Cell" textLabel="L2L-Uk-Zsu" detailTextLabel="bmr-HY-pzo" rowHeight="147" style="IBUITableViewCellStyleSubtitle" id="Iuq-2P-k9V">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="Sharer Request Cell" textLabel="L2L-Uk-Zsu" detailTextLabel="bmr-HY-pzo" rowHeight="147" style="IBUITableViewCellStyleSubtitle" id="Iuq-2P-k9V">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Iuq-2P-k9V" id="4ch-Si-tlF">
@@ -186,11 +187,13 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" title="Others' Requests" id="yDI-gZ-s2z">
                         <barButtonItem key="rightBarButtonItem" title="Logout" id="zJl-OZ-M9a">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="logOutButton:" destination="ahd-Ri-dcv" id="Ish-cp-tEA"/>
                             </connections>
@@ -338,10 +341,11 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0B-aZ-GuO">
-                                <rect key="frame" x="262" y="89" width="89" height="34"/>
+                                <rect key="frame" x="268" y="89" width="89" height="34"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <state key="normal" title="Delivered!">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Delivered?">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -701,7 +705,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="Sharer Request Cell" textLabel="564-j7-AeN" detailTextLabel="mqN-h3-aqE" rowHeight="147" style="IBUITableViewCellStyleSubtitle" id="Y0R-ZM-i1v">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="Sharer Request Cell" textLabel="564-j7-AeN" detailTextLabel="mqN-h3-aqE" rowHeight="147" style="IBUITableViewCellStyleSubtitle" id="Y0R-ZM-i1v">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y0R-ZM-i1v" id="RC9-P0-YqG">
@@ -721,6 +725,8 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <segue destination="qSV-y0-Vki" kind="push" identifier="chatV1" id="qDO-m3-qba"/>
                                 </connections>
@@ -824,6 +830,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sSb-HB-FXH">
                                         <rect key="frame" x="0.0" y="276" width="96" height="30"/>
                                         <state key="normal" title="Upload Image">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>

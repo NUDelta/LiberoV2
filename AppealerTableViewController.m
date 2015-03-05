@@ -106,10 +106,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.tableView.separatorColor = [UIColor whiteColor];
     self.navigationController.navigationBarHidden=NO;
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [titleButton setTintColor:[UIColor blackColor]];
+    [titleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [titleButton setTitle:@"My Requests" forState:UIControlStateNormal];
     [titleButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, -5)];
     [titleButton addTarget:self action:@selector(presentStyleMenu:) forControlEvents:UIControlEventTouchUpInside];
@@ -122,7 +124,8 @@
     UIBarButtonItem *bbi = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewItem)];
     navItem.rightBarButtonItem = bbi;
     navItem.leftBarButtonItem = self.editButtonItem;
-    
+    [navItem.rightBarButtonItem setTintColor:[UIColor blackColor]];
+    [navItem.leftBarButtonItem setTintColor:[UIColor blackColor]];
     NSLog([PFUser currentUser].username);
     [self startDownloadMyRequest];
     // Uncomment the following line to preserve selection between presentations.
@@ -254,13 +257,17 @@
   willDisplayCell: (UITableViewCell*)cell
 forRowAtIndexPath: (NSIndexPath*)indexPath
 {
-    if ([(NSString *)[self.requests[indexPath.row] valueForKeyPath:@"delivered"] isEqualToString:@"delivered"]) {
-        cell.backgroundColor = [UIColor colorWithRed: 0.0 green: 1.0 blue: 0.0 alpha: 1.0];
+    if ([(NSString *)[self.requests[self.requests.count - 1 - indexPath.row] valueForKeyPath:@"delivered"] isEqualToString:@"delivered"]) {
+        cell.backgroundColor = [UIColor colorWithRed: 114.0/255 green: 109.0/255 blue: 128.0/255 alpha: 1.0];
         cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.detailTextLabel.textColor = [UIColor whiteColor];
         cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     } else {
-        cell.backgroundColor = [UIColor colorWithRed: 1.0 green: 0.0 blue: 0.0 alpha: 1.0];
+        cell.backgroundColor = [UIColor colorWithRed: 46.0/255 green: 38.0/255 blue: 99.0/255 alpha: 0.5];;
         cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.detailTextLabel.textColor = [UIColor whiteColor];
         cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     }
 }
@@ -272,10 +279,10 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
         [query getObjectInBackgroundWithId:[self.requests[self.requests.count - 1 - indexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
             if(!error) {
                 object[@"cancelled"] = @"true";
-                NSLog(@"requets count: %d", [self.requests count]);
+                NSLog(@"requets count: %lu", (unsigned long)[self.requests count]);
                 NSLog(@"%@", indexPath.description);
                 [self.requests removeObjectAtIndex: self.requests.count - 1 - indexPath.row];
-                NSLog(@"requets count: %d", [self.requests count]);
+                NSLog(@"requets count: %lu", (unsigned long)[self.requests count]);
                 [object saveInBackground];
                 [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             }

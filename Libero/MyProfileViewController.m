@@ -108,7 +108,8 @@
     [titleButton setTitle:@"Profile" forState:UIControlStateNormal];
     [titleButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, -5)];
     [titleButton addTarget:self action:@selector(presentStyleMenu:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [titleButton setTintColor:[UIColor blackColor]];
+    [titleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [titleButton sizeToFit];
     self.navigationItem.titleView = titleButton;
     

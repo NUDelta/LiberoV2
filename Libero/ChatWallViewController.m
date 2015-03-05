@@ -10,6 +10,9 @@
 #import "ChatDetailTableViewController.h"
 #import "MyUser.h"
 #import "ViewController.h"
+#import "MySession.h"
+#define mySession [MySession sharedManager]
+
 @interface ChatWallViewController () <UIAlertViewDelegate>
 
 @end
@@ -22,6 +25,8 @@ NSString * tmpNames;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [mySession setCwvc:self];
     
     if ([self.other isEqualToString:@"notdelivered"]){
         UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"requestsNav"];

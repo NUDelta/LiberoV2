@@ -112,9 +112,12 @@
     [super viewDidLoad];
     UINavigationItem *nav = self.navigationItem;
     nav.title = @"Current Pickups";
-    
+    self.tableView.separatorColor = [UIColor whiteColor];
+
     self.navigationController.navigationBarHidden=NO;
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [titleButton setTintColor:[UIColor blackColor]];
+    [titleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     [titleButton setTitle:@"Current Pickups" forState:UIControlStateNormal];
     [titleButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, -5)];
@@ -159,8 +162,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"here too");
+    
     NSDictionary *request = self.requests[indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Sharer Request Cell" forIndexPath:indexPath];
+    //cell.backgroundColor = [UIColor colorWithRed: 46.0/255 green: 38.0/255 blue: 99.0/255 alpha: 0.7];
+    //cell.backgroundColor = [UIColor colorWithRed: 114.0/255 green: 109.0/255 blue: 128.0/255 alpha: 1.0];
+    cell.backgroundColor = [UIColor colorWithRed: 46.0/255 green: 38.0/255 blue: 99.0/255 alpha: 0.5];
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.detailTextLabel.textColor = [UIColor whiteColor];
+    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.text = [request valueForKeyPath:@"username"];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"MMMM d, YYYY hh:mm a";

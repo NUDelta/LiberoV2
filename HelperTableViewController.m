@@ -254,7 +254,8 @@
     [titleButton setTitle:@"Other's Requests" forState:UIControlStateNormal];
     [titleButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, -5)];
     [titleButton addTarget:self action:@selector(presentStyleMenu:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [titleButton setTintColor:[UIColor blackColor]];
+    [titleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [titleButton sizeToFit];
     self.navigationItem.titleView = titleButton;
     
@@ -387,6 +388,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *request = self.requests[indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Sharer Request Cell" forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor colorWithRed: 46.0/255 green: 38.0/255 blue: 99.0/255 alpha: 0.5];
+    //cell.backgroundColor = [UIColor colorWithRed: 114.0/255 green: 109.0/255 blue: 128.0/255 alpha: 1];
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.detailTextLabel.textColor = [UIColor whiteColor];
+    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.text = [NSString stringWithFormat: @"Requester: %@", [request valueForKeyPath:@"username"]];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"MMMM d, YYYY hh:mm a";

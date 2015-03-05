@@ -78,7 +78,8 @@
     [titleButton setTitle:@"Add New Request" forState:UIControlStateNormal];
     [titleButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, -5)];
     [titleButton addTarget:self action:@selector(presentStyleMenu:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [titleButton setTintColor:[UIColor blackColor]];
+    [titleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [titleButton sizeToFit];
     self.navigationItem.titleView = titleButton;
     
@@ -89,11 +90,14 @@
     _sizeData = @[@"Small",@"Medium",@"Large"];
     // Do any additional setup after loading the view.
     UINavigationItem *navItem = self.navigationItem;
+    
     navItem.title = @"Add New Request";
     UIBarButtonItem *bbiRight = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveRequest)];
     UIBarButtonItem *bbiLeft = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelRequest)];
     navItem.rightBarButtonItem = bbiRight;
     navItem.leftBarButtonItem = bbiLeft;
+    [navItem.rightBarButtonItem setTintColor:[UIColor blackColor]];
+    [navItem.leftBarButtonItem setTintColor:[UIColor blackColor]];
 }
 
 //- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {

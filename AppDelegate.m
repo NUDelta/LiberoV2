@@ -13,6 +13,9 @@
 #import "ESTConfig.h"
 #import "ChatWallViewController.h" 
 #import "CurrentPickUpTableViewController.h"
+#import "MySession.h"
+#import "AppealerTableViewController.h"
+#define mySession [MySession sharedManager]
 
 @interface AppDelegate () <CLLocationManagerDelegate>
 @property (nonatomic, strong) UIStoryboard *storyBoard;
@@ -105,7 +108,21 @@
         //send to my requests
         
     } else if ([[userInfo valueForKeyPath:@"whereFrom"] isEqualToString:@"pickup"]) {
-        //send to my requests chat
+        NSDictionary *request = [userInfo valueForKeyPath:@"request"];
+        
+        UINavigationController *myNav = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"requestsNav"];
+        self.window.rootViewController = myNav;
+        AppealerTableViewController *atvc = (AppealerTableViewController *)[sb instantiateViewControllerWithIdentifier:@"MyRequestsVC"];
+        
+        // ChatWallViewController *cvc = (ChatWallViewController *)[sb instantiateViewControllerWithIdentifier:@"ChatWallViewController"];
+        ChatWallViewController *cvc = [mySession cwvc];
+        cvc.other = [NSString stringWithFormat:@"%@", [request valueForKeyPath:@"username"]];
+        cvc.detailChat = YES;
+        cvc.request = request;
+        cvc.objId = [request valueForKey:@"objectId"];
+        myNav.viewControllers = [NSArray arrayWithObjects:atvc,cvc, nil];
+        [myNav popToViewController:cvc animated:YES];
+
         
     } else {
         //send to current pickups chat
@@ -115,8 +132,8 @@
         self.window.rootViewController = myNav;
         CurrentPickUpTableViewController *cptvc = (CurrentPickUpTableViewController *)[sb instantiateViewControllerWithIdentifier:@"CurrentPickUpTableViewController"];
         
-        ChatWallViewController *cvc = (ChatWallViewController *)[sb instantiateViewControllerWithIdentifier:@"ChatWallViewController"];
-       
+       // ChatWallViewController *cvc = (ChatWallViewController *)[sb instantiateViewControllerWithIdentifier:@"ChatWallViewController"];
+        ChatWallViewController *cvc = [mySession cwvc];
         cvc.other = [NSString stringWithFormat:@"%@", [request valueForKeyPath:@"username"]];
         cvc.detailChat = YES;
         cvc.request = request;
