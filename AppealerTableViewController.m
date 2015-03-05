@@ -45,6 +45,8 @@
 @property (nonatomic, strong) NSString *message;
 @property (nonatomic, strong) NSString *notificationSetting;
 @property (nonatomic, strong) UILocalNotification *localNotif;
+@property (assign) BOOL updatedBeacon;
+
 
 @end
 
@@ -459,6 +461,7 @@
 {
     if ([region.identifier isEqualToString:@"Plex"]) {
         self.beaconNoti = NO;
+        self.updatedBeacon = YES;
         [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
             if (!error) {
                 NSString *message = [NSString stringWithFormat:@"Exited %f, %f",geoPoint.latitude, geoPoint.longitude];
@@ -472,34 +475,38 @@
 - (void)beaconManager:(ESTBeaconManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(ESTBeaconRegion *)region
 {
 //    [self HelperRequests];
-    PFQuery *query = [PFQuery queryWithClassName:@"Message"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        NSMutableArray *tmpRequest = [[NSMutableArray alloc] init];
-        
-        if(!error) {
-            for(PFObject *object in objects){
-                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
-                    NSLog(@"%@", object[@"residenceHall"]);
-                    NSLog(@"another one %@", [MyUser currentUser].residenceHall);
-                    [tmpRequest addObject: object];
+    if (self.updatedBeacon){
+        PFQuery *query = [PFQuery queryWithClassName:@"Message"];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            NSMutableArray *tmpRequest = [[NSMutableArray alloc] init];
+            
+            if(!error) {
+                for(PFObject *object in objects){
+                    if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
+                        NSLog(@"%@", object[@"residenceHall"]);
+                        NSLog(@"another one %@", [MyUser currentUser].residenceHall);
+                        [tmpRequest addObject: object];
+                    }
                 }
             }
-        }
-        self.requests = tmpRequest;
-        NSLog(@"%d",self.requests.count);
-        if (self.requests.count > 0) {
-            if ([self.requests[self.requests.count -1] valueForKeyPath:@"packageType"] == NULL)
-                self.message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username], [self.requests[self.requests.count -1] valueForKeyPath:@"username"];
-            else
-                self.message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me? --%@", [MyUser currentUser].username, [self.requests[self.requests.count -1] valueForKeyPath:@"packageType"], [self.requests[self.requests.count -1] valueForKeyPath:@"username"]];
-            ESTBeacon *firstBeacon = [beacons firstObject];
-            if (!self.beaconNoti && [firstBeacon.distance integerValue] < 5 && [firstBeacon.distance integerValue]!= -1 && [firstBeacon.distance integerValue]!= 0) {
-                [self triggerNotificationWithMessage: self.message];
-                self.beaconNoti = YES;
-                [self appUsageLogging:[firstBeacon.distance stringValue]];
+            self.requests = tmpRequest;
+            NSLog(@"%d",self.requests.count);
+            if (self.requests.count > 0) {
+                if ([self.requests[self.requests.count -1] valueForKeyPath:@"packageType"] == NULL)
+                    self.message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username], [self.requests[self.requests.count -1] valueForKeyPath:@"username"];
+                else
+                    self.message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me? --%@", [MyUser currentUser].username, [self.requests[self.requests.count -1] valueForKeyPath:@"packageType"], [self.requests[self.requests.count -1] valueForKeyPath:@"username"]];
+                ESTBeacon *firstBeacon = [beacons firstObject];
+                if (!self.beaconNoti && [firstBeacon.distance integerValue] < 5 && [firstBeacon.distance integerValue]!= -1 && [firstBeacon.distance integerValue]!= 0) {
+                    [self triggerNotificationWithMessage: self.message];
+                    self.beaconNoti = YES;
+                    self.updatedBeacon = NO;
+                    [self appUsageLogging:[firstBeacon.distance stringValue]];
+                }
             }
-        }
-    }];
+        }];
+    }
+ 
     //    if ([self.requests[0] valueForKeyPath:@"packageType"] == NULL)
     //        message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me?", [MyUser currentUser].username];
     //    else
