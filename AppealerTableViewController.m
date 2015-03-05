@@ -134,12 +134,6 @@
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleBlackGradient;
       }],
-      [RWDropdownMenuItem itemWithText:@"New Request" image:nil action:^{
-          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"addRequestNav"];
-          myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-          [self presentViewController:myNav animated:YES completion:nil];
-          self.menuStyle = RWDropdownMenuStyleTranslucent;
-      }],
       [RWDropdownMenuItem itemWithText:@"Profile" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"profileNav"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -687,7 +681,27 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
 */
 
 
-
+-(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+    NSDictionary *request = self.myRequests[self.myRequests.count -1 - indexPath.row];
+    
+    NSLog(@"======================deliverer %@", [request valueForKeyPath:@"deliverer"]);
+    if([(NSString *)[request valueForKeyPath:@"deliverer"] isEqualToString:@"null"]) {
+        
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Waiting for pickup"
+                                                        message: @"We're sorry, your package hasn't been picked up yet!"
+                                                       delegate: self
+                                              cancelButtonTitle: @"OK"
+                                              otherButtonTitles: nil,nil];
+        [alert show];
+        return NO;
+        
+    } else {
+        return YES;
+    }
+    
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -700,7 +714,7 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
     NSLog(@"======================deliverer %@", [request valueForKeyPath:@"deliverer"]);
     if([(NSString *)[request valueForKeyPath:@"deliverer"] isEqualToString:@"null"]) {
         
-        if([segue.identifier isEqualToString:@"chatV2"]) {
+      /*  if([segue.identifier isEqualToString:@"chatV2"]) {
             if([segue.destinationViewController isKindOfClass:[ChatWallViewController class]]) {
                 ChatWallViewController *cvc = [segue destinationViewController];
                 NSLog(@"%@", [request valueForKeyPath:@"deliverer"]);
@@ -716,7 +730,7 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
                                                 delegate: self
                                                 cancelButtonTitle: @"OK"
                                                 otherButtonTitles: nil,nil];
-        [alert show];
+        [alert show];*/
 
         
     } else if([sender isKindOfClass:[UITableViewCell class]]) {

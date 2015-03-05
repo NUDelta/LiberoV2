@@ -43,12 +43,6 @@
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleTranslucent;
       }],
-      [RWDropdownMenuItem itemWithText:@"New Request" image:nil action:^{
-          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"addRequestNav"];
-          myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-          [self presentViewController:myNav animated:YES completion:nil];
-          self.menuStyle = RWDropdownMenuStyleTranslucent;
-      }],
       [RWDropdownMenuItem itemWithText:@"Profile" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"profileNav"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
