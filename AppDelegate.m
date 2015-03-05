@@ -32,13 +32,53 @@
     [MyUser registerSubclass];
     [Parse setApplicationId:@"gnB2zH2cX8g0Nt5zpWTqmiXx3FSloF98QxhvOuvG" clientKey:@"dv90lyOLj3VzxscTnIuH9hRkUgds54hXWJz7gsR2"];
     [ESTConfig setupAppID:@"app_2kmj1w2otd" andAppToken:@"2c138ec1f40d00cbaebd2aaac6cf09a8"];
-
+    CGSize iOSScreenSize = [[UIScreen mainScreen] bounds].size;
+    
     if([MyUser currentUser]) {
-
+        if (iOSScreenSize.height == 480){ //iphone 5
+            UIStoryboard *iPhone3Storyboard = [UIStoryboard storyboardWithName:@"Storyboard4" bundle:nil];
+            UIViewController *initialViewController = [iPhone3Storyboard instantiateInitialViewController];
+            self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+            self.window.rootViewController = initialViewController;
+            [self.window makeKeyAndVisible];
+        }
+        if (iOSScreenSize.height == 568){ //iphone 5
+            UIStoryboard *iPhone4Storyboard = [UIStoryboard storyboardWithName:@"Storyboard5s" bundle:nil];
+            UIViewController *initialViewController = [iPhone4Storyboard instantiateInitialViewController];
+            self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+            self.window.rootViewController = initialViewController;
+            [self.window makeKeyAndVisible];
+        }
+        if (iOSScreenSize.height == 667){ //iphone 6
+            UIStoryboard *iPhone47Storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UIViewController *initialViewController = [iPhone47Storyboard instantiateInitialViewController];
+            self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+            self.window.rootViewController = initialViewController;
+            [self.window makeKeyAndVisible];
+        }
+        
     } else {
-        UIViewController* rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
-        UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController];
-        self.window.rootViewController = navigation;
+        if (iOSScreenSize.height == 480){ //iphone 4
+            UIViewController* rootController1 = [[UIStoryboard storyboardWithName:@"Storyboard4" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
+            UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController1];
+            self.window.rootViewController = navigation;
+            [self.window makeKeyAndVisible];
+        }
+        if (iOSScreenSize.height == 568){ //iphone 5
+            UIViewController* rootController2 = [[UIStoryboard storyboardWithName:@"Storyboard5s" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
+            UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController2];
+            self.window.rootViewController = navigation;
+            [self.window makeKeyAndVisible];
+        }
+        if (iOSScreenSize.height == 667){ //iphone 6
+            UIViewController* rootController3 = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
+            UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController3];
+            self.window.rootViewController = navigation;            [self.window makeKeyAndVisible];
+        }
+        
+//        UIViewController* rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
+//        UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController];
+//        self.window.rootViewController = navigation;
     }
 //    if(!self.storyBoard) self.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 //    if(!self.mvc) self.mvc = [self.storyBoard instantiateViewControllerWithIdentifier:@"MapView"];

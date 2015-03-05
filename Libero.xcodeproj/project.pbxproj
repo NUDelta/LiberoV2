@@ -45,6 +45,8 @@
 		EDD323941A9E5B0100B8ED52 /* SendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDD323931A9E5B0100B8ED52 /* SendViewController.m */; };
 		EDD323971A9E6E7B00B8ED52 /* FormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDD323961A9E6E7B00B8ED52 /* FormViewController.m */; };
 		EDD3239A1AA6CCA400B8ED52 /* MySession.m in Sources */ = {isa = PBXBuildFile; fileRef = EDD323991AA6CCA400B8ED52 /* MySession.m */; };
+		EDD3239C1AA8332D00B8ED52 /* Storyboard5s.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDD3239B1AA8332D00B8ED52 /* Storyboard5s.storyboard */; };
+		EDD3239E1AA8388B00B8ED52 /* Storyboard4.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDD3239D1AA8388B00B8ED52 /* Storyboard4.storyboard */; };
 		EDFA7CC11A93ABCD000B6DD6 /* ChatTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA7CC01A93ABCD000B6DD6 /* ChatTableViewController.m */; };
 		EDFA7CCC1A93E9D5000B6DD6 /* balloon_read_left.png in Resources */ = {isa = PBXBuildFile; fileRef = EDFA7CC41A93E9D5000B6DD6 /* balloon_read_left.png */; };
 		EDFA7CCD1A93E9D5000B6DD6 /* balloon_read_right.png in Resources */ = {isa = PBXBuildFile; fileRef = EDFA7CC51A93E9D5000B6DD6 /* balloon_read_right.png */; };
@@ -130,6 +132,8 @@
 		EDD323961A9E6E7B00B8ED52 /* FormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormViewController.m; sourceTree = "<group>"; };
 		EDD323981AA6CCA400B8ED52 /* MySession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySession.h; sourceTree = "<group>"; };
 		EDD323991AA6CCA400B8ED52 /* MySession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySession.m; sourceTree = "<group>"; };
+		EDD3239B1AA8332D00B8ED52 /* Storyboard5s.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard5s.storyboard; sourceTree = "<group>"; };
+		EDD3239D1AA8388B00B8ED52 /* Storyboard4.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard4.storyboard; sourceTree = "<group>"; };
 		EDFA7CBF1A93ABCD000B6DD6 /* ChatTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewController.h; sourceTree = "<group>"; };
 		EDFA7CC01A93ABCD000B6DD6 /* ChatTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewController.m; sourceTree = "<group>"; };
 		EDFA7CC41A93E9D5000B6DD6 /* balloon_read_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balloon_read_left.png; sourceTree = "<group>"; };
@@ -219,6 +223,8 @@
 				EDD323961A9E6E7B00B8ED52 /* FormViewController.m */,
 				EDD323981AA6CCA400B8ED52 /* MySession.h */,
 				EDD323991AA6CCA400B8ED52 /* MySession.m */,
+				EDD3239B1AA8332D00B8ED52 /* Storyboard5s.storyboard */,
+				EDD3239D1AA8388B00B8ED52 /* Storyboard4.storyboard */,
 			);
 			path = Libero;
 			sourceTree = "<group>";
@@ -428,7 +434,7 @@
 				TargetAttributes = {
 					0643ED1E1A81A16100F8C4F4 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = W4E2C6X642;
+						DevelopmentTeam = E2L5G3LYSL;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -440,7 +446,7 @@
 					};
 					0643ED371A81A16100F8C4F4 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = W4E2C6X642;
+						DevelopmentTeam = E2L5G3LYSL;
 						TestTargetID = 0643ED1E1A81A16100F8C4F4;
 					};
 				};
@@ -475,6 +481,8 @@
 				EDFA7CCF1A93E9D5000B6DD6 /* balloon_selected_right.png in Resources */,
 				EDFA7CCC1A93E9D5000B6DD6 /* balloon_read_left.png in Resources */,
 				0643ED4B1A81A1D000F8C4F4 /* Main.storyboard in Resources */,
+				EDD3239E1AA8388B00B8ED52 /* Storyboard4.storyboard in Resources */,
+				EDD3239C1AA8332D00B8ED52 /* Storyboard5s.storyboard in Resources */,
 				0643ED331A81A16100F8C4F4 /* LaunchScreen.xib in Resources */,
 				EDFA7CD11A93E9D5000B6DD6 /* balloon_unread_right.png in Resources */,
 				EDD323911A9E3A7200B8ED52 /* down@2x.png in Resources */,
@@ -680,7 +688,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f8ddd603-6cfa-4e74-a126-446dbd9e976e";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -699,7 +707,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f8ddd603-6cfa-4e74-a126-446dbd9e976e";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

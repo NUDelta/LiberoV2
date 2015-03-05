@@ -308,7 +308,7 @@
                         <viewControllerLayoutGuide type="bottom" id="OWB-by-upe"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="GPl-Fg-mhY">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MzV-aQ-dNR">
@@ -341,7 +341,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0B-aZ-GuO">
-                                <rect key="frame" x="268" y="89" width="89" height="34"/>
+                                <rect key="frame" x="275" y="88" width="89" height="34"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <state key="normal" title="Delivered?">
@@ -357,7 +357,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="uIp-vu-PfF"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="568"/>
+                    <size key="freeformSize" width="375" height="667"/>
                     <connections>
                         <outlet property="deliveredBttn" destination="e0B-aZ-GuO" id="ujd-UT-smG"/>
                         <outlet property="messageInput" destination="dzR-OV-GtL" id="tpK-dh-CGm"/>
@@ -365,7 +365,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="agC-YS-KjJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1632" y="1420"/>
+            <point key="canvasLocation" x="1642" y="2632"/>
         </scene>
         <!--Chat Detail Table View Controller-->
         <scene sceneID="qlg-X6-Ra3">
@@ -978,7 +978,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Gf-tQ-U3J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1632" y="1172"/>
+            <point key="canvasLocation" x="1703" y="1202"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -987,6 +987,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="e96-fJ-Z6O"/>
+        <segue reference="qDO-m3-qba"/>
     </inferredMetricsTieBreakers>
 </document>
