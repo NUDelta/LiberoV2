@@ -22,7 +22,7 @@
 @property (strong, nonatomic) NSString *packageSize;
 @property (nonatomic, assign) RWDropdownMenuStyle menuStyle;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
-
+@property (assign) BOOL saved;
 @end
 
 @implementation AddRequestViewController
@@ -81,6 +81,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.spinner.hidden = TRUE;
+    self.saved = FALSE;
     self.navigationController.navigationBarHidden=NO;
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
@@ -174,29 +175,33 @@ numberOfRowsInComponent:(NSInteger)component
 }
 
 - (void)saveRequest {
-    NSLog(@"save request");
-    [self appUsageLogging:@"added new request"];
-    PFObject *req = [PFObject objectWithClassName:@"Message"];
-    if (self.imageView.image != NULL) {
-        NSData* data = UIImageJPEGRepresentation(self.imageView.image, 0.5f);
-        PFFile *imageFile = [PFFile fileWithName:@"Image.jpg" data:data];
-        [req setObject:imageFile forKey:@"image"];
+    if(!self.saved){
+        self.saved = TRUE;
+        NSLog(@"save request");
+        [self appUsageLogging:@"added new request"];
+        PFObject *req = [PFObject objectWithClassName:@"Message"];
+        if (self.imageView.image != NULL) {
+            NSData* data = UIImageJPEGRepresentation(self.imageView.image, 0.5f);
+            PFFile *imageFile = [PFFile fileWithName:@"Image.jpg" data:data];
+            [req setObject:imageFile forKey:@"image"];
+        }
+        req[@"username"] = [MyUser currentUser].username;
+        req[@"email"] = [MyUser currentUser].email;
+        req[@"residenceHall"] = [MyUser currentUser].residenceHall;
+        req[@"deliverer"] = @"null";
+        req[@"delivererId"] = @"null";
+        req[@"delivered"] = @"waiting for pickup";
+        req[@"itemDescription"] = self.descriptionTextField.text;
+        req[@"packageType"] = self.packageSize;
+        self.spinner.hidden = FALSE;
+        [self.spinner startAnimating];
+        [req saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            self.descriptionTextField = @"";
+            self.imageView.image = nil;
+            [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+        }];
     }
-    req[@"username"] = [MyUser currentUser].username;
-    req[@"email"] = [MyUser currentUser].email;
-    req[@"residenceHall"] = [MyUser currentUser].residenceHall;
-    req[@"deliverer"] = @"null";
-    req[@"delivererId"] = @"null";
-    req[@"delivered"] = @"waiting for pickup";
-    req[@"itemDescription"] = self.descriptionTextField.text;
-    req[@"packageType"] = self.packageSize;
-    self.spinner.hidden = FALSE;
-    [self.spinner startAnimating];
-    [req saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        self.descriptionTextField = @"";
-        self.imageView.image = nil;
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
-    }];
+
 }
 
 - (void)appUsageLogging: (NSString *)activity {
