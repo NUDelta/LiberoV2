@@ -415,6 +415,13 @@
     [alert show];
     NSLog(@"index button clicked");
 }
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    self.myIndexPath = indexPath;
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Are you gonna pick this up?" message:@"If you click YES, email notification will be sent to the recipient." delegate:self cancelButtonTitle:@"NO" otherButtonTitles: nil];
+    [alert addButtonWithTitle:@"YES"];
+    [alert show];
+    NSLog(@"index button clicked");
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -424,13 +431,6 @@
 }
 */
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    self.myIndexPath = indexPath;
-//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Are you gonna pick this up?" message:@"If you click YES, email notification will be sent to the recipient." delegate:self cancelButtonTitle:@"NO" otherButtonTitles: nil];
-//    [alert addButtonWithTitle:@"YES"];
-//    [alert show];
-}
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

@@ -67,7 +67,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="Appealer Request Cell" textLabel="hDv-MA-Rhy" detailTextLabel="v4V-lB-Pjn" rowHeight="157" style="IBUITableViewCellStyleSubtitle" id="e8I-6a-z9o">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Appealer Request Cell" textLabel="hDv-MA-Rhy" detailTextLabel="v4V-lB-Pjn" rowHeight="157" style="IBUITableViewCellStyleSubtitle" id="e8I-6a-z9o">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e8I-6a-z9o" id="11I-3n-8Cb">
@@ -167,7 +167,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="Sharer Request Cell" textLabel="L2L-Uk-Zsu" detailTextLabel="bmr-HY-pzo" rowHeight="147" style="IBUITableViewCellStyleSubtitle" id="Iuq-2P-k9V">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Sharer Request Cell" textLabel="L2L-Uk-Zsu" detailTextLabel="bmr-HY-pzo" rowHeight="147" style="IBUITableViewCellStyleSubtitle" id="Iuq-2P-k9V">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Iuq-2P-k9V" id="4ch-Si-tlF">
@@ -365,7 +365,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="agC-YS-KjJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1642" y="2632"/>
+            <point key="canvasLocation" x="1632" y="1420"/>
         </scene>
         <!--Chat Detail Table View Controller-->
         <scene sceneID="qlg-X6-Ra3">
@@ -705,7 +705,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="Sharer Request Cell" textLabel="564-j7-AeN" detailTextLabel="mqN-h3-aqE" rowHeight="147" style="IBUITableViewCellStyleSubtitle" id="Y0R-ZM-i1v">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Sharer Request Cell" textLabel="564-j7-AeN" detailTextLabel="mqN-h3-aqE" rowHeight="147" style="IBUITableViewCellStyleSubtitle" id="Y0R-ZM-i1v">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y0R-ZM-i1v" id="RC9-P0-YqG">
@@ -987,6 +987,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qDO-m3-qba"/>
+        <segue reference="e96-fJ-Z6O"/>
     </inferredMetricsTieBreakers>
 </document>
