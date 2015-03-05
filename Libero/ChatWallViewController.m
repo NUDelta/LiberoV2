@@ -25,7 +25,8 @@ NSString * tmpNames;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.messageInput.delegate = self;
+    [self.messageInput setReturnKeyType:UIReturnKeyDone];
     [mySession setCwvc:self];
     
     if ([self.other isEqualToString:@"notdelivered"]){
@@ -46,6 +47,16 @@ NSString * tmpNames;
         // Do any additional setup after loading the view.
     }
    
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.messageInput resignFirstResponder];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {

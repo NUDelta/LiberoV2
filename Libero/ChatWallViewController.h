@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChatWallViewController : UIViewController {
+@interface ChatWallViewController : UIViewController <UITextFieldDelegate> {
      NSString *other;
 }
 - (IBAction)deliveredPressed:(id)sender;
