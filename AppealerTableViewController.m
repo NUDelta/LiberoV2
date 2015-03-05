@@ -71,10 +71,10 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(!error) {
             for (PFObject *object in objects) {
-                NSLog((NSString *)object[@"username"]);
+//                NSLog((NSString *)object[@"username"]);
                 if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![(NSString *)object[@"cancelled"] isEqualToString:@"true"]){
                     [tmpRequest addObject: object];
-                    NSLog(@"object added");
+//                    NSLog(@"object added");
                 }
             }
         }
@@ -95,14 +95,14 @@
         if(!error) {
             for(PFObject *object in objects){
                 if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"true"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
-                    NSLog(@"%@", object[@"residenceHall"]);
-                    NSLog(@"another one %@", [MyUser currentUser].residenceHall);
+//                    NSLog(@"%@", object[@"residenceHall"]);
+//                    NSLog(@"another one %@", [MyUser currentUser].residenceHall);
                     [tmpRequest addObject: object];
                 }
             }
         }
         self.requests = tmpRequest;
-        NSLog(@"%d",self.requests.count);
+//        NSLog(@"%d",self.requests.count);
         if (self.requests.count > 0) {
             if ([self.requests[self.requests.count -1] valueForKeyPath:@"packageType"] == NULL)
                 self.message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username], [self.requests[self.requests.count -1] valueForKeyPath:@"username"];
@@ -411,7 +411,7 @@
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             for(PFObject *object in objects){
                 if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
-                    NSLog(@"%@", object[@"residenceHall"]);
+//                    NSLog(@"%@", object[@"residenceHall"]);
 //                    NSLog(@"another one %@", [MyUser currentUser].residenceHall);
                     [tmpRequest addObject: object];
                 }
@@ -421,7 +421,7 @@
                 if (localNotif) {
                     NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[self.requests[self.requests.count -1] valueForKeyPath:@"objectId"] forKey:[self.requests[self.requests.count -1] valueForKeyPath:@"objectId"]];
                     localNotif.userInfo = dictionary;
-                    NSLog(@"%@", [self.requests[self.requests.count -1] valueForKeyPath:@"packageType"]);
+//                    NSLog(@"%@", [self.requests[self.requests.count -1] valueForKeyPath:@"packageType"]);
                     if ([self.requests[self.requests.count -1] valueForKeyPath:@"packageType"] == NULL)
                         localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username, [self.requests[self.requests.count -1] valueForKeyPath:@"username"]];
                     else
@@ -434,9 +434,9 @@
                     [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
                         if (!error) {
                             int notifCount = [object[@"notifNum"] intValue];
-                            NSLog(@"%d", notifCount);
+//                            NSLog(@"%d", notifCount);
                             NSNumber *value = [NSNumber numberWithInt:notifCount+1];
-                            object[@"notifNum"] = value;
+//                            object[@"notifNum"] = value;
                             [object saveInBackground];
                         } else {
                             NSLog(@"ERROR!");
@@ -481,14 +481,16 @@
             if(!error) {
                 for(PFObject *object in objects){
                     if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
-                        NSLog(@"%@", object[@"residenceHall"]);
-                        NSLog(@"another one %@", [MyUser currentUser].residenceHall);
+//                        NSLog(@"%@", object[@"residenceHall"]);
+//                        NSLog(@"another one %@", [MyUser currentUser].residenceHall);
                         [tmpRequest addObject: object];
+                        self.requests = tmpRequest;
+
                     }
                 }
             }
-            self.requests = tmpRequest;
-            NSLog(@"%d",self.requests.count);
+            self.updatedBeacon = NO;
+            //                        NSLog(@"%d",self.requests.count);
             if (self.requests.count > 0) {
                 if ([self.requests[self.requests.count -1] valueForKeyPath:@"packageType"] == NULL)
                     self.message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username], [self.requests[self.requests.count -1] valueForKeyPath:@"username"];
@@ -499,7 +501,6 @@
                     NSLog(@"%@", [firstBeacon.distance stringValue]);
                     [self triggerNotificationWithMessage: self.message];
                     self.beaconNoti = YES;
-                    self.updatedBeacon = NO;
                     [self appUsageLogging:[firstBeacon.distance stringValue]];
                 }
             }
@@ -550,7 +551,7 @@
         [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
             if (!error) {
                 int notifCount = [object[@"notifNum"] intValue];
-                NSLog(@"%d", notifCount);
+//                NSLog(@"%d", notifCount);
                 NSNumber *value = [NSNumber numberWithInt:notifCount+1];
                 object[@"notifNum"] = value;
                 [object saveInBackground];
@@ -662,7 +663,7 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
         [query getObjectInBackgroundWithId:[self.myRequests[self.myRequests.count - 1 - indexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
             if(!error) {
                 object[@"cancelled"] = @"true";
-                NSLog(@"requets count: %lu", (unsigned long)[self.myRequests count]);
+//                NSLog(@"requets count: %lu", (unsigned long)[self.myRequests count]);
                 NSLog(@"%@", indexPath.description);
                 [self.myRequests removeObjectAtIndex: self.myRequests.count - 1 - indexPath.row];
                 NSLog(@"requets count: %lu", (unsigned long)[self.myRequests count]);
