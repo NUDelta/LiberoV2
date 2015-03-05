@@ -148,7 +148,7 @@
 
 
 - (void)viewDidLoad {
-    
+    self.updatedBeacon = YES;
     self.navigationController.navigationBarHidden=NO;
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
@@ -168,9 +168,9 @@
     [navItem.rightBarButtonItem setTintColor:[UIColor blackColor]];
     [navItem.leftBarButtonItem setTintColor:[UIColor blackColor]];
 //    NSLog([PFUser currentUser].username);
-    [self startDownloadMyRequest];
-    
-    [self HelperRequests];
+//    [self startDownloadMyRequest];
+//    
+//    [self HelperRequests];
     
     self.direction = [[NSString alloc]init];
     self.message = [[NSString alloc]init];
@@ -268,7 +268,7 @@
         }
     }];
 //    [self.tableView deselectRowAtIndexPath:self.myIndexPath animated:YES];
-//    [self HelperRequests];
+    [self HelperRequests];
 }
 
 - (void)addNewItem {
@@ -382,7 +382,10 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    [self detectMotion];
+    if (newLocation.horizontalAccuracy < 0) return;   // ignore invalid udpates
+    
+    // EDIT: need a valid oldLocation to be able to compute distance
+    if (oldLocation == nil || oldLocation.horizontalAccuracy < 0) return;
     CLLocation *locA = newLocation;
     CLLocation *locB = oldLocation;
     CLLocationCoordinate2D centerA;
@@ -392,6 +395,7 @@
     centerA.longitude = locA.coordinate.longitude;
     centerB.longitude = locB.coordinate.longitude;
     [self getHeadingForDirectionFromCoordinate:centerB toCoordinate:centerA];
+    [self detectMotion];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
@@ -491,7 +495,8 @@
                 else
                     self.message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me? --%@", [MyUser currentUser].username, [self.requests[self.requests.count -1] valueForKeyPath:@"packageType"], [self.requests[self.requests.count -1] valueForKeyPath:@"username"]];
                 ESTBeacon *firstBeacon = [beacons firstObject];
-                if (!self.beaconNoti && [firstBeacon.distance integerValue] < 5 && [firstBeacon.distance integerValue]!= -1 && [firstBeacon.distance integerValue]!= 0) {
+                if (!self.beaconNoti && [firstBeacon.distance integerValue] < 5 && [firstBeacon.distance integerValue]!= -1 && [firstBeacon.distance floatValue]!= 0.0) {
+                    NSLog(@"%@", [firstBeacon.distance stringValue]);
                     [self triggerNotificationWithMessage: self.message];
                     self.beaconNoti = YES;
                     self.updatedBeacon = NO;
@@ -513,13 +518,16 @@
 }
 
 - (void)beaconManager:(ESTBeaconManager *)manager rangingBeaconsDidFailForRegion:(ESTBeaconRegion *)region withError:(NSError *)error {
+//    NSLog(@"it is here!!!!!!!!!!!!!!!");
     NSLog(error.description);
+//    self.updatedBeacon = NO;
 }
 
 - (void)triggerNotificationWithMessage: (NSString *)message {
     //TODO: test outside!
-    
-    if ([self.direction isEqualToString:@"south"] || [self.direction isEqualToString:@"north"]) {
+//    self.direction = @"south";
+//    self.motion = @"walking";
+    if ([self.direction isEqualToString:@"south"]) {
         if ([self.motion isEqualToString:@"walking"] || [self.motion isEqualToString:@"running"]) {
             if ([self.motion isEqualToString:@"walking"])
                 [self appUsageLogging:@"walking"];

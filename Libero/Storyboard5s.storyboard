@@ -195,14 +195,7 @@
                             </tableViewCell>
                         </prototypes>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Others' Requests" id="A5V-Ml-fH6">
-                        <barButtonItem key="rightBarButtonItem" title="Logout" id="l7Z-13-bsW">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="logOutButton:" destination="Sne-3y-niT" id="KZ5-ii-Cx1"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Others' Requests" id="A5V-Ml-fH6"/>
                     <connections>
                         <segue destination="DKL-M4-Dja" kind="push" identifier="Image View Segue" id="2kO-lE-cSA"/>
                     </connections>
@@ -855,6 +848,16 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fmc-El-DUc">
+                                        <rect key="frame" x="-9" y="61" width="375" height="667"/>
+                                        <color key="backgroundColor" red="0.37254901959999998" green="0.34901960780000002" blue="0.41176470590000003" alpha="0.68000000000000005" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="4p8-QT-WSC">
+                                        <rect key="frame" x="143" y="285" width="20" height="20"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.44705882349999998" green="0.42745098040000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -865,7 +868,9 @@
                     <connections>
                         <outlet property="descriptionTextField" destination="sDS-kS-kbf" id="naV-kB-JJ5"/>
                         <outlet property="imageView" destination="KcU-kh-Imd" id="5qf-FV-dZ1"/>
+                        <outlet property="overlayLabel" destination="fmc-El-DUc" id="i5W-Qu-p0P"/>
                         <outlet property="sizePicker" destination="evZ-As-5uo" id="rR3-MW-eNX"/>
+                        <outlet property="spinner" destination="4p8-QT-WSC" id="hBK-tr-g5X"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pBZ-bx-pD1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -952,7 +957,16 @@
                         </subviews>
                         <color key="backgroundColor" red="0.44705882349999998" green="0.42745098040000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="3X1-Na-3mU"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="3X1-Na-3mU">
+                        <barButtonItem key="rightBarButtonItem" title="Logout" id="jJS-uN-kI9">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="logOutButton:" destination="xT1-fC-QaB" id="UlD-iG-3xN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="email" destination="t08-Zo-aKJ" id="Ewz-vb-Aem"/>
                         <outlet property="name" destination="960-gh-uZR" id="TGz-2T-Vnf"/>

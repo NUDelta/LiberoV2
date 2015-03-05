@@ -196,14 +196,7 @@
                             </tableViewCell>
                         </prototypes>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Others' Requests" id="yDI-gZ-s2z">
-                        <barButtonItem key="rightBarButtonItem" title="Logout" id="zJl-OZ-M9a">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="logOutButton:" destination="ahd-Ri-dcv" id="Ish-cp-tEA"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Others' Requests" id="yDI-gZ-s2z"/>
                     <connections>
                         <segue destination="ZyY-hA-Clv" kind="push" identifier="Image View Segue" id="7bY-bK-yha"/>
                     </connections>
@@ -966,7 +959,14 @@
                         </subviews>
                         <color key="backgroundColor" red="0.44705882349999998" green="0.42745098040000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="t7s-vh-lYN"/>
+                    <navigationItem key="navigationItem" id="t7s-vh-lYN">
+                        <barButtonItem key="rightBarButtonItem" title="Logout" id="VYt-ha-0uB">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="logOutButton:" destination="Qek-Zr-Zrj" id="fjt-De-dBm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="email" destination="quo-HK-JMJ" id="bwL-C0-hh6"/>
                         <outlet property="name" destination="zBr-VU-5tP" id="Epy-ln-RLR"/>
