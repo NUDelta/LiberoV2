@@ -149,7 +149,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         [self presentViewController:myNav animated:YES completion:nil];
         [self deliveredEmail];
         [self appUsageLogging: [NSString stringWithFormat:@"delivered %@", self.objId]];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Package Delivered!"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Thank you!"
                                                         message: @"Thanks for delivering the package!"
                                                        delegate: self
                                               cancelButtonTitle: @"OK"

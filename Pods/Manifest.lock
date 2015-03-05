@@ -1,6 +1,8 @@
 PODS:
   - Bolts (1.1.3)
   - EstimoteSDK (2.4.0)
+  - Lookback (0.9.3)
+  - LookbackSafe (0.9.3)
   - Parse (1.6.2):
     - Bolts (~> 1.1)
   - RWDropdownMenu (1.0.1)
@@ -8,12 +10,16 @@ PODS:
 DEPENDENCIES:
   - Bolts
   - EstimoteSDK
+  - Lookback
+  - LookbackSafe
   - Parse
   - RWDropdownMenu
 
 SPEC CHECKSUMS:
   Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
   EstimoteSDK: 6abcf32ed821e6669cf75d62457dded2c0951e7f
+  Lookback: 6bfb2bbd2f106677d1615db64e91a47fd4c9bf93
+  LookbackSafe: b96af7166fe5ca6d81f70004ff4c4b0cdfd42290
   Parse: 60d65108fe39da77ec16c9e51d74b4d296b21424
   RWDropdownMenu: 74ad34e54804b33acac90cf54653a0cf9b59a689
 

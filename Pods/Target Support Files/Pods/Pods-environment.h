@@ -30,3 +30,23 @@
 #define COCOAPODS_VERSION_MINOR_RWDropdownMenu 0
 #define COCOAPODS_VERSION_PATCH_RWDropdownMenu 1
 
+// Debug build configuration
+#ifdef DEBUG
+
+  // Lookback
+  #define COCOAPODS_POD_AVAILABLE_Lookback
+  #define COCOAPODS_VERSION_MAJOR_Lookback 0
+  #define COCOAPODS_VERSION_MINOR_Lookback 9
+  #define COCOAPODS_VERSION_PATCH_Lookback 3
+
+#endif
+// Release build configuration
+#ifdef RELEASE
+
+  // LookbackSafe
+  #define COCOAPODS_POD_AVAILABLE_LookbackSafe
+  #define COCOAPODS_VERSION_MAJOR_LookbackSafe 0
+  #define COCOAPODS_VERSION_MINOR_LookbackSafe 9
+  #define COCOAPODS_VERSION_PATCH_LookbackSafe 3
+
+#endif

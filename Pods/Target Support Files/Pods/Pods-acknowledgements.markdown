@@ -32,6 +32,20 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 Copyright 2014 Estimote, Inc. All rights reserved.
 
 
+## Lookback
+
+All text and design is copyright © 2014 Lookback AB
+
+All rights reserved. Terms of use as defined at http://lookback.io applies.
+
+
+## LookbackSafe
+
+All text and design is copyright © 2014 Lookback AB
+
+All rights reserved. Terms of use as defined at http://lookback.io applies.
+
+
 ## Parse
 
 See https://www.parse.com/about/terms
