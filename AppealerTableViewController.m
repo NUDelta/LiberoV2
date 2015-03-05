@@ -221,14 +221,26 @@
     self.beaconManager = [[ESTBeaconManager alloc] init];
     self.beaconManager.delegate = self;
     
+    NSUUID *uuid_purple = [[NSUUID alloc]initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
+
     //    ESTBeaconRegion* region = [[ESTBeaconRegion alloc] initWithProximityUUID:uuid identifier:@"sample" secured:YES];
     ESTBeaconRegion* region = [[ESTBeaconRegion alloc] initWithProximityUUID:uuid
                                                                        major: 56412
                                                                        minor: 31995
                                                                   identifier: @"iBeaconRegion"];
+    
+    ESTBeaconRegion* regionPurple = [[ESTBeaconRegion alloc] initWithProximityUUID:uuid
+                                                                       major: 16165
+                                                                       minor: 62862
+                                                                  identifier: @"PurpleiBeaconRegion"];
+    
+    
     [self.beaconManager requestWhenInUseAuthorization];
     [self.beaconManager startMonitoringForRegion:region];
     [self.beaconManager startRangingBeaconsInRegion:region];
+    [self.beaconManager startMonitoringForRegion:regionPurple];
+    [self.beaconManager startRangingBeaconsInRegion:regionPurple];
+
     self.motionManager = [[CMMotionActivityManager alloc] init];
     [self detectMotion];
 //    self.localNotif = [[UILocalNotification alloc] init];

@@ -60,7 +60,7 @@ NSTimer *timer;
    // NSLog(@"%@", [self parentViewController]);
     _messages = [[NSMutableArray alloc] init];
    // [self setCombNames:@"adminjiajun l"];
-    [self downloadConversation];
+//    [self downloadConversation];
     
         // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -70,6 +70,7 @@ NSTimer *timer;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [self dataReloaded];
     timer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(dataReloaded) userInfo:nil repeats:YES];
 }
 
