@@ -125,7 +125,11 @@ NSTimer *timer;
     } else {
         cell.sent = NO;
     }
-    cell.timeLabel.text = (NSString *)object[@"sender"];
+    NSDate *date = object.createdAt;
+    NSLog(@"%@", date);
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"MM/dd/yy, h:mm a"];
+    cell.timeLabel.text = [NSString stringWithFormat:@"%@ - %@",(NSString *)object[@"sender"], [dateFormat stringFromDate:date]];
     cell.messageLabel.text = [_messages objectAtIndex:([_messages count] - 1 - indexPath.row)];
     //[self configureCell:cell atIndexPath:indexPath];
     
