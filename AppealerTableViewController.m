@@ -244,8 +244,7 @@
     NSLog(@"did appear");
     [self appUsageLogging:@"myrequest"];
     [self startDownloadMyRequest];
-    [self HelperRequests];
-
+    
 //    [self.tableView reloadData];
     NSLog(@"table View reloaded");
     PFQuery *query = [MyUser query];
@@ -549,7 +548,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [self.requests count];
+    return [self.myRequests count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
