@@ -143,11 +143,23 @@
 - (IBAction)logOutButton:(UIBarButtonItem *)sender {
     [PFUser logOut];
     AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
+    CGSize iOSScreenSize = [[UIScreen mainScreen] bounds].size;
+
+    if (iOSScreenSize.height == 568){ //iphone 5
+        UIViewController* rootController1 = [[UIStoryboard storyboardWithName:@"Storyboard5s" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
+        
+        UINavigationController* navigation1 = [[UINavigationController alloc] initWithRootViewController:rootController1];
+        appDelegateTemp.window.rootViewController = navigation1;
+        [appDelegateTemp.window makeKeyAndVisible];
+    }
+    if (iOSScreenSize.height == 667){ //iphone 6
+        UIViewController* rootController2 = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
+        
+        UINavigationController* navigation2 = [[UINavigationController alloc] initWithRootViewController:rootController2];
+        appDelegateTemp.window.rootViewController = navigation2;
+        [appDelegateTemp.window makeKeyAndVisible];
+    }
     
-    UIViewController* rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
-    
-    UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController];
-    appDelegateTemp.window.rootViewController = navigation;
 }
 
 - (void)setRequests:(NSArray *)requests
