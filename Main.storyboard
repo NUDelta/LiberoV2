@@ -161,7 +161,7 @@
         <!--Others' Requests-->
         <scene sceneID="3HH-w2-CDV">
             <objects>
-                <viewController id="ahd-Ri-dcv" customClass="HelperTableViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HelperTableViewController" id="ahd-Ri-dcv" customClass="HelperTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="147" sectionHeaderHeight="22" sectionFooterHeight="22" id="BT9-5P-7TL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

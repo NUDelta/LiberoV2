@@ -15,6 +15,8 @@
 #import "CurrentPickUpTableViewController.h"
 #import "MySession.h"
 #import "AppealerTableViewController.h"
+#import "HelperTableViewController.h"
+
 #define mySession [MySession sharedManager]
 
 @interface AppDelegate () <CLLocationManagerDelegate>
@@ -81,6 +83,14 @@
     if (applicationState == UIApplicationStateInactive || applicationState == UIApplicationStateBackground) {
         [[UIApplication sharedApplication] cancelLocalNotification:notification];
         [application presentLocalNotificationNow:notification];
+
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UINavigationController *myNav = [sb instantiateViewControllerWithIdentifier:@"friendR"];
+        self.window.rootViewController = myNav;
+        HelperTableViewController *htvc = (HelperTableViewController *)[sb instantiateViewControllerWithIdentifier:@"HelperTableViewController"];
+
+        [myNav popToViewController:htvc animated:YES];
+
 //        self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
     }
     if(application.applicationState == UIApplicationStateActive ) {
