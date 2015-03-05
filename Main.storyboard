@@ -828,10 +828,6 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zGo-87-Pg4">
-                                        <rect key="frame" x="78" y="121" width="215" height="162"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </pickerView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="24d-ou-TYd">
                                         <rect key="frame" x="20" y="98" width="93" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -860,6 +856,17 @@
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="FJw-5C-EfW">
                                         <rect key="frame" x="146" y="288" width="20" height="20"/>
                                     </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T9C-R0-rqC">
+                                        <rect key="frame" x="-6" y="64" width="318" height="504"/>
+                                        <color key="backgroundColor" red="0.37254901960784315" green="0.34901960784313724" blue="0.41176470588235292" alpha="0.68000000000000005" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zGo-87-Pg4">
+                                        <rect key="frame" x="78" y="132" width="215" height="162"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </pickerView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.44705882349999998" green="0.42745098040000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -870,13 +877,14 @@
                     <connections>
                         <outlet property="descriptionTextField" destination="G9p-qf-s2s" id="Wqy-4u-CMg"/>
                         <outlet property="imageView" destination="3jn-KB-ADJ" id="z0S-5d-a11"/>
+                        <outlet property="overlayLabel" destination="T9C-R0-rqC" id="Tay-r9-bHL"/>
                         <outlet property="sizePicker" destination="zGo-87-Pg4" id="R19-ff-dFV"/>
                         <outlet property="spinner" destination="FJw-5C-EfW" id="6Sd-8Q-tyE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mdb-96-oUf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1136" y="4087"/>
+            <point key="canvasLocation" x="1160" y="4125"/>
         </scene>
         <!--Profile-->
         <scene sceneID="3LT-C4-Q3a">

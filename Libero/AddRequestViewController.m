@@ -80,6 +80,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.overlayLabel.hidden = TRUE;
     self.spinner.hidden = TRUE;
     self.saved = FALSE;
     self.navigationController.navigationBarHidden=NO;
@@ -194,6 +195,7 @@ numberOfRowsInComponent:(NSInteger)component
         req[@"itemDescription"] = self.descriptionTextField.text;
         req[@"packageType"] = self.packageSize;
         self.spinner.hidden = FALSE;
+         self.overlayLabel.hidden = FALSE;
         [self.spinner startAnimating];
         [req saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             self.descriptionTextField = @"";

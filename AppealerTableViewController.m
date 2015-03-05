@@ -92,7 +92,7 @@
         
         if(!error) {
             for(PFObject *object in objects){
-                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
+                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"true"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
                     NSLog(@"%@", object[@"residenceHall"]);
                     NSLog(@"another one %@", [MyUser currentUser].residenceHall);
                     [tmpRequest addObject: object];
@@ -249,7 +249,7 @@
 }
 
 - (void)appDidEnterForeground {
-    [self startDownloadMyRequest];
+//    [self startDownloadMyRequest];
 //    [self.tableView reloadData];
 }
 
@@ -412,7 +412,7 @@
             for(PFObject *object in objects){
                 if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
                     NSLog(@"%@", object[@"residenceHall"]);
-                    NSLog(@"another one %@", [MyUser currentUser].residenceHall);
+//                    NSLog(@"another one %@", [MyUser currentUser].residenceHall);
                     [tmpRequest addObject: object];
                 }
             }
@@ -471,7 +471,7 @@
 
 - (void)beaconManager:(ESTBeaconManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(ESTBeaconRegion *)region
 {
-    [self HelperRequests];
+//    [self HelperRequests];
     PFQuery *query = [PFQuery queryWithClassName:@"Message"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         NSMutableArray *tmpRequest = [[NSMutableArray alloc] init];
