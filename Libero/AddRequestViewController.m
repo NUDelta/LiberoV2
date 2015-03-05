@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *sizePicker;
 @property (strong, nonatomic) NSString *packageSize;
 @property (nonatomic, assign) RWDropdownMenuStyle menuStyle;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end
 
@@ -68,12 +69,18 @@
     [RWDropdownMenu presentFromViewController:self withItems:styleItems align:RWDropdownMenuCellAlignmentCenter style:self.menuStyle navBarImage:nil completion:nil];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    self.spinner.hidden = TRUE;
+    [self.spinner stopAnimating];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [self appUsageLogging:@"add new request"];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.spinner.hidden = TRUE;
     self.navigationController.navigationBarHidden=NO;
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
@@ -183,7 +190,8 @@ numberOfRowsInComponent:(NSInteger)component
     req[@"delivered"] = @"waiting for pickup";
     req[@"itemDescription"] = self.descriptionTextField.text;
     req[@"packageType"] = self.packageSize;
-    
+    self.spinner.hidden = FALSE;
+    [self.spinner startAnimating];
     [req saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         self.descriptionTextField = @"";
         self.imageView.image = nil;

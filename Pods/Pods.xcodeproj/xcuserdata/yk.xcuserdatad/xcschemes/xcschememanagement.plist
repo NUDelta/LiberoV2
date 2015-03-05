@@ -8,26 +8,46 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 		<key>Pods-EstimoteSDK.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Pods-Lookback.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
+		<key>Pods-LookbackSafe.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
 		</dict>
 		<key>Pods-Parse.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
 		<key>Pods-RWDropdownMenu.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -47,12 +67,47 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>7069A0E8BC760554D4AF6CA5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>7F544A7535C8D482642ACEC5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>84BBBBC45CF8043D072B65B1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8CD34D2BA0F7F22237548BEB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9F1F9B9D2D8BA5895A183501</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AA2AD2AB63A6D13524E861FA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C29E24C9EE91681C89B56E8D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D366D1DC957BD2F74F6A913E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F0201865BC73AA93396C0916</key>
 		<dict>
 			<key>primary</key>
 			<true/>

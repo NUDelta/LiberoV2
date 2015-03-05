@@ -857,6 +857,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="FJw-5C-EfW">
+                                        <rect key="frame" x="146" y="288" width="20" height="20"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.44705882349999998" green="0.42745098040000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -868,6 +871,7 @@
                         <outlet property="descriptionTextField" destination="G9p-qf-s2s" id="Wqy-4u-CMg"/>
                         <outlet property="imageView" destination="3jn-KB-ADJ" id="z0S-5d-a11"/>
                         <outlet property="sizePicker" destination="zGo-87-Pg4" id="R19-ff-dFV"/>
+                        <outlet property="spinner" destination="FJw-5C-EfW" id="6Sd-8Q-tyE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mdb-96-oUf" userLabel="First Responder" sceneMemberID="firstResponder"/>
