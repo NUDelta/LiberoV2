@@ -60,11 +60,11 @@
 {
     NSArray *styleItems =
     @[
-      [RWDropdownMenuItem itemWithText:@"Other's Requests" image:nil action:^{
-          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"friendR"];
+      [RWDropdownMenuItem itemWithText:@"My Requests" image:nil action:^{
+          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"requestsNav"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
           [self presentViewController:myNav animated:YES completion:nil];
-          self.menuStyle = RWDropdownMenuStyleBlackGradient;
+          self.menuStyle = RWDropdownMenuStyleTranslucent;
       }],
       [RWDropdownMenuItem itemWithText:@"Current Pickups" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"currentPickupNav"];
@@ -72,12 +72,14 @@
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleTranslucent;
       }],
-      [RWDropdownMenuItem itemWithText:@"My Requests" image:nil action:^{
-          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"requestsNav"];
+      [RWDropdownMenuItem itemWithText:@"Other's Requests" image:nil action:^{
+          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"friendR"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
           [self presentViewController:myNav animated:YES completion:nil];
-          self.menuStyle = RWDropdownMenuStyleTranslucent;
+          self.menuStyle = RWDropdownMenuStyleBlackGradient;
       }],
+
+
       [RWDropdownMenuItem itemWithText:@"New Request" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"addRequestNav"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
