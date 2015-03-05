@@ -28,7 +28,14 @@
                 installation[@"user"] = [PFUser currentUser];
                 [installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
-                    appDelegateTemp.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
+                    CGSize iOSScreenSize = [[UIScreen mainScreen] bounds].size;
+                    if (iOSScreenSize.height == 568){ //iphone 5
+                        appDelegateTemp.window.rootViewController = [[UIStoryboard storyboardWithName:@"Storyboard5s" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
+                    }
+                    if (iOSScreenSize.height == 667){ //iphone 6
+                        appDelegateTemp.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
+                    }
+                    
                 }];
                 // Do stuff after successful login.
             } else {
@@ -39,7 +46,15 @@
         }];
 }
 - (IBAction)SignUpButton:(id)sender {
-    UIViewController* logInViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"MyLogInViewController"];
+    CGSize iOSScreenSize = [[UIScreen mainScreen] bounds].size;
+    UIViewController* logInViewController;
+    if (iOSScreenSize.height == 568){ //iphone 5
+        logInViewController = [[UIStoryboard storyboardWithName:@"Storyboard5s" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"MyLogInViewController"];
+    }
+    if (iOSScreenSize.height == 667){ //iphone 6
+       logInViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"MyLogInViewController"];
+    }
+    
     [self presentViewController:logInViewController animated:NO completion:NULL];
 }
 

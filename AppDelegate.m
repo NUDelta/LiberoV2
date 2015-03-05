@@ -60,20 +60,24 @@
     } else {
         if (iOSScreenSize.height == 480){ //iphone 4
             UIViewController* rootController1 = [[UIStoryboard storyboardWithName:@"Storyboard4" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
-            UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController1];
-            self.window.rootViewController = navigation;
+            UINavigationController* navigation1 = [[UINavigationController alloc] initWithRootViewController:rootController1];
+            
+            self.window.rootViewController = navigation1;
             [self.window makeKeyAndVisible];
         }
         if (iOSScreenSize.height == 568){ //iphone 5
             UIViewController* rootController2 = [[UIStoryboard storyboardWithName:@"Storyboard5s" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
-            UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController2];
-            self.window.rootViewController = navigation;
+            UINavigationController* navigation2 = [[UINavigationController alloc] initWithRootViewController:rootController2];
+            self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+            self.window.rootViewController = navigation2;
             [self.window makeKeyAndVisible];
         }
         if (iOSScreenSize.height == 667){ //iphone 6
             UIViewController* rootController3 = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
-            UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController3];
-            self.window.rootViewController = navigation;            [self.window makeKeyAndVisible];
+            UINavigationController* navigation3 = [[UINavigationController alloc] initWithRootViewController:rootController3];
+            self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+            self.window.rootViewController = navigation3;
+            [self.window makeKeyAndVisible];
         }
         
 //        UIViewController* rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
