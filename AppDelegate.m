@@ -177,9 +177,9 @@
     if ([[userInfo valueForKeyPath:@"objectId"] isEqualToString:@"-1"]){
         //send to my requests
         if(application.applicationState == UIApplicationStateActive){
-            NSLog(@"%@", userInfo);
+           /* NSLog(@"%@", userInfo);
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Update!" message:[[userInfo valueForKeyPath:@"aps"] valueForKey:@"alert"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            [alert show];
+            [alert show];*/
         }
         
         
