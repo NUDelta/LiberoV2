@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddRequestViewController : UIViewController
+@interface AddRequestViewController : UIViewController <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *overlayLabel;
 
 @end

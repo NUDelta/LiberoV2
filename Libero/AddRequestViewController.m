@@ -43,7 +43,7 @@
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleTranslucent;
       }],
-      [RWDropdownMenuItem itemWithText:@"Other's Requests" image:nil action:^{
+      [RWDropdownMenuItem itemWithText:@"Others' Requests" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"friendR"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
           [self presentViewController:myNav animated:YES completion:nil];
@@ -66,8 +66,18 @@
     [self.spinner stopAnimating];
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.descriptionTextField resignFirstResponder];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [self appUsageLogging:@"add new request"];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 - (void)viewDidLoad {
@@ -76,6 +86,8 @@
     self.spinner.hidden = TRUE;
     self.saved = FALSE;
     self.navigationController.navigationBarHidden=NO;
+    self.descriptionTextField.delegate = self;
+    [self.descriptionTextField setReturnKeyType:UIReturnKeyDone];
     /*UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     [titleButton setTitle:@"Add New Request" forState:UIControlStateNormal];

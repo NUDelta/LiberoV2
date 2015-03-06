@@ -72,7 +72,7 @@
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleTranslucent;
       }],
-      [RWDropdownMenuItem itemWithText:@"Other's Requests" image:nil action:^{
+      [RWDropdownMenuItem itemWithText:@"Others' Requests" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"friendR"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
           [self presentViewController:myNav animated:YES completion:nil];
@@ -87,6 +87,16 @@
       ];
     
     [RWDropdownMenu presentFromViewController:self withItems:styleItems align:RWDropdownMenuCellAlignmentCenter style:self.menuStyle navBarImage:nil completion:nil];
+}
+
+-(void) startDownloadMyRequest {
+    
+    [self CurrentPickUpRequests];
+    [self.tableView reloadData];
+    if (self.refreshControl) {
+        [self.refreshControl endRefreshing];
+    }
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -104,6 +114,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor whiteColor];
+    self.refreshControl.tintColor = [UIColor blackColor];
+    [self.refreshControl addTarget:self action:@selector(startDownloadMyRequest)forControlEvents:UIControlEventValueChanged];
+
     UINavigationItem *nav = self.navigationItem;
     nav.title = @"Current Pickups";
     self.tableView.separatorColor = [UIColor whiteColor];
@@ -166,13 +181,18 @@
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.detailTextLabel.textColor = [UIColor whiteColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-    cell.textLabel.text = [request valueForKeyPath:@"username"];
+    //cell.textLabel.text = [request valueForKeyPath:@"username"];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"MMMM d, YYYY hh:mm a";
     dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"CST"];
     NSString *dateWithNewFormat = [dateFormatter stringFromDate:[request valueForKeyPath:@"updatedAt"]];
     
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"Status: %@\nupdatedAt: %@", [request valueForKeyPath:@"delivered"], dateWithNewFormat];
+   NSString *desc = ([request valueForKeyPath:@"itemDescription"] && ![[request valueForKey:@"itemDescription"] isEqualToString:@""]) ? [request valueForKeyPath:@"itemDescription"]: @"no description";
+    //cell.detailTextLabel.text = [NSString stringWithFormat:@"Package Size: %@\nRequested at: %@", [request valueForKeyPath:@"packageType"], dateWithNewFormat];
+    cell.textLabel.text = [NSString stringWithFormat:@"Description: %@", desc];
+    
+    
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Requested by: %@\nRequested at: %@",[request valueForKeyPath:@"username"], dateWithNewFormat];
     return cell;
 }
 

@@ -57,7 +57,7 @@
     self.reEnterPasswordField.delegate = self;
     self.emailField.delegate = self;
     self.residenceHallField.delegate = self;
-    
+    [self.emailField setKeyboardType:UIKeyboardTypeEmailAddress];
     [self.usernameField setReturnKeyType:UIReturnKeyNext];
     [self.residenceHallField setReturnKeyType:UIReturnKeyNext];
     [self.emailField setReturnKeyType:UIReturnKeyNext];

@@ -200,6 +200,15 @@
     }];
 }
 
+-(void) startDownloadMyRequest {
+    
+    [self HelperRequests];
+    [self.tableView reloadData];
+    if (self.refreshControl) {
+        [self.refreshControl endRefreshing];
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [self appUsageLogging:@"othersrequest"];
@@ -234,7 +243,7 @@
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleTranslucent;
       }],
-      [RWDropdownMenuItem itemWithText:@"Other's Requests" image:nil action:^{
+      [RWDropdownMenuItem itemWithText:@"Others' Requests" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"friendR"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
           [self presentViewController:myNav animated:YES completion:nil];
@@ -253,12 +262,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor whiteColor];
+    self.refreshControl.tintColor = [UIColor blackColor];
+    [self.refreshControl addTarget:self action:@selector(startDownloadMyRequest)forControlEvents:UIControlEventValueChanged];
     NSLog(@"Notification setting: %@", [MyUser currentUser].notification);
 
     self.navigationController.navigationBarHidden=NO;
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [titleButton setTitle:@"Other's Requests" forState:UIControlStateNormal];
+    [titleButton setTitle:@"Others' Requests" forState:UIControlStateNormal];
     [titleButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, -5)];
     [titleButton addTarget:self action:@selector(presentStyleMenu:) forControlEvents:UIControlEventTouchUpInside];
     [titleButton setTintColor:[UIColor blackColor]];
@@ -401,13 +414,18 @@
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.detailTextLabel.textColor = [UIColor whiteColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-    cell.textLabel.text = [NSString stringWithFormat: @"Requester: %@", [request valueForKeyPath:@"username"]];
+    //cell.textLabel.text = [NSString stringWithFormat: @"Requester: %@", [request valueForKeyPath:@"username"]];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"MMMM d, YYYY hh:mm a";
     dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"CST"];
     NSString *dateWithNewFormat = [dateFormatter stringFromDate:[request valueForKeyPath:@"createdAt"]];
-
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"Package Size: %@\nRequested at: %@", [request valueForKeyPath:@"packageType"], dateWithNewFormat];
+    NSString *desc = ([request valueForKeyPath:@"itemDescription"] && ![[request valueForKey:@"itemDescription"] isEqualToString:@""]) ? [request valueForKeyPath:@"itemDescription"]: @"no description";
+    //cell.detailTextLabel.text = [NSString stringWithFormat:@"Package Size: %@\nRequested at: %@", [request valueForKeyPath:@"packageType"], dateWithNewFormat];
+    cell.textLabel.text = [NSString stringWithFormat:@"Description: %@", desc];
+    
+    
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Requested by: %@\nRequested at: %@",[request valueForKeyPath:@"username"], dateWithNewFormat];
+    
     return cell;
 }
 

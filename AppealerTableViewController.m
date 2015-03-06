@@ -64,17 +64,7 @@
 
 - (void)startDownloadMyRequest
 {
-    if (self.refreshControl) {
-        /*NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-         [formatter setDateFormat:@"MMM d, h:mm a"];
-         NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
-         NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
-         forKey:NSForegroundColorAttributeName];
-         NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
-         self.refreshControl.attributedTitle = attributedTitle;*/
-        
-        [self.refreshControl endRefreshing];
-    }
+    
     NSMutableArray *tmpRequest = [[NSMutableArray alloc]init];
     PFQuery *query = [PFQuery queryWithClassName:@"Message"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -91,6 +81,11 @@
         [self.tableView reloadData];
         
     }];
+    if (self.refreshControl) {
+        
+        
+        [self.refreshControl endRefreshing];
+    }
     
 }
 
@@ -137,7 +132,7 @@
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleTranslucent;
       }],
-      [RWDropdownMenuItem itemWithText:@"Other's Requests" image:nil action:^{
+      [RWDropdownMenuItem itemWithText:@"Others' Requests" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"friendR"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
           [self presentViewController:myNav animated:YES completion:nil];
@@ -559,17 +554,19 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *request = self.myRequests[self.myRequests.count - 1 - indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Appealer Request Cell" forIndexPath:indexPath];
-    if([(NSString *)[request valueForKeyPath:@"deliverer"] isEqualToString:@"null"])
-        cell.textLabel.text = @"Waiting for pickup";
-    else
-        cell.textLabel.text = [NSString stringWithFormat:@"Helper name: %@", [request valueForKeyPath:@"deliverer"]];
+    
     //    cell.textLabel.text = [NSString stringWithFormat:@"Tracking #: %@", [request valueForKeyPath:@"trackingNumber"]];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"MMMM d, YYYY hh:mm a";
     dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"CST"];
     NSString *dateWithNewFormat = [dateFormatter stringFromDate:[request valueForKeyPath:@"createdAt"]];
-    NSString *desc = [request valueForKeyPath:@"itemDescription"] ? [request valueForKeyPath:@"itemDescription"]: @"no description";
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"Description: %@\nStatus: %@\nRequested at: %@", desc, [request valueForKeyPath:@"delivered"], dateWithNewFormat];
+    NSString *desc = ([request valueForKeyPath:@"itemDescription"] && ![[request valueForKey:@"itemDescription"] isEqualToString:@""]) ? [request valueForKeyPath:@"itemDescription"]: @"no description";
+    cell.textLabel.text = [NSString stringWithFormat:@"Description: %@", desc];
+    
+    if([(NSString *)[request valueForKeyPath:@"deliverer"] isEqualToString:@"null"])
+     cell.detailTextLabel.text = [NSString stringWithFormat:@"Status: %@\nRequested at: %@",[request valueForKeyPath:@"delivered"], dateWithNewFormat];
+    else
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"Status: %@ by %@\nRequested at: %@",[request valueForKeyPath:@"delivered"], [request valueForKeyPath:@"deliverer"],dateWithNewFormat];
     return cell;
 }
 

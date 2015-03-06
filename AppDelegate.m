@@ -178,7 +178,7 @@
         //send to my requests
         if(application.applicationState == UIApplicationStateActive){
             NSLog(@"%@", userInfo);
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Update!" message:[[userInfo valueForKeyPath:@"aps"] valueForKey:@"alert"] delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Update!" message:[[userInfo valueForKeyPath:@"aps"] valueForKey:@"alert"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [alert show];
         }
         
