@@ -76,7 +76,7 @@
     self.spinner.hidden = TRUE;
     self.saved = FALSE;
     self.navigationController.navigationBarHidden=NO;
-    UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    /*UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     [titleButton setTitle:@"Add New Request" forState:UIControlStateNormal];
     [titleButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, -5)];
@@ -84,7 +84,7 @@
     [titleButton setTintColor:[UIColor blackColor]];
     [titleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [titleButton sizeToFit];
-    self.navigationItem.titleView = titleButton;
+    self.navigationItem.titleView = titleButton;*/
     
     self.packageSize = [[NSString alloc]init];
     self.sizePicker.dataSource = _sizeData;
@@ -95,6 +95,7 @@
     UINavigationItem *navItem = self.navigationItem;
     
     navItem.title = @"Add New Request";
+    
     UIBarButtonItem *bbiRight = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveRequest)];
     UIBarButtonItem *bbiLeft = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelRequest)];
     navItem.rightBarButtonItem = bbiRight;

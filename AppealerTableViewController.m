@@ -64,6 +64,17 @@
 
 - (void)startDownloadMyRequest
 {
+    if (self.refreshControl) {
+        /*NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+         [formatter setDateFormat:@"MMM d, h:mm a"];
+         NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
+         NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
+         forKey:NSForegroundColorAttributeName];
+         NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
+         self.refreshControl.attributedTitle = attributedTitle;*/
+        
+        [self.refreshControl endRefreshing];
+    }
     NSMutableArray *tmpRequest = [[NSMutableArray alloc]init];
     PFQuery *query = [PFQuery queryWithClassName:@"Message"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -132,12 +143,6 @@
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleBlackGradient;
       }],
-      [RWDropdownMenuItem itemWithText:@"New Request" image:nil action:^{
-          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"addRequestNav"];
-          myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-          [self presentViewController:myNav animated:YES completion:nil];
-          self.menuStyle = RWDropdownMenuStyleTranslucent;
-      }],
       [RWDropdownMenuItem itemWithText:@"Profile" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"profileNav"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -152,23 +157,28 @@
 
 
 - (void)viewDidLoad {
-    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor whiteColor];
+    self.refreshControl.tintColor = [UIColor blackColor];
+    [self.refreshControl addTarget:self action:@selector(startDownloadMyRequest)forControlEvents:UIControlEventValueChanged];
     self.navigationController.navigationBarHidden=NO;
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     [titleButton setTitle:@"My Requests" forState:UIControlStateNormal];
     [titleButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, -5)];
     [titleButton addTarget:self action:@selector(presentStyleMenu:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [titleButton setTintColor:[UIColor blackColor]];
+    [titleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [titleButton sizeToFit];
     self.navigationItem.titleView = titleButton;
     
     UINavigationItem *navItem = self.navigationItem;
-    navItem.title = @"My request";
+    navItem.title = @"My Requests";
     UIBarButtonItem *bbi = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewItem)];
     navItem.rightBarButtonItem = bbi;
     navItem.leftBarButtonItem = self.editButtonItem;
-    
+    [navItem.rightBarButtonItem setTintColor:[UIColor blackColor]];
+    [navItem.leftBarButtonItem setTintColor:[UIColor blackColor]];
     //    NSLog([PFUser currentUser].username);
     [self startDownloadMyRequest];
     
@@ -663,6 +673,24 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
 
 #pragma mark - Navigation
 
+-(BOOL) shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+    NSDictionary *request = self.myRequests[self.myRequests.count -1 - indexPath.row];
+    if([(NSString *)[request valueForKeyPath:@"deliverer"] isEqualToString:@"null"]){
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Waiting for pickup"
+                                                        message: @"We're sorry, your package hasn't been picked up yet!"
+                                                       delegate: self
+                                              cancelButtonTitle: @"OK"
+                                              otherButtonTitles: nil,nil];
+        [alert show];
+        return NO;
+    } else {
+        return YES;
+    }
+    
+    
+}
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
@@ -673,7 +701,7 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
     NSLog(@"======================deliverer %@", [request valueForKeyPath:@"deliverer"]);
     if([(NSString *)[request valueForKeyPath:@"deliverer"] isEqualToString:@"null"]) {
         
-        if([segue.identifier isEqualToString:@"chatV2"]) {
+       /* if([segue.identifier isEqualToString:@"chatV2"]) {
             if([segue.destinationViewController isKindOfClass:[ChatWallViewController class]]) {
                 ChatWallViewController *cvc = [segue destinationViewController];
                 NSLog(@"%@", [request valueForKeyPath:@"deliverer"]);
@@ -682,14 +710,8 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
                 //cvc.objId = [request valueForKey:@"objectId"];
                 NSLog(@"segueing");
             }
-        }
+        }*/
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Waiting for pickup"
-                                                        message: @"We're sorry, your package hasn't been picked up yet!"
-                                                       delegate: self
-                                              cancelButtonTitle: @"OK"
-                                              otherButtonTitles: nil,nil];
-        [alert show];
         
         
     } else if([sender isKindOfClass:[UITableViewCell class]]) {

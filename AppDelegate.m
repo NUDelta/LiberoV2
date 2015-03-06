@@ -8,10 +8,10 @@
 
 #import "AppDelegate.h"
 #import "PackageViewController.h"
-#import <Parse/Parse.h> 
+#import <Parse/Parse.h>
 #import "MyUser.h"
 #import "ESTConfig.h"
-#import "ChatWallViewController.h" 
+#import "ChatWallViewController.h"
 #import "CurrentPickUpTableViewController.h"
 #import "MySession.h"
 #import "AppealerTableViewController.h"
@@ -31,8 +31,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [MyUser registerSubclass];
-//    [Lookback_Weak setupWithAppToken:@"H7ZRbabe2HkpTEebe"];
-//    [Lookback_Weak lookback].shakeToRecord = YES;
+    [Lookback_Weak setupWithAppToken:@"H7ZRbabe2HkpTEebe"];
+    [Lookback_Weak lookback].shakeToRecord = YES;
     [Parse setApplicationId:@"gnB2zH2cX8g0Nt5zpWTqmiXx3FSloF98QxhvOuvG" clientKey:@"dv90lyOLj3VzxscTnIuH9hRkUgds54hXWJz7gsR2"];
     [ESTConfig setupAppID:@"app_2kmj1w2otd" andAppToken:@"2c138ec1f40d00cbaebd2aaac6cf09a8"];
     CGSize iOSScreenSize = [[UIScreen mainScreen] bounds].size;
@@ -83,20 +83,20 @@
             [self.window makeKeyAndVisible];
         }
         
-//        UIViewController* rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
-//        UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController];
-//        self.window.rootViewController = navigation;
+        //        UIViewController* rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
+        //        UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController];
+        //        self.window.rootViewController = navigation;
     }
-//    if(!self.storyBoard) self.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    if(!self.mvc) self.mvc = [self.storyBoard instantiateViewControllerWithIdentifier:@"MapView"];
-
+    //    if(!self.storyBoard) self.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    //    if(!self.mvc) self.mvc = [self.storyBoard instantiateViewControllerWithIdentifier:@"MapView"];
+    
     //Register for Local Notifications
-//    
-//    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
-//        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
-//    }
-//    
-//     Register for Push Notitications, if running iOS 8
+    //
+    //    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
+    //        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+    //    }
+    //
+    //     Register for Push Notitications, if running iOS 8
     if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
         UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
                                                         UIUserNotificationTypeBadge |
@@ -118,10 +118,10 @@
 {
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
-////    currentInstallation[@"user"] = [MyUser currentUser].objectId;
+    ////    currentInstallation[@"user"] = [MyUser currentUser].objectId;
     currentInstallation.channels = @[ @"global" ];
     [currentInstallation saveInBackground];
-//    NSLog(@"didregisternotif called");
+    //    NSLog(@"didregisternotif called");
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
@@ -130,44 +130,68 @@
     if (applicationState == UIApplicationStateInactive || applicationState == UIApplicationStateBackground) {
         [[UIApplication sharedApplication] cancelLocalNotification:notification];
         [application presentLocalNotificationNow:notification];
-
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        CGSize iOSScreenSize = [[UIScreen mainScreen] bounds].size;
+        UIStoryboard *sb;
+        if (iOSScreenSize.height == 568) {
+            sb = [UIStoryboard storyboardWithName:@"Storyboard5s" bundle:nil];
+        } else if (iOSScreenSize.height == 667){
+            sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        }
+        //UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         UINavigationController *myNav = [sb instantiateViewControllerWithIdentifier:@"friendR"];
         self.window.rootViewController = myNav;
         HelperTableViewController *htvc = (HelperTableViewController *)[sb instantiateViewControllerWithIdentifier:@"HelperTableViewController"];
-
+        
         [myNav popToViewController:htvc animated:YES];
-
-//        self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
+        
+        //        self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
     }
     if(application.applicationState == UIApplicationStateActive ) {
-//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Local Notification" message:@"Inside" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
-//        [alert show];
+        //        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Local Notification" message:@"Inside" delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
+        //        [alert show];
         //The application received a notification in the active state, so you can display an alert view or do something appropriate.
     }
-//    [[self window] makeKeyAndVisible];
-//    self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
-//    NSString *packageName = [notification.userInfo objectForKey:@"Package Key"];
-//    MapViewController *mvc = [self.storyBoard instantiateViewControllerWithIdentifier:@"MapVC"];
-//    [self.window.rootViewController performSegueWithIdentifier:@"Map View Segue" sender: self.window.rootViewController];
+    //    [[self window] makeKeyAndVisible];
+    //    self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
+    //    NSString *packageName = [notification.userInfo objectForKey:@"Package Key"];
+    //    MapViewController *mvc = [self.storyBoard instantiateViewControllerWithIdentifier:@"MapVC"];
+    //    [self.window.rootViewController performSegueWithIdentifier:@"Map View Segue" sender: self.window.rootViewController];
     //    self.window.rootViewController = self.mvc;
-//    NSLog(@"%@", self.window.rootViewController);
-//    [self.window.rootViewController performSegueWithIdentifier:@"PackageViewSegue" sender:self.window.rootViewController];
-//    [self.window.rootViewController presentModalViewController:pvc animated:NO];
+    //    NSLog(@"%@", self.window.rootViewController);
+    //    [self.window.rootViewController performSegueWithIdentifier:@"PackageViewSegue" sender:self.window.rootViewController];
+    //    [self.window.rootViewController presentModalViewController:pvc animated:NO];
     application.applicationIconBadgeNumber = notification.applicationIconBadgeNumber - 1;
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    CGSize iOSScreenSize = [[UIScreen mainScreen] bounds].size;
+    UIStoryboard *sb;
+    if (iOSScreenSize.height == 568) {
+        sb = [UIStoryboard storyboardWithName:@"Storyboard5s" bundle:nil];
+    } else if (iOSScreenSize.height == 667){
+        sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    }
     NSLog(@"objectId: %@ - whereFrom: %@", [userInfo valueForKeyPath:@"objectId"], [userInfo valueForKeyPath:@"whereFrom"]);
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    //UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     if ([[userInfo valueForKeyPath:@"objectId"] isEqualToString:@"-1"]){
         //send to my requests
+        if(application.applicationState == UIApplicationStateActive){
+            NSLog(@"%@", userInfo);
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Update!" message:[[userInfo valueForKeyPath:@"aps"] valueForKey:@"alert"] delegate:nil cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
+            [alert show];
+        }
+        
         
     } else if ([[userInfo valueForKeyPath:@"whereFrom"] isEqualToString:@"pickup"]) {
         NSDictionary *request = [userInfo valueForKeyPath:@"request"];
+        UINavigationController *myNav;
+        if (iOSScreenSize.height == 568) {
+            myNav = [[UIStoryboard storyboardWithName:@"Storyboard5s" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"requestsNav"];
+        } else if (iOSScreenSize.height == 667){
+            myNav = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"requestsNav"];
+        }
         
-        UINavigationController *myNav = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"requestsNav"];
         self.window.rootViewController = myNav;
         AppealerTableViewController *atvc = (AppealerTableViewController *)[sb instantiateViewControllerWithIdentifier:@"MyRequestsVC"];
         
@@ -179,17 +203,22 @@
         cvc.objId = [request valueForKey:@"objectId"];
         myNav.viewControllers = [NSArray arrayWithObjects:atvc,cvc, nil];
         [myNav popToViewController:cvc animated:YES];
-
+        
         
     } else {
         //send to current pickups chat
         NSDictionary *request = [userInfo valueForKeyPath:@"request"];
-
-        UINavigationController *myNav = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"currentPickupNav"];
+        UINavigationController *myNav;
+        if (iOSScreenSize.height == 568) {
+            myNav = [[UIStoryboard storyboardWithName:@"Storyboard5s" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"currentPickupNav"];
+        } else if (iOSScreenSize.height == 667){
+            myNav = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"currentPickupNav"];
+        }
+        //UINavigationController *myNav = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"currentPickupNav"];
         self.window.rootViewController = myNav;
         CurrentPickUpTableViewController *cptvc = (CurrentPickUpTableViewController *)[sb instantiateViewControllerWithIdentifier:@"CurrentPickUpTableViewController"];
         
-       // ChatWallViewController *cvc = (ChatWallViewController *)[sb instantiateViewControllerWithIdentifier:@"ChatWallViewController"];
+        // ChatWallViewController *cvc = (ChatWallViewController *)[sb instantiateViewControllerWithIdentifier:@"ChatWallViewController"];
         ChatWallViewController *cvc = [mySession cwvc];
         cvc.other = [NSString stringWithFormat:@"%@", [request valueForKeyPath:@"username"]];
         cvc.detailChat = YES;
@@ -199,7 +228,7 @@
         [myNav popToViewController:cvc animated:YES];
     }
     
-//    [PFPush handlePush:userInfo];
+    //    [PFPush handlePush:userInfo];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
