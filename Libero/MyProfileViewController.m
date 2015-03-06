@@ -146,7 +146,7 @@
         if(!error) {
             for(PFObject *object in objects){
                 if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username]) {
-                    if ([object[@"notification"] isEqualToString: @"On"])
+                    if ([object[@"notification"] isEqualToString: @"On"] || !object[@"notification"])
                         [self.notification setOn:YES];
                     else
                         [self.notification setOn:NO];

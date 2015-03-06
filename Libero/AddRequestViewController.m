@@ -98,7 +98,7 @@
     [titleButton sizeToFit];
     self.navigationItem.titleView = titleButton;*/
     
-    self.packageSize = [[NSString alloc]init];
+    self.packageSize = @"Small";
     self.sizePicker.dataSource = _sizeData;
     self.sizePicker.delegate = self;
     _sizeData = [[NSMutableArray alloc]init];
