@@ -424,7 +424,7 @@
     cell.textLabel.text = [NSString stringWithFormat:@"Description: %@", desc];
     
     
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"Requested by: %@\nRequested at: %@",[request valueForKeyPath:@"username"], dateWithNewFormat];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Size: %@\nRequested by: %@\nRequested at: %@", [request valueForKeyPath:@"packageType"], [request valueForKeyPath:@"username"], dateWithNewFormat];
     
     return cell;
 }

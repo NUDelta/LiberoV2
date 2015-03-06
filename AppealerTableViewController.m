@@ -564,9 +564,9 @@
     cell.textLabel.text = [NSString stringWithFormat:@"Description: %@", desc];
     
     if([(NSString *)[request valueForKeyPath:@"deliverer"] isEqualToString:@"null"])
-     cell.detailTextLabel.text = [NSString stringWithFormat:@"Status: %@\nRequested at: %@",[request valueForKeyPath:@"delivered"], dateWithNewFormat];
+     cell.detailTextLabel.text = [NSString stringWithFormat:@"Status: %@\nSize: %@\nRequested at: %@",[request valueForKeyPath:@"delivered"],[request valueForKeyPath:@"packageType"], dateWithNewFormat];
     else
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"Status: %@ by %@\nRequested at: %@",[request valueForKeyPath:@"delivered"], [request valueForKeyPath:@"deliverer"],dateWithNewFormat];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"Status: %@ by %@\nSize: %@\nRequested at: %@",[request valueForKeyPath:@"delivered"], [request valueForKeyPath:@"deliverer"],[request valueForKeyPath:@"packageType"], dateWithNewFormat];
     return cell;
 }
 
