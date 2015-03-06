@@ -202,7 +202,7 @@
     //    [self.locationManager requestAlwaysAuthorization];
     //    [self.locationManager requestWhenInUseAuthorization];
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    self.locationManager.distanceFilter = 50;
+    self.locationManager.distanceFilter = 10;
     
     [self.locationManager startUpdatingLocation];
     
@@ -213,6 +213,7 @@
     CLLocationCoordinate2D plex; //Foster Walker
     plex.latitude = 42.053666;
     plex.longitude = -87.677672;
+    
     CLCircularRegion *plexRegion = [[CLCircularRegion alloc] initWithCenter:plex radius:50 identifier:@"Plex"];
     [self.locationManager startMonitoringForRegion: plexRegion];
     
@@ -220,7 +221,7 @@
     [notifCenter addObserver:self selector:@selector(appDidEnterForeground) name:@"appDidEnterForeground" object:nil];
     
     [notifCenter addObserver:self selector: @selector(notificationChanged:) name:@"notificationChanged" object: nil];
-    [self appUsageLogging:@"appopen"];
+//    [self appUsageLogging:@"appopen"];
     
     NSUUID *uuid = [[NSUUID alloc]initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
     self.beaconManager = [[ESTBeaconManager alloc] init];
@@ -239,8 +240,10 @@
                                                                              minor: 62862
                                                                         identifier: @"PurpleiBeaconRegion"];
     
+    if ([self.beaconManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [self.beaconManager requestWhenInUseAuthorization];
+    }
     
-    [self.beaconManager requestWhenInUseAuthorization];
     [self.beaconManager startMonitoringForRegion:region];
     [self.beaconManager startRangingBeaconsInRegion:region];
     [self.beaconManager startMonitoringForRegion:regionPurple];
@@ -260,7 +263,7 @@
 {
     NSLog(@"did appear");
     [self appUsageLogging:@"myrequest"];
-//    [self startDownloadMyRequest];
+    [self startDownloadMyRequest];
     
     //    [self.tableView reloadData];
     NSLog(@"table View reloaded");
@@ -505,38 +508,39 @@
 
 - (void)triggerNotificationWithMessage: (NSString *)message {
     //TODO: test outside!
-    if ([self.motion isEqualToString:@"walking"] || [self.motion isEqualToString:@"running"]) {
-        if ([self.motion isEqualToString:@"walking"])
-            [self appUsageLogging:@"walking"];
-        if ([self.motion isEqualToString:@"walking"])
-            [self appUsageLogging:@"running"];
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        localNotification.alertBody = message;
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-        //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
-        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-    } else {
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        localNotification.alertBody = message;
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-        //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
-        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-    }
-    [self appUsageLogging:@"notification"];
-    PFQuery *query = [MyUser query];
-    [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
-        if (!error) {
-            int notifCount = [object[@"notifNum"] intValue];
-            //                NSLog(@"%d", notifCount);
-            NSNumber *value = [NSNumber numberWithInt:notifCount+1];
-            object[@"notifNum"] = value;
-            [object saveInBackground];
+    if ([self.direction isEqualToString:@"south"]) {
+        if ([self.motion isEqualToString:@"walking"] || [self.motion isEqualToString:@"running"]) {
+            if ([self.motion isEqualToString:@"walking"])
+                [self appUsageLogging:@"walking"];
+            if ([self.motion isEqualToString:@"walking"])
+                [self appUsageLogging:@"running"];
+            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+            localNotification.alertBody = message;
+            localNotification.soundName = UILocalNotificationDefaultSoundName;
+            //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
+            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
         } else {
-            NSLog(@"ERROR!");
+            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+            localNotification.alertBody = message;
+            localNotification.soundName = UILocalNotificationDefaultSoundName;
+            //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
+            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
         }
-    }];
+        [self appUsageLogging:@"notification"];
+        PFQuery *query = [MyUser query];
+        [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
+            if (!error) {
+                int notifCount = [object[@"notifNum"] intValue];
+                //                NSLog(@"%d", notifCount);
+                NSNumber *value = [NSNumber numberWithInt:notifCount+1];
+                object[@"notifNum"] = value;
+                [object saveInBackground];
+            } else {
+                NSLog(@"ERROR!");
+            }
+        }];
+    }
 }
-
 
 #pragma mark - Table view data source
 

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5992CD5B26AA4C17E93735F4"
+               BlueprintIdentifier = "51E51627E0B81E77C96176DA"
                BuildableName = "libPods-RWDropdownMenu.a"
                BlueprintName = "Pods-RWDropdownMenu"
                ReferencedContainer = "container:Pods.xcodeproj">

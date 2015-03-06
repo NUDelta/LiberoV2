@@ -53,28 +53,6 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>All text and design is copyright © 2014 Lookback AB
-
-All rights reserved. Terms of use as defined at http://lookback.io applies.
-</string>
-			<key>Title</key>
-			<string>Lookback</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
-			<string>All text and design is copyright © 2014 Lookback AB
-
-All rights reserved. Terms of use as defined at http://lookback.io applies.
-</string>
-			<key>Title</key>
-			<string>LookbackSafe</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
 			<string>See https://www.parse.com/about/terms</string>
 			<key>Title</key>
 			<string>Parse</string>

@@ -6,6 +6,4 @@ pod 'Parse'
 pod 'Bolts'
 pod 'RWDropdownMenu'
 pod 'EstimoteSDK'
-pod 'Lookback', :configurations => ['Debug']
-pod 'LookbackSafe', :configurations => ['Release']
 

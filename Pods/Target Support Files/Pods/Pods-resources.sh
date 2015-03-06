@@ -47,11 +47,7 @@ install_resource()
       ;;
   esac
 }
-          install_resource "Lookback/lookback/HD/Lookback.framework/Versions/A/Resources/GFSettings.storyboard"
-                    install_resource "Lookback/lookback/HD/Lookback.framework/Versions/A/Resources/lookback-assets.xcassets"
-                    install_resource "LookbackSafe/lookback/Safe/Lookback.framework/Versions/A/Resources/GFSettings.storyboard"
-                    install_resource "LookbackSafe/lookback/Safe/Lookback.framework/Versions/A/Resources/lookback-assets.xcassets"
-          
+
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 if [[ "${ACTION}" == "install" ]]; then
   rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${INSTALL_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

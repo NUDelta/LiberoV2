@@ -13,12 +13,12 @@
 		<key>CFBundleVersion</key>
 		<string>1</string>
 		<key>SigningIdentity</key>
-		<string>iPhone Developer: Yongsung Kim (ALQWK44CCB)</string>
+		<string>iPhone Distribution: Northwestern University</string>
 	</dict>
 	<key>ArchiveVersion</key>
 	<integer>2</integer>
 	<key>CreationDate</key>
-	<date>2015-03-06T04:45:34Z</date>
+	<date>2015-03-06T15:29:45Z</date>
 	<key>Name</key>
 	<string>Libero</string>
 	<key>SchemeName</key>
