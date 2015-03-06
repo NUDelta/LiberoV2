@@ -45,8 +45,6 @@
 @property (nonatomic, strong) NSString *message;
 @property (nonatomic, strong) NSString *notificationSetting;
 @property (nonatomic, strong) UILocalNotification *localNotif;
-@property (assign) BOOL updatedBeacon;
-
 
 @end
 
@@ -71,23 +69,23 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(!error) {
             for (PFObject *object in objects) {
-//                NSLog((NSString *)object[@"username"]);
-                if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![(NSString *)object[@"cancelled"] isEqualToString:@"true"]){
+                NSLog((NSString *)object[@"username"]);
+                if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![(NSString *)object[@"true"] isEqualToString:@"true"]){
                     [tmpRequest addObject: object];
-//                    NSLog(@"object added");
+                    NSLog(@"object added");
                 }
             }
         }
         self.myRequests = tmpRequest;
         [self.tableView reloadData];
-
+        
     }];
     
 }
 
 - (void)HelperRequests
 {
-    NSLog(@"Index : %d", [self.navigationController.viewControllers indexOfObject:self]);
+//    NSLog(@"Index : %d", [self.navigationController.viewControllers indexOfObject:self]);
     PFQuery *query = [PFQuery queryWithClassName:@"Message"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         NSMutableArray *tmpRequest = [[NSMutableArray alloc] init];
@@ -95,14 +93,14 @@
         if(!error) {
             for(PFObject *object in objects){
                 if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"true"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
-//                    NSLog(@"%@", object[@"residenceHall"]);
-//                    NSLog(@"another one %@", [MyUser currentUser].residenceHall);
+                    NSLog(@"%@", object[@"residenceHall"]);
+                    NSLog(@"another one %@", [MyUser currentUser].residenceHall);
                     [tmpRequest addObject: object];
                 }
             }
         }
         self.requests = tmpRequest;
-//        NSLog(@"%d",self.requests.count);
+        NSLog(@"%d",self.requests.count);
         if (self.requests.count > 0) {
             if ([self.requests[self.requests.count -1] valueForKeyPath:@"packageType"] == NULL)
                 self.message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username], [self.requests[self.requests.count -1] valueForKeyPath:@"username"];
@@ -134,6 +132,12 @@
           [self presentViewController:myNav animated:YES completion:nil];
           self.menuStyle = RWDropdownMenuStyleBlackGradient;
       }],
+      [RWDropdownMenuItem itemWithText:@"New Request" image:nil action:^{
+          UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"addRequestNav"];
+          myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+          [self presentViewController:myNav animated:YES completion:nil];
+          self.menuStyle = RWDropdownMenuStyleTranslucent;
+      }],
       [RWDropdownMenuItem itemWithText:@"Profile" image:nil action:^{
           UINavigationController *myNav = [self.storyboard instantiateViewControllerWithIdentifier:@"profileNav"];
           myNav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -141,22 +145,21 @@
           self.menuStyle = RWDropdownMenuStyleTranslucent;
       }],
       ];
-
+    
     
     [RWDropdownMenu presentFromViewController:self withItems:styleItems align:RWDropdownMenuCellAlignmentCenter style:self.menuStyle navBarImage:nil completion:nil];
 }
 
 
 - (void)viewDidLoad {
-    self.updatedBeacon = YES;
+    
     self.navigationController.navigationBarHidden=NO;
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [titleButton setImage:[[UIImage imageNamed:@"down@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     [titleButton setTitle:@"My Requests" forState:UIControlStateNormal];
     [titleButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, -5)];
     [titleButton addTarget:self action:@selector(presentStyleMenu:) forControlEvents:UIControlEventTouchUpInside];
-    [titleButton setTintColor:[UIColor blackColor]];
-    [titleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
     [titleButton sizeToFit];
     self.navigationItem.titleView = titleButton;
     
@@ -165,16 +168,15 @@
     UIBarButtonItem *bbi = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewItem)];
     navItem.rightBarButtonItem = bbi;
     navItem.leftBarButtonItem = self.editButtonItem;
-    [navItem.rightBarButtonItem setTintColor:[UIColor blackColor]];
-    [navItem.leftBarButtonItem setTintColor:[UIColor blackColor]];
-//    NSLog([PFUser currentUser].username);
-//    [self startDownloadMyRequest];
-//    
-//    [self HelperRequests];
+    
+    //    NSLog([PFUser currentUser].username);
+    [self startDownloadMyRequest];
+    
+    [self HelperRequests];
     
     self.direction = [[NSString alloc]init];
     self.message = [[NSString alloc]init];
-    
+    self.direction = @"south";
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -220,7 +222,7 @@
     self.beaconManager.delegate = self;
     
     NSUUID *uuid_purple = [[NSUUID alloc]initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
-
+    
     //    ESTBeaconRegion* region = [[ESTBeaconRegion alloc] initWithProximityUUID:uuid identifier:@"sample" secured:YES];
     ESTBeaconRegion* region = [[ESTBeaconRegion alloc] initWithProximityUUID:uuid
                                                                        major: 56412
@@ -228,9 +230,9 @@
                                                                   identifier: @"iBeaconRegion"];
     
     ESTBeaconRegion* regionPurple = [[ESTBeaconRegion alloc] initWithProximityUUID:uuid
-                                                                       major: 16165
-                                                                       minor: 62862
-                                                                  identifier: @"PurpleiBeaconRegion"];
+                                                                             major: 16165
+                                                                             minor: 62862
+                                                                        identifier: @"PurpleiBeaconRegion"];
     
     
     [self.beaconManager requestWhenInUseAuthorization];
@@ -238,24 +240,24 @@
     [self.beaconManager startRangingBeaconsInRegion:region];
     [self.beaconManager startMonitoringForRegion:regionPurple];
     [self.beaconManager startRangingBeaconsInRegion:regionPurple];
-
+    
     self.motionManager = [[CMMotionActivityManager alloc] init];
     [self detectMotion];
-//    self.localNotif = [[UILocalNotification alloc] init];
+    //    self.localNotif = [[UILocalNotification alloc] init];
 }
 
 - (void)appDidEnterForeground {
-//    [self startDownloadMyRequest];
-//    [self.tableView reloadData];
+    [self startDownloadMyRequest];
+    //    [self.tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     NSLog(@"did appear");
     [self appUsageLogging:@"myrequest"];
-    [self startDownloadMyRequest];
+//    [self startDownloadMyRequest];
     
-//    [self.tableView reloadData];
+    //    [self.tableView reloadData];
     NSLog(@"table View reloaded");
     PFQuery *query = [MyUser query];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -267,8 +269,8 @@
             }
         }
     }];
-//    [self.tableView deselectRowAtIndexPath:self.myIndexPath animated:YES];
-    [self HelperRequests];
+    //    [self.tableView deselectRowAtIndexPath:self.myIndexPath animated:YES];
+    //    [self HelperRequests];
 }
 
 - (void)addNewItem {
@@ -299,7 +301,7 @@
 }
 
 
-#pragma mark - Location 
+#pragma mark - Location
 - (void)notificationChanged: (NSNotification *)notification {
     NSLog(@"notification settings!!!!!!!!!!!!!!! %@", [notification.userInfo valueForKeyPath:@"notificationKey"]);
     self.notificationSetting = [notification.userInfo valueForKeyPath:@"notificationKey"];
@@ -320,15 +322,16 @@
     if([CMMotionActivityManager isActivityAvailable]) {
         [self.motionManager startActivityUpdatesToQueue:[[NSOperationQueue alloc]init] withHandler:^(CMMotionActivity *activity) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (activity.walking || activity.running) {
-                    if (activity.walking) {
-                        self.motion = @"walking";
-                        //                        [self appUsageLogging:@"running"];
-                    }
-                    if (activity.running) {
-                        self.motion = @"walking";
-                        //                        [self appUsageLogging:@"running"];
-                    }
+                if (activity.walking) {
+                    self.motion = @"walking";
+                    //                        [self appUsageLogging:@"running"];
+                }
+                else if (activity.running) {
+                    self.motion = @"running";
+                    //                        [self appUsageLogging:@"running"];
+                }
+                else {
+                    self.motion = @"walking";
                 }
             });
         }];
@@ -381,85 +384,84 @@
     }
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    if (newLocation.horizontalAccuracy < 0) return;   // ignore invalid udpates
-    
-    // EDIT: need a valid oldLocation to be able to compute distance
-    if (oldLocation == nil || oldLocation.horizontalAccuracy < 0) return;
-    CLLocation *locA = newLocation;
-    CLLocation *locB = oldLocation;
-    CLLocationCoordinate2D centerA;
-    CLLocationCoordinate2D centerB;
-    centerA.latitude = locA.coordinate.latitude;
-    centerB.latitude = locB.coordinate.latitude;
-    centerA.longitude = locA.coordinate.longitude;
-    centerB.longitude = locB.coordinate.longitude;
-    [self getHeadingForDirectionFromCoordinate:centerB toCoordinate:centerA];
-    [self detectMotion];
-}
-
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
     //FIXME: this is for v1
-    NSLog(@"Welcome to %@", region.identifier);
-    NSLog(@"notification setting: %@", self.notificationSetting);
-
-    if ([region.identifier isEqualToString:@"Plex"] && [self.notificationSetting isEqualToString:@"On"]) {
-        UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-        PFQuery *query = [PFQuery queryWithClassName:@"Message"];
-        NSMutableArray *tmpRequest = [[NSMutableArray alloc] init];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            for(PFObject *object in objects){
-                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Soro" message:@"Soro" delegate:self cancelButtonTitle:@"NO" otherButtonTitles: nil];
+//        [alert show];
+    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+        if (!error) {
+            CLLocationCoordinate2D oldLoc;
+            oldLoc.latitude = geoPoint.latitude;
+            oldLoc.longitude = geoPoint.longitude;
+            CLLocationCoordinate2D plex;
+            plex.latitude = 42.052951;
+            plex.longitude = -87.679057;
+            [self getHeadingForDirectionFromCoordinate:oldLoc toCoordinate:plex];
+            NSString *str = [NSString stringWithFormat:@"Entered region %f, %f", oldLoc.latitude, oldLoc.longitude];
+            [self appUsageLogging:str];
+        }
+    }];
+    [self HelperRequests];
+//    
+//    NSLog(@"Welcome to %@", region.identifier);
+//    NSLog(@"notification setting: %@", self.notificationSetting);
+//    
+//    if ([region.identifier isEqualToString:@"Plex"] && [self.notificationSetting isEqualToString:@"On"]) {
+//        UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+//        PFQuery *query = [PFQuery queryWithClassName:@"Message"];
+//        NSMutableArray *tmpRequest = [[NSMutableArray alloc] init];
+//        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//            for(PFObject *object in objects){
+//                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"true"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
 //                    NSLog(@"%@", object[@"residenceHall"]);
 //                    NSLog(@"another one %@", [MyUser currentUser].residenceHall);
-                    [tmpRequest addObject: object];
-                }
-            }
-            self.requests = tmpRequest;
-            if ([self.requests count]>0){
-                if (localNotif) {
-                    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[self.requests[self.requests.count -1] valueForKeyPath:@"objectId"] forKey:[self.requests[self.requests.count -1] valueForKeyPath:@"objectId"]];
-                    localNotif.userInfo = dictionary;
+//                    [tmpRequest addObject: object];
+//                }
+//            }
+//            self.requests = tmpRequest;
+//            if ([self.requests count]>0){
+//                if (localNotif) {
+//                    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[self.requests[self.requests.count -1] valueForKeyPath:@"objectId"] forKey:[self.requests[self.requests.count -1] valueForKeyPath:@"objectId"]];
+//                    localNotif.userInfo = dictionary;
 //                    NSLog(@"%@", [self.requests[self.requests.count -1] valueForKeyPath:@"packageType"]);
-                    if ([self.requests[self.requests.count -1] valueForKeyPath:@"packageType"] == NULL)
-                        localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username, [self.requests[self.requests.count -1] valueForKeyPath:@"username"]];
-                    else
-                        localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me? --%@", [MyUser currentUser].username, [self.requests[self.requests.count -1] valueForKeyPath:@"packageType"], [self.requests[self.requests.count -1] valueForKeyPath:@"username"]];
-                    localNotif.alertAction = @"Testing notification based on regions";
-                    localNotif.soundName = UILocalNotificationDefaultSoundName;
-                    localNotif.applicationIconBadgeNumber = 1;
-                    
-                    PFQuery *query = [MyUser query];
-                    [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
-                        if (!error) {
-                            int notifCount = [object[@"notifNum"] intValue];
+//                    if ([self.requests[self.requests.count -1] valueForKeyPath:@"packageType"] == NULL)
+//                        localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username, [self.requests[self.requests.count -1] valueForKeyPath:@"username"]];
+//                    else
+//                        localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me? --%@", [MyUser currentUser].username, [self.requests[self.requests.count -1] valueForKeyPath:@"packageType"], [self.requests[self.requests.count -1] valueForKeyPath:@"username"]];
+//                    localNotif.alertAction = @"Testing notification based on regions";
+//                    localNotif.soundName = UILocalNotificationDefaultSoundName;
+//                    localNotif.applicationIconBadgeNumber = 1;
+//                    
+//                    PFQuery *query = [MyUser query];
+//                    [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
+//                        if (!error) {
+//                            int notifCount = [object[@"notifNum"] intValue];
 //                            NSLog(@"%d", notifCount);
-                            NSNumber *value = [NSNumber numberWithInt:notifCount+1];
+//                            NSNumber *value = [NSNumber numberWithInt:notifCount+1];
 //                            object[@"notifNum"] = value;
-                            [object saveInBackground];
-                        } else {
-                            NSLog(@"ERROR!");
-                        }
-                    }];
-                    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-                        if (!error) {
-                            NSString *message = [NSString stringWithFormat:@"Entered %f, %f",geoPoint.latitude, geoPoint.longitude];
-                            [self appUsageLogging:message];
-                        }
-                    }];
-                    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-                }
-            }
-        }];
-    }
+//                            [object saveInBackground];
+//                        } else {
+//                            NSLog(@"ERROR!");
+//                        }
+//                    }];
+//                    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+//                        if (!error) {
+//                            NSString *message = [NSString stringWithFormat:@"Entered %f, %f",geoPoint.latitude, geoPoint.longitude];
+//                            [self appUsageLogging:message];
+//                        }
+//                    }];
+//                    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+//                }
+//            }
+//        }];
+//    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
 {
     if ([region.identifier isEqualToString:@"Plex"]) {
         self.beaconNoti = NO;
-        self.updatedBeacon = YES;
         [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
             if (!error) {
                 NSString *message = [NSString stringWithFormat:@"Exited %f, %f",geoPoint.latitude, geoPoint.longitude];
@@ -472,45 +474,19 @@
 
 - (void)beaconManager:(ESTBeaconManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(ESTBeaconRegion *)region
 {
-//    [self HelperRequests];
-    if (self.updatedBeacon){
-        PFQuery *query = [PFQuery queryWithClassName:@"Message"];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            NSMutableArray *tmpRequest = [[NSMutableArray alloc] init];
-            
-            if(!error) {
-                for(PFObject *object in objects){
-                    if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"cancelled"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
-//                        NSLog(@"%@", object[@"residenceHall"]);
-//                        NSLog(@"another one %@", [MyUser currentUser].residenceHall);
-                        [tmpRequest addObject: object];
-                        self.requests = tmpRequest;
-
-                    }
-                }
-            }
-            self.updatedBeacon = NO;
-            //                        NSLog(@"%d",self.requests.count);
-            if (self.requests.count > 0) {
-                if ([self.requests[self.requests.count -1] valueForKeyPath:@"packageType"] == NULL)
-                    self.message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username], [self.requests[self.requests.count -1] valueForKeyPath:@"username"];
-                else
-                    self.message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me? --%@", [MyUser currentUser].username, [self.requests[self.requests.count -1] valueForKeyPath:@"packageType"], [self.requests[self.requests.count -1] valueForKeyPath:@"username"]];
-                ESTBeacon *firstBeacon = [beacons firstObject];
-                if (!self.beaconNoti && [firstBeacon.distance integerValue] < 5 && [firstBeacon.distance integerValue]!= -1 && [firstBeacon.distance floatValue]!= 0.0) {
-                    NSLog(@"%@", [firstBeacon.distance stringValue]);
-                    [self triggerNotificationWithMessage: self.message];
-                    self.beaconNoti = YES;
-                    [self appUsageLogging:[firstBeacon.distance stringValue]];
-                }
-            }
-        }];
+    if(self.requests.count > 0){
+        if ([self.requests[0] valueForKeyPath:@"packageType"] == NULL)
+            self.message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username], [self.requests[0] valueForKeyPath:@"username"];
+        else
+            self.message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me? --%@", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"packageType"], [self.requests[0] valueForKeyPath:@"username"]];
+        ESTBeacon *firstBeacon = [beacons firstObject];
+        if (!self.beaconNoti && [firstBeacon.distance integerValue] < 5 && [firstBeacon.distance integerValue]!= -1 && [firstBeacon.distance floatValue]!= 0.0) {
+            NSLog(@"%@", [firstBeacon.distance stringValue]);
+            [self triggerNotificationWithMessage: self.message];
+            self.beaconNoti = YES;
+            [self appUsageLogging:[firstBeacon.distance stringValue]];
+        }
     }
- 
-    //    if ([self.requests[0] valueForKeyPath:@"packageType"] == NULL)
-    //        message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me?", [MyUser currentUser].username];
-    //    else
-    //        message = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me?", [MyUser currentUser].username, [self.requests[0] valueForKeyPath:@"packageType"]];
 }
 
 
@@ -519,47 +495,41 @@
 }
 
 - (void)beaconManager:(ESTBeaconManager *)manager rangingBeaconsDidFailForRegion:(ESTBeaconRegion *)region withError:(NSError *)error {
-//    NSLog(@"it is here!!!!!!!!!!!!!!!");
     NSLog(error.description);
-//    self.updatedBeacon = NO;
 }
 
 - (void)triggerNotificationWithMessage: (NSString *)message {
     //TODO: test outside!
-//    self.direction = @"south";
-//    self.motion = @"walking";
-    if ([self.direction isEqualToString:@"south"]) {
-        if ([self.motion isEqualToString:@"walking"] || [self.motion isEqualToString:@"running"]) {
-            if ([self.motion isEqualToString:@"walking"])
-                [self appUsageLogging:@"walking"];
-            if ([self.motion isEqualToString:@"walking"])
-                [self appUsageLogging:@"running"];
-            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-            localNotification.alertBody = message;
-            localNotification.soundName = UILocalNotificationDefaultSoundName;
-            //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
-            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-        } else {
-            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-            localNotification.alertBody = message;
-            localNotification.soundName = UILocalNotificationDefaultSoundName;
-            //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
-            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-        }
-        [self appUsageLogging:@"notification"];
-        PFQuery *query = [MyUser query];
-        [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
-            if (!error) {
-                int notifCount = [object[@"notifNum"] intValue];
-//                NSLog(@"%d", notifCount);
-                NSNumber *value = [NSNumber numberWithInt:notifCount+1];
-                object[@"notifNum"] = value;
-                [object saveInBackground];
-            } else {
-                NSLog(@"ERROR!");
-            }
-        }];
+    if ([self.motion isEqualToString:@"walking"] || [self.motion isEqualToString:@"running"]) {
+        if ([self.motion isEqualToString:@"walking"])
+            [self appUsageLogging:@"walking"];
+        if ([self.motion isEqualToString:@"walking"])
+            [self appUsageLogging:@"running"];
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.alertBody = message;
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
+        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+    } else {
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.alertBody = message;
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        //    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication]applicationIconBadgeNumber]+1;
+        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
     }
+    [self appUsageLogging:@"notification"];
+    PFQuery *query = [MyUser query];
+    [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
+        if (!error) {
+            int notifCount = [object[@"notifNum"] intValue];
+            //                NSLog(@"%d", notifCount);
+            NSNumber *value = [NSNumber numberWithInt:notifCount+1];
+            object[@"notifNum"] = value;
+            [object saveInBackground];
+        } else {
+            NSLog(@"ERROR!");
+        }
+    }];
 }
 
 
@@ -583,7 +553,7 @@
         cell.textLabel.text = @"Waiting for pickup";
     else
         cell.textLabel.text = [NSString stringWithFormat:@"Helper name: %@", [request valueForKeyPath:@"deliverer"]];
-//    cell.textLabel.text = [NSString stringWithFormat:@"Tracking #: %@", [request valueForKeyPath:@"trackingNumber"]];
+    //    cell.textLabel.text = [NSString stringWithFormat:@"Tracking #: %@", [request valueForKeyPath:@"trackingNumber"]];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"MMMM d, YYYY hh:mm a";
     dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"CST"];
@@ -603,7 +573,7 @@
 //        self.phoneNumber = ((MyUser *)objects[0]).additional;
 //        [[UIApplication sharedApplication] openURL:[NSURL URLWithString: [NSString stringWithFormat:@"telprompt://%@", self.phoneNumber]]];
 //    }];
-    
+
 //    self.phoneNumber = [request valueForKeyPath:@"deliverernum"];
 //    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Wanna call deliverer?" message:@"Click YES to call the deliverer." delegate:self cancelButtonTitle:@"NO" otherButtonTitles: nil];
 //    [alert addButtonWithTitle:@"YES"];
@@ -622,7 +592,7 @@
 //        [[UIApplication sharedApplication] openURL:[NSURL URLWithString: [NSString stringWithFormat:@"telprompt://%@", self.phoneNumber]]];
 //
 //    }];
-    
+
 //    self.phoneNumber = [request valueForKeyPath:@"deliverernum"];
 //    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Wanna call deliverer?" message:@"Click YES to call the deliverer." delegate:self cancelButtonTitle:@"NO" otherButtonTitles: nil];
 //    [alert addButtonWithTitle:@"YES"];
@@ -630,12 +600,12 @@
 //}
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 - (void)tableView: (UITableView*)tableView
   willDisplayCell: (UITableViewCell*)cell
@@ -663,7 +633,7 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
         [query getObjectInBackgroundWithId:[self.myRequests[self.myRequests.count - 1 - indexPath.row] valueForKeyPath:@"objectId"] block:^(PFObject *object, NSError *error) {
             if(!error) {
                 object[@"cancelled"] = @"true";
-//                NSLog(@"requets count: %lu", (unsigned long)[self.myRequests count]);
+                NSLog(@"requets count: %lu", (unsigned long)[self.myRequests count]);
                 NSLog(@"%@", indexPath.description);
                 [self.myRequests removeObjectAtIndex: self.myRequests.count - 1 - indexPath.row];
                 NSLog(@"requets count: %lu", (unsigned long)[self.myRequests count]);
@@ -676,41 +646,21 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
 }
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 
--(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-    NSDictionary *request = self.myRequests[self.myRequests.count -1 - indexPath.row];
-    
-    NSLog(@"======================deliverer %@", [request valueForKeyPath:@"deliverer"]);
-    if([(NSString *)[request valueForKeyPath:@"deliverer"] isEqualToString:@"null"]) {
-        
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Waiting for pickup"
-                                                        message: @"We're sorry, your package hasn't been picked up yet!"
-                                                       delegate: self
-                                              cancelButtonTitle: @"OK"
-                                              otherButtonTitles: nil,nil];
-        [alert show];
-        return NO;
-        
-    } else {
-        return YES;
-    }
-    
-}
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -723,7 +673,7 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
     NSLog(@"======================deliverer %@", [request valueForKeyPath:@"deliverer"]);
     if([(NSString *)[request valueForKeyPath:@"deliverer"] isEqualToString:@"null"]) {
         
-      /*  if([segue.identifier isEqualToString:@"chatV2"]) {
+        if([segue.identifier isEqualToString:@"chatV2"]) {
             if([segue.destinationViewController isKindOfClass:[ChatWallViewController class]]) {
                 ChatWallViewController *cvc = [segue destinationViewController];
                 NSLog(@"%@", [request valueForKeyPath:@"deliverer"]);
@@ -735,27 +685,27 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
         }
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Waiting for pickup"
-                                                message: @"We're sorry, your package hasn't been picked up yet!"
-                                                delegate: self
-                                                cancelButtonTitle: @"OK"
-                                                otherButtonTitles: nil,nil];
-        [alert show];*/
-
+                                                        message: @"We're sorry, your package hasn't been picked up yet!"
+                                                       delegate: self
+                                              cancelButtonTitle: @"OK"
+                                              otherButtonTitles: nil,nil];
+        [alert show];
+        
         
     } else if([sender isKindOfClass:[UITableViewCell class]]) {
-            
-            if([segue.identifier isEqualToString:@"chatV2"]) {
-                if([segue.destinationViewController isKindOfClass:[ChatWallViewController class]]) {
-                    ChatWallViewController *cvc = [segue destinationViewController];
-                    NSLog(@"%@", [request valueForKeyPath:@"deliverer"]);
-                    cvc.other = [NSString stringWithFormat:@"%@", [request valueForKeyPath:@"deliverer"]];
-                    cvc.detailChat = NO;
-                    //cvc.objId = [request valueForKey:@"objectId"];
-                    cvc.request = request;
-                    NSLog(@"segueing");
-                    [self appUsageLogging:[NSString stringWithFormat:@"requester chat with %@ for %@", cvc.other, [request valueForKeyPath:@"objectId"]]];
-                }
+        
+        if([segue.identifier isEqualToString:@"chatV2"]) {
+            if([segue.destinationViewController isKindOfClass:[ChatWallViewController class]]) {
+                ChatWallViewController *cvc = [segue destinationViewController];
+                NSLog(@"%@", [request valueForKeyPath:@"deliverer"]);
+                cvc.other = [NSString stringWithFormat:@"%@", [request valueForKeyPath:@"deliverer"]];
+                cvc.detailChat = NO;
+                //cvc.objId = [request valueForKey:@"objectId"];
+                cvc.request = request;
+                NSLog(@"segueing");
+                [self appUsageLogging:[NSString stringWithFormat:@"requester chat with %@ for %@", cvc.other, [request valueForKeyPath:@"objectId"]]];
             }
+        }
     }
     
     
@@ -763,18 +713,18 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 /*- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    if([sender isKindOfClass:[UITableViewCell class]]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-        if([segue.identifier isEqualToString:@"Show Deliverer Info"]) {
-            if([segue.destinationViewController isKindOfClass:[DelivererViewController class]]) {
-                DelivererViewController *dvc = [segue destinationViewController];
-                dvc.request = self.requests[self.requests.count - 1 - indexPath.row];
-                NSLog(@"segueing");
-            }
-        }
-    }
-}*/
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ if([sender isKindOfClass:[UITableViewCell class]]) {
+ NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+ if([segue.identifier isEqualToString:@"Show Deliverer Info"]) {
+ if([segue.destinationViewController isKindOfClass:[DelivererViewController class]]) {
+ DelivererViewController *dvc = [segue destinationViewController];
+ dvc.request = self.requests[self.requests.count - 1 - indexPath.row];
+ NSLog(@"segueing");
+ }
+ }
+ }
+ }*/
 
 @end

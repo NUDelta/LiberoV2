@@ -31,8 +31,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [MyUser registerSubclass];
-    [Lookback_Weak setupWithAppToken:@"H7ZRbabe2HkpTEebe"];
-    [Lookback_Weak lookback].shakeToRecord = YES;
+//    [Lookback_Weak setupWithAppToken:@"H7ZRbabe2HkpTEebe"];
+//    [Lookback_Weak lookback].shakeToRecord = YES;
     [Parse setApplicationId:@"gnB2zH2cX8g0Nt5zpWTqmiXx3FSloF98QxhvOuvG" clientKey:@"dv90lyOLj3VzxscTnIuH9hRkUgds54hXWJz7gsR2"];
     [ESTConfig setupAppID:@"app_2kmj1w2otd" andAppToken:@"2c138ec1f40d00cbaebd2aaac6cf09a8"];
     CGSize iOSScreenSize = [[UIScreen mainScreen] bounds].size;
