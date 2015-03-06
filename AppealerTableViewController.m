@@ -71,7 +71,7 @@
         if(!error) {
             for (PFObject *object in objects) {
                 NSLog((NSString *)object[@"username"]);
-                if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![(NSString *)object[@"true"] isEqualToString:@"true"]){
+                if([(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![(NSString *)object[@"cancelled"] isEqualToString:@"true"]){
                     [tmpRequest addObject: object];
                     NSLog(@"object added");
                 }
