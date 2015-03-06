@@ -244,10 +244,10 @@
         [self.beaconManager requestWhenInUseAuthorization];
     }
     
-    [self.beaconManager startMonitoringForRegion:region];
-    [self.beaconManager startRangingBeaconsInRegion:region];
-    [self.beaconManager startMonitoringForRegion:regionPurple];
-    [self.beaconManager startRangingBeaconsInRegion:regionPurple];
+//    [self.beaconManager startMonitoringForRegion:region];
+//    [self.beaconManager startRangingBeaconsInRegion:region];
+//    [self.beaconManager startMonitoringForRegion:regionPurple];
+//    [self.beaconManager startRangingBeaconsInRegion:regionPurple];
     
     self.motionManager = [[CMMotionActivityManager alloc] init];
     [self detectMotion];
@@ -395,75 +395,74 @@
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
     //FIXME: this is for v1
-//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Soro" message:@"Soro" delegate:self cancelButtonTitle:@"NO" otherButtonTitles: nil];
-//        [alert show];
-    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-        if (!error) {
-            CLLocationCoordinate2D oldLoc;
-            oldLoc.latitude = geoPoint.latitude;
-            oldLoc.longitude = geoPoint.longitude;
-            CLLocationCoordinate2D plex;
-            plex.latitude = 42.052951;
-            plex.longitude = -87.679057;
-            [self getHeadingForDirectionFromCoordinate:oldLoc toCoordinate:plex];
-            NSString *str = [NSString stringWithFormat:@"Entered region %f, %f", oldLoc.latitude, oldLoc.longitude];
-            [self appUsageLogging:str];
-        }
-    }];
+
+//    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+//        if (!error) {
+//            CLLocationCoordinate2D oldLoc;
+//            oldLoc.latitude = geoPoint.latitude;
+//            oldLoc.longitude = geoPoint.longitude;
+//            CLLocationCoordinate2D plex;
+//            plex.latitude = 42.052951;
+//            plex.longitude = -87.679057;
+//            [self getHeadingForDirectionFromCoordinate:oldLoc toCoordinate:plex];
+//            NSString *str = [NSString stringWithFormat:@"Entered region %f, %f", oldLoc.latitude, oldLoc.longitude];
+//            [self appUsageLogging:str];
+//        }
+//    }];
     [self HelperRequests];
 //    
 //    NSLog(@"Welcome to %@", region.identifier);
 //    NSLog(@"notification setting: %@", self.notificationSetting);
 //    
-//    if ([region.identifier isEqualToString:@"Plex"] && [self.notificationSetting isEqualToString:@"On"]) {
-//        UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-//        PFQuery *query = [PFQuery queryWithClassName:@"Message"];
-//        NSMutableArray *tmpRequest = [[NSMutableArray alloc] init];
-//        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-//            for(PFObject *object in objects){
-//                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"true"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
-//                    NSLog(@"%@", object[@"residenceHall"]);
-//                    NSLog(@"another one %@", [MyUser currentUser].residenceHall);
-//                    [tmpRequest addObject: object];
-//                }
-//            }
-//            self.requests = tmpRequest;
-//            if ([self.requests count]>0){
-//                if (localNotif) {
-//                    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[self.requests[self.requests.count -1] valueForKeyPath:@"objectId"] forKey:[self.requests[self.requests.count -1] valueForKeyPath:@"objectId"]];
-//                    localNotif.userInfo = dictionary;
-//                    NSLog(@"%@", [self.requests[self.requests.count -1] valueForKeyPath:@"packageType"]);
-//                    if ([self.requests[self.requests.count -1] valueForKeyPath:@"packageType"] == NULL)
-//                        localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username, [self.requests[self.requests.count -1] valueForKeyPath:@"username"]];
-//                    else
-//                        localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me? --%@", [MyUser currentUser].username, [self.requests[self.requests.count -1] valueForKeyPath:@"packageType"], [self.requests[self.requests.count -1] valueForKeyPath:@"username"]];
-//                    localNotif.alertAction = @"Testing notification based on regions";
-//                    localNotif.soundName = UILocalNotificationDefaultSoundName;
-//                    localNotif.applicationIconBadgeNumber = 1;
-//                    
-//                    PFQuery *query = [MyUser query];
-//                    [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
-//                        if (!error) {
-//                            int notifCount = [object[@"notifNum"] intValue];
-//                            NSLog(@"%d", notifCount);
-//                            NSNumber *value = [NSNumber numberWithInt:notifCount+1];
-//                            object[@"notifNum"] = value;
-//                            [object saveInBackground];
-//                        } else {
-//                            NSLog(@"ERROR!");
-//                        }
-//                    }];
-//                    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-//                        if (!error) {
-//                            NSString *message = [NSString stringWithFormat:@"Entered %f, %f",geoPoint.latitude, geoPoint.longitude];
-//                            [self appUsageLogging:message];
-//                        }
-//                    }];
-//                    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-//                }
-//            }
-//        }];
-//    }
+    if ([region.identifier isEqualToString:@"Plex"] && [self.notificationSetting isEqualToString:@"On"]) {
+        UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+        PFQuery *query = [PFQuery queryWithClassName:@"Message"];
+        NSMutableArray *tmpRequest = [[NSMutableArray alloc] init];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            for(PFObject *object in objects){
+                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"true"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
+                    NSLog(@"%@", object[@"residenceHall"]);
+                    NSLog(@"another one %@", [MyUser currentUser].residenceHall);
+                    [tmpRequest addObject: object];
+                }
+            }
+            self.requests = tmpRequest;
+            if ([self.requests count]>0){
+                if (localNotif) {
+                    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[self.requests[self.requests.count -1] valueForKeyPath:@"objectId"] forKey:[self.requests[self.requests.count -1] valueForKeyPath:@"objectId"]];
+                    localNotif.userInfo = dictionary;
+                    NSLog(@"%@", [self.requests[self.requests.count -1] valueForKeyPath:@"packageType"]);
+                    if ([self.requests[self.requests.count -1] valueForKeyPath:@"packageType"] == NULL)
+                        localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package for me? --%@", [MyUser currentUser].username, [self.requests[self.requests.count -1] valueForKeyPath:@"username"]];
+                    else
+                        localNotif.alertBody = [NSString stringWithFormat:@"Hi %@! Can you pick up a package (%@ size) for me? --%@", [MyUser currentUser].username, [self.requests[self.requests.count -1] valueForKeyPath:@"packageType"], [self.requests[self.requests.count -1] valueForKeyPath:@"username"]];
+                    localNotif.alertAction = @"Testing notification based on regions";
+                    localNotif.soundName = UILocalNotificationDefaultSoundName;
+                    localNotif.applicationIconBadgeNumber = 1;
+                    
+                    PFQuery *query = [MyUser query];
+                    [query getObjectInBackgroundWithId:[MyUser currentUser].objectId block:^(PFObject *object, NSError *error) {
+                        if (!error) {
+                            int notifCount = [object[@"notifNum"] intValue];
+                            NSLog(@"%d", notifCount);
+                            NSNumber *value = [NSNumber numberWithInt:notifCount+1];
+                            object[@"notifNum"] = value;
+                            [object saveInBackground];
+                        } else {
+                            NSLog(@"ERROR!");
+                        }
+                    }];
+                    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+                        if (!error) {
+                            NSString *message = [NSString stringWithFormat:@"Entered %f, %f",geoPoint.latitude, geoPoint.longitude];
+                            [self appUsageLogging:message];
+                        }
+                    }];
+                    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+                }
+            }
+        }];
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
