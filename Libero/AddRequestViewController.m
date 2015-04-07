@@ -193,7 +193,7 @@ numberOfRowsInComponent:(NSInteger)component
         }
         req[@"username"] = [MyUser currentUser].username;
         req[@"email"] = [MyUser currentUser].email;
-        req[@"residenceHall"] = [MyUser currentUser].residenceHall;
+//        req[@"residenceHall"] = [MyUser currentUser].residenceHall;
         req[@"deliverer"] = @"null";
         req[@"delivererId"] = @"null";
         req[@"delivered"] = @"waiting for pickup";

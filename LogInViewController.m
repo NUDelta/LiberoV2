@@ -104,7 +104,7 @@
     MyUser *newUser = (MyUser *)[MyUser object];
     newUser.username = self.usernameField.text;
     newUser.email = self.emailField.text;
-    [newUser setResidenceHall: self.residenceHallField.text];
+    //[newUser setResidenceHall: self.residenceHallField.text];
     [newUser setAdditional: self.phoneNumberField.text];
     newUser.password = self.passwordField.text;
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -122,11 +122,13 @@
             installation[@"user"] = [PFUser currentUser];
             [installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 CGSize iOSScreenSize = [[UIScreen mainScreen] bounds].size;
-                
+                if (iOSScreenSize.height == 480){ //iphone 5
+                    appDelegateTemp.window.rootViewController = [[UIStoryboard storyboardWithName:@"Storyboard4" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
+                }
                 if (iOSScreenSize.height == 568){ //iphone 5
                     appDelegateTemp.window.rootViewController = [[UIStoryboard storyboardWithName:@"Storyboard5s" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
                 }
-                if (iOSScreenSize.height == 667){ //iphone 6
+                if (iOSScreenSize.height >= 667){ //iphone 6
                      appDelegateTemp.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
                 }
 

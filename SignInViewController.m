@@ -29,10 +29,13 @@
                 [installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
                     CGSize iOSScreenSize = [[UIScreen mainScreen] bounds].size;
+                    if (iOSScreenSize.height == 480){ //iphone 5
+                        appDelegateTemp.window.rootViewController = [[UIStoryboard storyboardWithName:@"Storyboard4" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
+                    }
                     if (iOSScreenSize.height == 568){ //iphone 5
                         appDelegateTemp.window.rootViewController = [[UIStoryboard storyboardWithName:@"Storyboard5s" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
                     }
-                    if (iOSScreenSize.height == 667){ //iphone 6
+                    if (iOSScreenSize.height >= 667){ //iphone 6
                         appDelegateTemp.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
                     }
                     
@@ -48,10 +51,13 @@
 - (IBAction)SignUpButton:(id)sender {
     CGSize iOSScreenSize = [[UIScreen mainScreen] bounds].size;
     UIViewController* logInViewController;
+    if (iOSScreenSize.height == 480){ //iphone 5
+        logInViewController = [[UIStoryboard storyboardWithName:@"Storyboard4" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"MyLogInViewController"];
+    }
     if (iOSScreenSize.height == 568){ //iphone 5
         logInViewController = [[UIStoryboard storyboardWithName:@"Storyboard5s" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"MyLogInViewController"];
     }
-    if (iOSScreenSize.height == 667){ //iphone 6
+    if (iOSScreenSize.height >= 667){ //iphone 6
        logInViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"MyLogInViewController"];
     }
     

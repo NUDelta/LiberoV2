@@ -49,7 +49,7 @@
             self.window.rootViewController = initialViewController;
             [self.window makeKeyAndVisible];
         }
-        if (iOSScreenSize.height == 667){ //iphone 6
+        if (iOSScreenSize.height >= 667){ //iphone 6
             UIStoryboard *iPhone47Storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             UIViewController *initialViewController = [iPhone47Storyboard instantiateInitialViewController];
             self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -72,7 +72,7 @@
             self.window.rootViewController = navigation2;
             [self.window makeKeyAndVisible];
         }
-        if (iOSScreenSize.height == 667){ //iphone 6
+        if (iOSScreenSize.height >= 667){ //iphone 6
             UIViewController* rootController3 = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
             UINavigationController* navigation3 = [[UINavigationController alloc] initWithRootViewController:rootController3];
             self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -131,7 +131,7 @@
         UIStoryboard *sb;
         if (iOSScreenSize.height == 568) {
             sb = [UIStoryboard storyboardWithName:@"Storyboard5s" bundle:nil];
-        } else if (iOSScreenSize.height == 667){
+        } else if (iOSScreenSize.height >= 667){
             sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         }
         //UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -166,7 +166,7 @@
     UIStoryboard *sb;
     if (iOSScreenSize.height == 568) {
         sb = [UIStoryboard storyboardWithName:@"Storyboard5s" bundle:nil];
-    } else if (iOSScreenSize.height == 667){
+    } else if (iOSScreenSize.height >= 667){
         sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     }
     NSLog(@"objectId: %@ - whereFrom: %@", [userInfo valueForKeyPath:@"objectId"], [userInfo valueForKeyPath:@"whereFrom"]);
@@ -185,7 +185,7 @@
         UINavigationController *myNav;
         if (iOSScreenSize.height == 568) {
             myNav = [[UIStoryboard storyboardWithName:@"Storyboard5s" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"requestsNav"];
-        } else if (iOSScreenSize.height == 667){
+        } else if (iOSScreenSize.height >= 667){
             myNav = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"requestsNav"];
         }
         
@@ -208,7 +208,7 @@
         UINavigationController *myNav;
         if (iOSScreenSize.height == 568) {
             myNav = [[UIStoryboard storyboardWithName:@"Storyboard5s" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"currentPickupNav"];
-        } else if (iOSScreenSize.height == 667){
+        } else if (iOSScreenSize.height >= 667){
             myNav = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"currentPickupNav"];
         }
         //UINavigationController *myNav = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"currentPickupNav"];

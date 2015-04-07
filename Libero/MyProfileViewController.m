@@ -32,7 +32,7 @@
         appDelegateTemp.window.rootViewController = navigation1;
         [appDelegateTemp.window makeKeyAndVisible];
     }
-    if (iOSScreenSize.height == 667){ //iphone 6
+    if (iOSScreenSize.height >= 667){ //iphone 6
         UIViewController* rootController2 = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
         
         UINavigationController* navigation2 = [[UINavigationController alloc] initWithRootViewController:rootController2];
@@ -133,7 +133,7 @@
     
     self.name.text = [NSString stringWithFormat:@"Name: %@", [MyUser currentUser].username];
     self.email.text = [NSString stringWithFormat:@"Email: %@", [MyUser currentUser].email];
-    self.residenceHall.text = [NSString stringWithFormat:@"Residence hall: %@", [MyUser currentUser].residenceHall];
+//    self.residenceHall.text = [NSString stringWithFormat:@"Residence hall: %@", [MyUser currentUser].residenceHall];
 
         
     // Do any additional setup after loading the view.

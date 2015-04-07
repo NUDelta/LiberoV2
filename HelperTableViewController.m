@@ -152,7 +152,7 @@
         appDelegateTemp.window.rootViewController = navigation1;
         [appDelegateTemp.window makeKeyAndVisible];
     }
-    if (iOSScreenSize.height == 667){ //iphone 6
+    if (iOSScreenSize.height >= 667){ //iphone 6
         UIViewController* rootController2 = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"SignInViewController"];
         
         UINavigationController* navigation2 = [[UINavigationController alloc] initWithRootViewController:rootController2];
@@ -182,9 +182,9 @@
         
         if(!error) {
             for(PFObject *object in objects){
-                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"true"] && [(NSString *)object[@"residenceHall"] isEqualToString:(NSString *)[MyUser currentUser].residenceHall]) {
-                        NSLog(@"%@", object[@"residenceHall"]);
-                        NSLog(@"another one %@", [MyUser currentUser].residenceHall);
+                if(![(NSString *)object[@"username"] isEqualToString:(NSString *)[MyUser currentUser].username] && ![object[@"delivered"] isEqualToString:@"delivered"] && ![object[@"delivered"] isEqualToString:@"picked up"]&& ![(NSString *)object[@"cancelled"] isEqualToString:@"true"]) {
+//                        NSLog(@"%@", object[@"residenceHall"]);
+//                        NSLog(@"another one %@", [MyUser currentUser].residenceHall);
                         [tmpRequest addObject: object];
                     }
                 }
